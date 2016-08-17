@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+# coding:utf-8
+# Build by: LandGrey 2016-08-17
+#
+# A useful hacker dictionary  builder
+#
+
+from core.Base import get_base_dic
+from core.Base import getchars
+from core.Chunk import get_chunk_dic
+from lib.command import parse_args
+
+if __name__ == '__main__':
+    args = parse_args()
+    if args.type:
+        get_base_dic(args.len[0], args.len[1], getchars(args.type), args.encode, args.head, args.tail)
+    if args.customchar:
+        get_base_dic(args.len[0], args.len[1], args.customchar, args.encode, args.head, args.tail)
+    if args.chunk:
+        chunk = []
+        for item in args.chunk:
+            if item != '':
+                chunk.append(item)
+        get_chunk_dic(chunk, args.encode, args.head, args.tail)
+
+
+
