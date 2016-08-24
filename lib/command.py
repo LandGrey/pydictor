@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-08-17
+# Build by: LandGrey 2016-08-24
 #
 # Parse command line arguments
 #
@@ -15,11 +15,12 @@ def parse_args():
                                      description='*[+] A useful hacker dictionary  builder. [+]*\n'
                                                  ' [+] Build by LandGrey\n',
                                      usage='pydictor.py [-t type] [-cc customchar] '
-                                           '[-cm <str1> <str2> ...] [--len minlen maxlen] '
+                                           '[-cm <str1> <str2> ...] [--len minlen maxlen] \n'
                                            '[--head  Prefix] [--tail Suffix] '
-                                           '[--encode <b64,md5,sha1,url,sha256,sha512>]')
+                                           '[--encode <b64,md5,md516,sha1,url,sha256,sha512>]\n'
+                                           '[--sd]')
 
-    parser.add_argument('-t', dest='type',choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'],metavar='Type',default='',
+    parser.add_argument('-t', dest='type',choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type',default='',
                         help='Choose from  [d L c dL dc Lc dLc]'
                               '\nd     digital             [0 - 9]'
                               '\nL     lowercase letters   [a - z]'
@@ -45,14 +46,18 @@ def parse_args():
                         help='Add string tail for the dictionary')
 
     parser.add_argument('--encode', dest='encode', metavar='Encode', default='',
-                        choices=['b64', 'md5', 'sha1', 'url', 'sha256', 'sha512'],
+                        choices=['b64', 'md5', 'md516', 'sha1', 'url', 'sha256', 'sha512'],
                         help='Choose the form of encrytion'
                              '\nb64     base64 encode'
-                             '\nmd5     md5 encryption'
+                             '\nmd5     md5 encryption (32 bit)'
+                             '\nmd516   md5 encryption (16 bit)'
                              '\nsha1    sha1 encryption'
                              '\nurl     urlencode'
                              '\nsha256  sha256 encrytion'
                              '\nsha512  sha512 encrytion')
+
+    parser.add_argument('--sd', dest='sedb', default='',  action="store_true",
+                        help='Enter the SEDB(Social Engineering Dictionary Builder)')
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')
@@ -65,6 +70,10 @@ def check_args(args):
     if args.len[0] > args.len[1]:
         print '\n[+]Pydictor   Build by LandGrey [+]\nMinimum length <= Maximum length'
         sys.exit()
+
+    if args.len[1] > 11:
+        print '\n[+]Pydictor   Build by LandGrey [+]\nMaximum length <= 11'
+
     if len(args.chunk) > 11:
         print '\n[+]Pydictor   Build by LandGrey [+]\nSorry, too much string chunks and space may be insufficient'
         sys.exit()

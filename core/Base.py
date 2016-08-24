@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by LandGrey 2016-08-17
+# Build by LandGrey 2016-06-08
 #
 # build a common dictionary
 #
@@ -11,13 +11,13 @@ import string
 import itertools
 from lib.encode import *
 
-operator = {'b64': base64_encode, 'md5': md5_encode, 'sha1': sha1_encode,
-            'url': url_encode, 'sha256': sha256_encode,'sha512': sha512_encode}
+operator = {'b64': base64_encode, 'md5': md5_encode, 'md516': md5_16_encode, 'sha1': sha1_encode,
+            'url': url_encode, 'sha256': sha256_encode, 'sha512': sha512_encode}
 
 
 # get the dictionary type
-def getchars(typefalg):
-    falg = str(typefalg)
+def getchars(typeflag):
+    falg = str(typeflag)
     chars = []
     if falg == "d":
         chars = string.printable[:10]
@@ -37,13 +37,13 @@ def getchars(typefalg):
 
 
 # create the dictionary files
-def get_base_dic(minlength, maxlength, objfalg, encodeflag, head, tail):
+def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     count = 0
-    storepath=os.path.join(os.getcwd(), "results", "[len_%s_%s]_[%s]_%s.txt" %
+    storepath=os.path.join(os.getcwd(), "results", "[len_%s_%s]_[date_%s]_%s.txt" %
                            (minlength, maxlength, str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time()))), encodeflag))
     with open(storepath, "w") as f:
         for i in xrange(minlength, maxlength+1):
-            for item in itertools.product(objfalg, repeat=i):
+            for item in itertools.product(objflag, repeat=i):
                 if encodeflag == "":
                     f.write(head+"".join(item)+tail+"\n")
                     count += 1
