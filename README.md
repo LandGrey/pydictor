@@ -2,8 +2,13 @@
 =	
 		一个实用的黑客字典建立工具
 		A useful hacker dictionary  builder
-##### by LandGrey
+##### Build by LandGrey
 -
+##### 前言：
+第一次自己独立写一个github工程,完全是出于兴趣和想要提高自己的心。其原型是我之前在csdn写的一篇博文 [python黑客字典生成器——pydictor](http://blog.csdn.net/c465869935/article/details/51841299),写代码过程中收获了很多东西,也确实充实了暑假的后半段日子。希望以后的日子里,能够做更多有意义的事情,也希望能认识更多的朋友,学习到更多的知识,获得更好的人生体验。如果您对我糟糕的代码或者工程本身有些想法,不妨告诉我,让我更快的提高！qq邮箱:465869935@qq.com.
+
+-
+
 #### 功能简介:
 
 ##### 1. 支持使用纯数字、纯小写字母或纯大写字母的任意位数爆破字典生成
@@ -42,7 +47,7 @@
        `python pydictor.py --sd ` 进入社工字典生成界面
 
 -
-#### 社会工程学字典功能介绍:
+#### 社会工程学字典生成功能介绍:
 
 ##### 1. 内置15项收集数据
 		[+]cname        Chinese name's phonetic          中文名拼音全拼
@@ -58,21 +63,22 @@
 		[+]nickname     Commonly used nickname           常用昵称
 		[+]idcard       Identity card number             身份证号
 		[+]jobnum       Job or student number            学号或工号或其简写等
-		[+]otherid      Social network platform accounts 社交平台账号或昵称
+		[+]otherdate    Others date [YYYYMMDD] 			 其他亲人生日等特殊日期
 		[+]usedchar     Commonly used characters         其他常用字符串数字等
 
 ##### 2. 命令速通
 	进入 Social Engineering Dictionary Builder 界面后,可以使用
 	[项目名] [v1] [...]	设置某项数据的值 
-	help settings		查看15项数据的意思;
-	help [具体项]		 查看某项数据的意思;
+	help all			查看15项数据的意思;
+	help [具体项]		查看某项数据的意思;
 	show				查看15项数据的当前设置情况;
-	show [具体项]		 查看某项数据的当前设置情况;
+	show [具体项]		查看某项数据的当前设置情况;
 	run					建立字典
 	cls					清除命令行文字
 	clear				清除命令行文字
 	quit				退出
 	exit				退出
+
 ##### 3. 15项数据说明
 		(1) 以上15项,每一项都支持用空格隔开输入多个数据,不清楚的可以不填;
 		    命令: nickname Tomcat Zwell zer0
