@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by LandGrey 2016-06-08
+# Build by LandGrey 2016-08-25
 #
 # build a common dictionary
 #
+# This is a part of pydictor
+
 
 import os
 import time
@@ -39,7 +41,7 @@ def getchars(typeflag):
 # create the dictionary files
 def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     count = 0
-    storepath=os.path.join(os.getcwd(), "results", "[len_%s_%s]_[date_%s]_%s.txt" %
+    storepath=os.path.join(os.getcwd(), "results", "%s_%s_%s_%s.txt" %
                            (minlength, maxlength, str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time()))), encodeflag))
     with open(storepath, "w") as f:
         for i in xrange(minlength, maxlength+1):

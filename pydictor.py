@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-08-24
+# Build by: LandGrey 2016-08-25
 #
 # A useful hacker dictionary  builder
 #
+# This is a part of belonging to pydictor
 
-import os
+
 from core.Base import get_base_dic
 from core.Base import getchars
 from core.Chunk import get_chunk_dic
@@ -27,7 +28,6 @@ if __name__ == '__main__':
         get_chunk_dic(chunk, args.encode, args.head, args.tail)
     if args.sedb:
         try:
-            os.system("cls")
             shell = SEDB()
             shell.cmdloop()
         except:

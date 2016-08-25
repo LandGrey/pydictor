@@ -4,6 +4,8 @@
 #
 # encode & encrypt the strings
 #
+# This is a part of pydictor
+
 
 from urllib import quote
 from base64 import b64encode

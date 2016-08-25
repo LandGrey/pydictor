@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-08-24
+# Build by: LandGrey 2016-08-25
 #
 # Parse command line arguments
 #
+# This is a part of pydictor
+
 
 import argparse
 import sys
@@ -18,17 +20,17 @@ def parse_args():
                                            '[-cm <str1> <str2> ...] [--len minlen maxlen] \n'
                                            '[--head  Prefix] [--tail Suffix] '
                                            '[--encode <b64,md5,md516,sha1,url,sha256,sha512>]\n'
-                                           '[--sd]')
+                                           '[--sedb]')
 
     parser.add_argument('-t', dest='type',choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type',default='',
                         help='Choose from  [d L c dL dc Lc dLc]'
-                              '\nd     digital             [0 - 9]'
-                              '\nL     lowercase letters   [a - z]'
-                              '\nc     capital letters     [A - Z]'
-                              '\ndL    Mix d and L         [0-9 a-z]'
-                              '\ndc    Mix d and c         [0-9 A-Z]'
-                              '\nLc    Mix L and c         [a-z A-Z]'
-                              '\ndLc   Mix d, L and c      [0-9 a-z A-Z]')
+                        '\nd     digital             [0 - 9]'
+                        '\nL     lowercase letters   [a - z]'
+                        '\nc     capital letters     [A - Z]'
+                        '\ndL    Mix d and L         [0-9 a-z]'
+                        '\ndc    Mix d and c         [0-9 A-Z]'
+                        '\nLc    Mix L and c         [a-z A-Z]'
+                        '\ndLc   Mix d, L and c      [0-9 a-z A-Z]')
 
     parser.add_argument('-cc', dest='customchar', metavar='Character', default='',
                         help='Use [Custom Character] build the dictionary')
@@ -56,7 +58,7 @@ def parse_args():
                              '\nsha256  sha256 encrytion'
                              '\nsha512  sha512 encrytion')
 
-    parser.add_argument('--sd', dest='sedb', default='',  action="store_true",
+    parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
                         help='Enter the SEDB(Social Engineering Dictionary Builder)')
 
     if len(sys.argv) == 1:

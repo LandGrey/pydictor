@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-08-24
+# Build by: LandGrey 2016-08-25
 #
 # Social Engineering Dictionary Builder
 #
+# This is a part of pydictor
+
 
 import os
 import sys
@@ -15,6 +17,7 @@ from rules.CBrule import CBrule
 from rules.EBrule import EBrule
 from rules.SBrule import SBrule
 from rules.SingleRule import SingleRule
+from rules.WeakPass import weak_pass_set
 
 
 class SEDB(cmd.Cmd):
@@ -22,7 +25,8 @@ class SEDB(cmd.Cmd):
         cmd.Cmd.__init__(self)
         reload(sys)
         sys.setdefaultencoding('utf-8')
-        self.prompt = "Pydictor >>"
+        os.system("cls")
+        self.prompt = "pydictor SEDB>>"
         self.do_help(self)
 
     def do_EOF(self):
@@ -31,7 +35,7 @@ class SEDB(cmd.Cmd):
     def do_help(self, key):
         if key in help_dict.keys():
             print help_dict[key]
-        elif key == 'settings':
+        elif key == 'all':
             for k in help_dict.keys():
                 print help_dict[k]
         else:
@@ -64,7 +68,7 @@ class SEDB(cmd.Cmd):
     def do_birth(self, args):
         for item in str(args).split(' '):
             if len(item) != 8 or str(item).isdigit() is False:
-                pass
+                print 'Input format:[YYYYMMDD] exp:19890512'
             else:
                 settings_dict['birth'].append(item)
 
@@ -72,7 +76,7 @@ class SEDB(cmd.Cmd):
         for item in str(args).split(' '):
             settings_dict['usedpwd'].append(item)
 
-    def do_phone(self,args):
+    def do_phone(self, args):
         for item in str(args).split(' '):
             settings_dict['phone'].append(item)
 
@@ -107,9 +111,12 @@ class SEDB(cmd.Cmd):
         for item in str(args).split(' '):
             settings_dict['jobnum'].append(item)
 
-    def do_otherid(self, args):
+    def do_otherdate(self, args):
         for item in str(args).split(' '):
-            settings_dict['otherid'].append(item)
+            if len(item) != 8 or str(item).isdigit() is False:
+                print 'Input format:[YYYYMMDD] exp:19890512'
+            else:
+                settings_dict['otherdate'].append(item)
 
     def do_usedchar(self, args):
         for item in str(args).split(' '):
@@ -118,12 +125,12 @@ class SEDB(cmd.Cmd):
     def do_show(self, key):
         if key in settings_dict.keys():
             if type(settings_dict[key]) is str:
-                print key + "  :" + settings_dict[key]
+                print "%-10s :%s" % (key, settings_dict[key])
             else:
-                print key + "  :" + ' '.join([x for x in settings_dict[key]])
+                print "%-10s :%s" % (key, ' '.join([x for x in settings_dict[key]]))
         else:
             for args in settings_dict.keys():
-                    print args + " :" + ' '.join([x for x in settings_dict[args]])
+                print "%-10s :%s" % (args, ' '.join([x for x in settings_dict[args]]))
 
     def do_run(self, args):
         count = 0
@@ -134,7 +141,7 @@ class SEDB(cmd.Cmd):
                                      settings_dict['birth'], settings_dict['usedpwd'], settings_dict['phone'],
                                      settings_dict['uphone'], settings_dict['hphone'], settings_dict['email'],
                                      settings_dict['postcode'], settings_dict['nickname'], settings_dict['idcard'],
-                                     settings_dict['jobnum'], settings_dict['otherid'], settings_dict['usedchar']):
+                                     settings_dict['jobnum'], settings_dict['otherdate'], settings_dict['usedchar']):
                 f.write(single + '\n')
                 count += 1
             # CBrule
@@ -149,7 +156,10 @@ class SEDB(cmd.Cmd):
             for sb in SBrule(settings_dict['sname'], settings_dict['birth']):
                 f.write(sb + '\n')
                 count += 1
-
+            # WeakPass
+            for weakpwd in weak_pass_set:
+                f.write(weakpwd + '\n')
+                count += 1
         print "[+] A total of %s lines" % str(count)
         print "[+] Store in %s " % storepath
 

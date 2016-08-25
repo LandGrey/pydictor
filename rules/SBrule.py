@@ -4,6 +4,9 @@
 #
 # sname + birth rule
 #
+# This is a part of pydictor
+
+
 from CBrule import CBrule
 
 
@@ -16,14 +19,14 @@ def SBrule(sname, birth):
             # {sname birth SNAME}
             res.append(str(sn).lower() + bd +str(sn).upper())
             res.append(str(sn).lower() + str(bd)[2:] + str(sn).upper())
-            res.append(str(sn).lower() + str(bd).replace('0', '') + str(sn).upper())
+            res.append(str(sn).lower() + str(bd)[:4] + str(bd)[4:].replace('0', '') + str(sn).upper())
             # {sname birth SNAME .}
             res.append(str(sn).lower() + bd + str(sn).upper() + '.')
             res.append(str(sn).lower() + str(bd)[2:] + str(sn).upper() + '.')
-            res.append(str(sn).lower() + str(bd).replace('0', '') + str(sn).upper() + '.')
+            res.append(str(sn).lower() + str(bd)[:4] + str(bd)[4:].replace('0', '') + str(sn).upper() + '.')
             # {sname birth SNAME _}
             res.append(str(sn).lower() + bd + str(sn).upper() + '_')
             res.append(str(sn).lower() + str(bd)[2:] + str(sn).upper() + '_')
-            res.append(str(sn).lower() + str(bd).replace('0', '') + str(sn).upper() + '_')
+            res.append(str(sn).lower() + str(bd)[:4] + str(bd)[4:].replace('0', '') + str(sn).upper() + '_')
 
     return res
