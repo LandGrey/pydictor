@@ -44,7 +44,7 @@
 
 ##### 7. 支持建立社会工程学字典
   例:
-       `python pydictor.py --sd ` 进入社工字典生成界面
+       `python pydictor.py --sedb ` 进入社工字典生成界面
 
 -
 #### 社会工程学字典生成功能介绍:
