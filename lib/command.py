@@ -22,7 +22,7 @@ def parse_args():
                                            '[--encode <b64,md5,md516,sha1,url,sha256,sha512>]\n'
                                            '[--sedb]')
 
-    parser.add_argument('-t', dest='type',choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type',default='',
+    parser.add_argument('-t', dest='type', choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type', default='',
                         help='Choose from  [d L c dL dc Lc dLc]'
                         '\nd     digital             [0 - 9]'
                         '\nL     lowercase letters   [a - z]'
@@ -38,7 +38,7 @@ def parse_args():
     parser.add_argument('-cm', dest='chunk', metavar='Str', nargs='+', type=str, default='',
                         help='Use the string [Chunk Multiplication] build the dictionary')
 
-    parser.add_argument('--len', dest='len', metavar=('Minlen','Maxlen'), nargs=2, type=int, default=(1, 4),
+    parser.add_argument('--len', dest='len', metavar=('Minlen', 'Maxlen'), nargs=2, type=int, default=(1, 4),
                         help='Minimun Length   Maximun Length (except head tail encode)\nDefault: min=1    max=4')
 
     parser.add_argument('--head', dest='head', metavar='Prefix', type=str, default='',

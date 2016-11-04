@@ -38,11 +38,21 @@ worst_25_pass = [
     '000000'
 ]
 
+# IT youth weak password
+ITpass = [
+    '123456789', '12345678', '11111111', 'dearbook',
+    '00000000', '123123123', '1234567890', '88888888',
+    '111111111', '147258369', '987654321', 'aaaaaaaa',
+    '1111111111', '66666666', 'a123456789', '11223344',
+    '1qaz2wsx', 'xiazhili', '789456123', 'qqqqqqqq',
+    '000000000'
+]
+
 # other specail passwords
 special_pass = [
     '3.1415926', '3_1415926', 'p3.1415926', 'p_3.1415926'
 ]
 
-joinall = top_20_kb + other_char_kb + usual_weak_pass + worst_25_pass + special_pass
+joinall = top_20_kb + other_char_kb + usual_weak_pass + worst_25_pass + ITpass + special_pass
 
 weak_pass_set = set(joinall)
