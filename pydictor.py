@@ -12,7 +12,6 @@ from core.Base import getchars
 from core.Chunk import get_chunk_dic
 from core.SEDB import SEDB
 from lib.command import parse_args
-from plugins.IdCardPostSix import getIDCardPost
 
 
 if __name__ == '__main__':
@@ -27,11 +26,6 @@ if __name__ == '__main__':
             if item != '':
                 chunk.append(item)
         get_chunk_dic(chunk, args.encode, args.head, args.tail)
-    if args.plugins:
-        if args.plugins == 'pid6':
-            getIDCardPost('pid6', args.encode, args.head, args.tail, args.sex)
-        elif args.plugins == 'pid8':
-            getIDCardPost('pid8', args.encode, args.head, args.tail, args.sex)
     if args.sedb:
         try:
             shell = SEDB()

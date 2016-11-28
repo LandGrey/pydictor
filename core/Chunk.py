@@ -31,5 +31,3 @@ def get_chunk_dic(objflag, encodeflag, head, tail):
                 count += 1
     print "[+] A total of %s lines" % str(count)
     print "[+] Store in %s " % storepath
-
-
