@@ -7,12 +7,11 @@
 # This is a part of pydictor
 
 
-import os
 import sys
 import cmd
-import time
 sys.path.append('..')
 from lib.text import *
+from lib.data import *
 from rules.CBrule import CBrule
 from rules.EBrule import EBrule
 from rules.SBrule import SBrule
@@ -35,7 +34,7 @@ class SEDB(cmd.Cmd):
     def do_help(self, key):
         if key in help_dict.keys():
             print help_dict[key]
-        elif key == 'all':
+        elif key == 'desc':
             for k in help_dict.keys():
                 print help_dict[k]
         else:
@@ -134,7 +133,7 @@ class SEDB(cmd.Cmd):
 
     def do_run(self, args):
         count = 0
-        storepath = os.path.join(os.getcwd(), "results", 'SEDB_%s.txt' % str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time()))))
+        storepath = os.path.join(resultstorepath, 'SEDB_%s.txt' % buildtime)
         with open(storepath, 'w') as f:
             # SingleRule
             for single in SingleRule(settings_dict['cname'], settings_dict['ename'], settings_dict['sname'],
@@ -160,8 +159,7 @@ class SEDB(cmd.Cmd):
             for weakpwd in weak_pass_set:
                 f.write(weakpwd + '\n')
                 count += 1
-        print "[+] A total of %s lines" % str(count)
-        print "[+] Store in %s " % storepath
+        finishprint(count, storepath)
 
 
 

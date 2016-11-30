@@ -7,42 +7,50 @@
 # This is a part of pydictor
 
 
-import os
-import time
 import string
 import itertools
-from lib.encode import *
-
-operator = {'b64': base64_encode, 'md5': md5_encode, 'md516': md5_16_encode, 'sha1': sha1_encode,
-            'url': url_encode, 'sha256': sha256_encode, 'sha512': sha512_encode}
+from lib.data import *
 
 
-# get the dictionary type
+# dictionary type
+description = " "
+
+
+# get the dictionary list
 def getchars(typeflag):
+    global description
     falg = str(typeflag)
     chars = []
     if falg == "d":
-        chars = string.printable[:10]
+        chars = string.digits
+        description = 'digits'
     elif falg == "L":
-        chars = string.printable[10:36]
+        chars = string.lowercase
+        description = 'lowercase'
     elif falg == "c":
-        chars = string.printable[36:62]
+        chars = string.uppercase
+        description = 'uppercase'
     elif falg == "dL":
         chars = string.printable[:36]
+        description = 'digits_lowercase'
     elif falg == "dc":
-        chars = string.printable[:10]+string.printable[36:62]
+        chars = string.digits + string.uppercase
+        description = 'digits_uppercase'
     elif falg == "Lc":
-        chars = string.printable[10:62]
+        chars = string.letters
+        description = 'letters'
     elif falg == "dLc":
         chars = string.printable[:62]
+        description = 'digits_letters'
     return chars
 
 
 # create the dictionary files
 def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
+    global description
     count = 0
-    storepath=os.path.join(os.getcwd(), "results", "%s_%s_%s_%s.txt" %
-                           (minlength, maxlength, str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time()))), encodeflag))
+    storepath=os.path.join(resultstorepath, "%s_%s_%s_%s_%s.txt" %
+                           (minlength, maxlength, description, buildtime, encodeflag))
     with open(storepath, "w") as f:
         for i in xrange(minlength, maxlength+1):
             for item in itertools.product(objflag, repeat=i):
@@ -52,5 +60,4 @@ def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
                 else:
                     f.write(operator.get(encodeflag)(head+"".join(item)+tail)+"\n")
                     count += 1
-    print "[+] A total of %s lines" % str(count)
-    print "[+] Store in %s " % storepath
+    finishprint(count, storepath)

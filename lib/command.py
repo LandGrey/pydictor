@@ -41,11 +41,11 @@ def parse_args():
     parser.add_argument('-cc', dest='customchar', metavar='Character', default='',
                         help='Use   [Custom Character]  build the dictionary')
 
-    parser.add_argument('-cm', dest='chunk', metavar='Str', nargs='+', type=str, default='',
+    parser.add_argument('-cm', dest='chunk', metavar='Chunk', nargs='+', type=str, default='',
                         help='Use the string [Chunk Multiplication] build the dictionary')
 
     parser.add_argument('-p', dest='plugins', choices=['pid6', 'pid8'],
-                        metavar='plug', type=str, default='',
+                        metavar='Plug', type=str, default='',
                         help='Choose from  [pid6 pid8]'
                              '\npid6 [Id Card post 6 num]     sex[m:male f:female] default:all'
                              '\npid8 [Id Card post 8 num]     sex[m:male f:female] default:all')
@@ -70,8 +70,8 @@ def parse_args():
                         choices=['b64', 'md5', 'md516', 'sha1', 'url', 'sha256', 'sha512'],
                         help='Choose the form of encrytion'
                              '\nb64     base64 encode'
-                             '\nmd5     md5 encryption (32 bit)'
-                             '\nmd516   md5 encryption (16 bit)'
+                             '\nmd5     md5 encryption (32)'
+                             '\nmd516   md5 encryption (16)'
                              '\nsha1    sha1 encryption'
                              '\nurl     urlencode'
                              '\nsha256  sha256 encrytion'

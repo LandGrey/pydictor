@@ -50,7 +50,7 @@ ITpass = [
 
 # other specail passwords
 special_pass = [
-    '3.1415926', '3_1415926', 'p3.1415926', 'p_3.1415926'
+    '3.1415926', '3_1415926'
 ]
 
 joinall = top_20_kb + other_char_kb + usual_weak_pass + worst_25_pass + ITpass + special_pass

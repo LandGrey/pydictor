@@ -2,25 +2,27 @@
 # coding:utf-8
 # Build by: LandGrey 2016-08-25
 #
-# store text for others import
+# store text for SEDB import
 #
 # This is a part of pydictor
 
 
 from collections import OrderedDict
 
-helpmsg = "               Social Engineering Dictionary Builder\n" \
+helpmsg = "                      Social Engineering Dictionary Builder\n" \
                   "                                                              Build by LandGrey\n"\
                   "----------------------------------[ command ]------------------------------------\n"\
-                  "[+]help [all]    (View help message)    |  [+]show [setting](Show current settings)\n"\
+                  "[+]help desc     (View the description) |  [+]show setting  (Show current settings)\n"\
                   "[+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)\n"\
                   "[+]run           (Build the dictionary) |\n"\
-                  "Usage Exp :show  (Show all of settings) |  help settings    (View all of setings help)\n"\
-                  "----------------------------------[ settings ]------------------------------------\n"\
+                  "                                        | \n"\
+                  "Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)\n\n\n"\
+                  "-------------------------------[ setting options ]--------------------------------\n"\
                   "[+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone   \n"\
                   "[+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard  \n"\
-                  "[+]jobnum     [+]otherdate  [+]usedchar | \n"\
-                  "Usage Exp :nickname zwell zhangs zsan   |  *Each setting supports multiple values"
+                  "[+]jobnum     [+]otherdate  [+]usedchar | \n" \
+                  "                                        |\n"\
+                  "Usage Exp :nickname zwell zhangs zsan   |  * Each setting supports multiple values\n"
 
 settings_dict = OrderedDict([
     ('cname', []), ('ename', []), ('sname', []), ('birth', []),
