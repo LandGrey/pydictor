@@ -11,12 +11,11 @@ from core.Base import get_base_dic
 from core.Base import getchars
 from core.Chunk import get_chunk_dic
 from core.SEDB import SEDB
-from lib.command import parse_args
+from lib.data import *
 from plugins.IdCardPost import getIDCardPost
 
 
 if __name__ == '__main__':
-    args = parse_args()
     if args.type:
         get_base_dic(args.len[0], args.len[1], getchars(args.type), args.encode, args.head, args.tail)
     if args.customchar:

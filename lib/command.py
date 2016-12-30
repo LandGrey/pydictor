@@ -21,6 +21,7 @@ def parse_args():
                                            '        [-cc    customchar                                  ]\n'
                                            '        [-cm    <str1> <str2> ...                           ] \n'
                                            '        [-p     <pid6, pid8>                                ] \n'
+                                           '        [-o output                                          ]\n'
                                            '        [--sex  <m, f, all>                                 ]\n'
                                            '        [--len  minlen maxlen                               ]\n'
                                            '        [--head prefix                                      ]\n'
@@ -49,6 +50,10 @@ def parse_args():
                         help='Choose from  [pid6 pid8]'
                              '\npid6 [Id Card post 6 num]     sex[m:male f:female] default:all'
                              '\npid8 [Id Card post 8 num]     sex[m:male f:female] default:all')
+
+    parser.add_argument('-o', dest='output', metavar='output', type=str, default='',
+                        help='Set the directory output path'
+                             '\ndefault as: pydictor/results/')
 
     parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],
                         metavar='sex', type=str, default='all',
