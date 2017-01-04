@@ -1,5 +1,5 @@
 # pydictor  
-=	
+
 		一个实用的黑客字典建立工具
 		A useful hacker dictionary  builder
 ##### Build by LandGrey
@@ -114,35 +114,41 @@ optional arguments:
 ##### 4. 支持使用自定义字符(包括特殊字符)的任意位数爆破字典生成
   例:
 	`python pydictor -char aAbBcC123. --len 6 8`			生成由'aAbBcC123.' 10个字符组成的所有6位到8位字典
-  注:  当需要空格等特殊字符时,请加双引号包围所有自定义字符,如:"abcAB C123."
+  
+**注**:  当需要空格等特殊字符时,请加双引号包围所有自定义字符,如:"abcAB C123."
 	   
 ##### 5. 支持使用自定义字符串、字符生成所有排列可能性组合的字典
   例:
 	`python pydictor -chunk abc ABC 123 .`			生成由'abc'、'ABC'、'123' 和'.'4个块组成的所有排列的可能性组合字典
-  注:  当需要空格等特殊字符时,请加双引号单独包围特殊字符,如:abc " " 123 asdf;此类字典的生成长度为块数的阶乘.
+  
+**注**:  当需要空格等特殊字符时,请加双引号单独包围特殊字符,如:abc " " 123 asdf;此类字典的生成长度为块数的阶乘.
 
 ##### 6. 支持中国公民身份证后6/8位爆破字典生成
   例:
 	`python pydictor -id pid6 --sex m`			生成中国男性公民的身份证后6位所有可能性组合字典
-  注:  不支持指定生成此类字典的长度，默认的--sex参数为全体("all")公民
+  
+**注**:  不支持指定生成此类字典的长度，默认的--sex参数为全体("all")公民
 	   
 	   
 ##### 7. 支持指定生成的字典前缀(头)与后缀(尾)
   例:
 	`python pydictor.py -base L --len 1 4 --head a --tail 123`
-  注:  指定的头和尾并不包括在指定的长度(--len参数)中,而是在原来的长度基础上额外增加的。
+  
+**注**:  指定的头和尾并不包括在指定的长度(--len参数)中,而是在原来的长度基础上额外增加的。
   
   
 ##### 8. 支持将生成的字典进行编码或加密
   例:
     `python pydictor.py -base d --encode b64`
-  **注**:  支持 base64 urlencode编码, md5(32位) md516(16位) sha1 sha256 sha512加密
+  
+**注**:  支持 base64 urlencode编码, md5(32位) md516(16位) sha1 sha256 sha512加密
 
 
 ##### 9. 支持指定输出目录
   例:
     `python pydictor.py -base d --len 4 4 -o D:\output`
-  **注**: 如指定的目录不存在, 则会尝试创建；如果创建失败，则使用或创建默认的results目录；
+  
+**注**: 如指定的目录不存在, 则会尝试创建；如果创建失败，则使用或创建默认的results目录；
 
 
 ##### 10. 配置文件解析功能
@@ -150,7 +156,8 @@ optional arguments:
 
     python pydictor.py --conf				    使用默认位置的build.conf 配置文件建立字典
     python pydictor.py --conf D:\conf\my.conf	使用指定位置的配置文件建立字典
-  **注**: 具体解析规则如下，另可参考build.conf文件示例；
+  
+**注**: 具体解析规则如下，另可参考build.conf文件示例；
 
 ##### 配置文件解析规则:
 ```
@@ -185,13 +192,17 @@ optional arguments:
 	python pydictor.py --shred 			删除默认的 results 目录及其所有字典文件
     python pydictor.py --shred base 	删除当前输出目录(默认为results)下，以"BASE"开头的所有字典文件
 
-   因为输出时前缀固定，所以可以用这种方式删除某一类字典文件，当前支持的前缀(不区分大小写)有5种:base、chunk、conf、sedb、idcard
+因为输出时前缀固定，所以可以用这种方式删除某一类字典文件
+
+当前支持的前缀(不区分大小写)有5种:base、chunk、conf、sedb、idcard
+
    另外,--shred选项还支持将传入的任意位置的一个目录、文件，整个的安全删除，程序会自动判断待删除的是目录还是文件，从而自动工作
 
     python pydictor.py --shred D:\mess			删除整个D:\mess目录
     python pydictor.py --shred D:\mess\1.zip	删除D:\mess\1.zip 文件
 
   为提高安全删除速度，默认使用1遍擦除重写，如有更高安全需要，可修改lib\data.py中的file_rewrite_count和dir_rewrite_count，提高擦除次数；建议最高修改次数为3次；
+
   **注**: 安全删除功能请谨慎使用，造成重要数据不可恢复与本程序开发者无任何关系!
 
 ##### 12. 支持建立社会工程学字典
