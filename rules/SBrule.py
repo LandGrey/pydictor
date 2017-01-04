@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-08-24
-#
 # sname + birth rule
-#
-# This is a part of pydictor
-
+"""
+Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+License: GNU GENERAL PUBLIC LICENSE Version 3
+"""
 
 from CBrule import CBrule
 

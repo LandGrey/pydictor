@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by LandGrey 2016-06-08
-#
-# encode & encrypt the strings
-#
-# This is a part of pydictor
-
+# encode & encrypt functions
+"""
+Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+License: GNU GENERAL PUBLIC LICENSE Version 3
+"""
 
 from urllib import quote
 from base64 import b64encode

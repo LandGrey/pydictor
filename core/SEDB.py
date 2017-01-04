@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-08-25
-#
 # Social Engineering Dictionary Builder
-#
-# This is a part of pydictor
+"""
+Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+License: GNU GENERAL PUBLIC LICENSE Version 3
+"""
 
-
+import os
 import sys
 import cmd
 sys.path.append('..')
-from lib.text import *
-from lib.data import *
+from lib.text import help_dict, settings_dict, helpmsg, pydictor_ascii_text_2 as pydictor_art_text
+from lib.data import get_result_store_path, buildtime, CRLF, SEDB_prefix
+from lib.fun import finishprinter
 from rules.CBrule import CBrule
 from rules.EBrule import EBrule
 from rules.SBrule import SBrule
@@ -38,6 +39,7 @@ class SEDB(cmd.Cmd):
             for k in help_dict.keys():
                 print help_dict[k]
         else:
+            print pydictor_art_text
             print helpmsg
 
     def do_exit(self):
@@ -133,7 +135,7 @@ class SEDB(cmd.Cmd):
 
     def do_run(self, args):
         count = 0
-        storepath = os.path.join(resultstorepath, 'SEDB_%s.txt' % buildtime)
+        storepath = os.path.join(get_result_store_path(), '%s_%s.txt' % (SEDB_prefix, buildtime))
         with open(storepath, 'w') as f:
             # SingleRule
             for single in SingleRule(settings_dict['cname'], settings_dict['ename'], settings_dict['sname'],
@@ -141,26 +143,23 @@ class SEDB(cmd.Cmd):
                                      settings_dict['uphone'], settings_dict['hphone'], settings_dict['email'],
                                      settings_dict['postcode'], settings_dict['nickname'], settings_dict['idcard'],
                                      settings_dict['jobnum'], settings_dict['otherdate'], settings_dict['usedchar']):
-                f.write(single + '\n')
+                f.write(single + CRLF)
                 count += 1
             # CBrule
             for cb in CBrule(settings_dict['cname'], settings_dict['birth']):
-                f.write(cb + '\n')
+                f.write(cb + CRLF)
                 count += 1
             # EBrule
             for eb in EBrule(settings_dict['ename'], settings_dict['birth']):
-                f.write(eb + '\n')
+                f.write(eb + CRLF)
                 count += 1
             # SBrule
             for sb in SBrule(settings_dict['sname'], settings_dict['birth']):
-                f.write(sb + '\n')
+                f.write(sb + CRLF)
                 count += 1
             # WeakPass
             for weakpwd in weak_pass_set:
-                f.write(weakpwd + '\n')
+                f.write(weakpwd + CRLF)
                 count += 1
-        finishprint(count, storepath)
-
-
-
+        finishprinter(count, storepath)
 

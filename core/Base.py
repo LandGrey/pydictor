@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by LandGrey 2016-08-25
-#
 # build a common dictionary
-#
-# This is a part of pydictor
+"""
+Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+License: GNU GENERAL PUBLIC LICENSE Version 3
+"""
 
-
+import os
 import string
 import itertools
-from lib.data import *
-
+from lib.data import get_result_store_path, buildtime, operator, CRLF, BASE_prefix
+from lib.fun import finishprinter
+from lib.fun import countchecker
 
 # dictionary type
 description = " "
@@ -19,27 +20,27 @@ description = " "
 # get the dictionary list
 def getchars(typeflag):
     global description
-    falg = str(typeflag)
+    flag = str(typeflag)
     chars = []
-    if falg == "d":
+    if flag == "d":
         chars = string.digits
         description = 'digits'
-    elif falg == "L":
+    elif flag == "L":
         chars = string.lowercase
         description = 'lowercase'
-    elif falg == "c":
+    elif flag == "c":
         chars = string.uppercase
         description = 'uppercase'
-    elif falg == "dL":
+    elif flag == "dL":
         chars = string.printable[:36]
         description = 'digits_lowercase'
-    elif falg == "dc":
+    elif flag == "dc":
         chars = string.digits + string.uppercase
         description = 'digits_uppercase'
-    elif falg == "Lc":
+    elif flag == "Lc":
         chars = string.letters
         description = 'letters'
-    elif falg == "dLc":
+    elif flag == "dLc":
         chars = string.printable[:62]
         description = 'digits_letters'
     return chars
@@ -47,17 +48,18 @@ def getchars(typeflag):
 
 # create the dictionary files
 def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
+    countchecker(len(objflag), minlength, maxlength)
     global description
     count = 0
-    storepath=os.path.join(resultstorepath, "%s_%s_%s_%s_%s.txt" %
-                           (minlength, maxlength, description, buildtime, encodeflag))
+    storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s_%s_%s.txt" %
+                           (BASE_prefix, minlength, maxlength, description, buildtime, encodeflag))
     with open(storepath, "w") as f:
         for i in xrange(minlength, maxlength+1):
             for item in itertools.product(objflag, repeat=i):
                 if encodeflag == "":
-                    f.write(head+"".join(item)+tail+"\n")
+                    f.write(head+"".join(item)+tail + CRLF)
                     count += 1
                 else:
-                    f.write(operator.get(encodeflag)(head+"".join(item)+tail)+"\n")
+                    f.write(operator.get(encodeflag)(head + "".join(item) + tail) + CRLF)
                     count += 1
-    finishprint(count, storepath)
+    finishprinter(count, storepath)

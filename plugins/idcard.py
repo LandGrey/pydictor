@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build by: LandGrey 2016-11-27
-#
 # Chinese identity card post 6/8 numbers build plugins base on sex
-#
-# This is a part of pydictor
+"""
+Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+License: GNU GENERAL PUBLIC LICENSE Version 3
+"""
 
-from lib.data import *
+import os
+from lib.data import get_result_store_path, buildtime, operator, CRLF, IDCARD_prefix
+from lib.fun import finishprinter
 
 
 def getIDCardPost(posflag, encodeflag, head, tail, sex):
     count = 0
-    storepath = os.path.join(resultstorepath, "IdCardPost%s_%s_%s.txt" %
-                            (str(posflag)[-1:], buildtime, encodeflag))
+    storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s.txt" %
+                             (IDCARD_prefix, str(posflag)[-1:], buildtime, encodeflag))
     posrule = lambda _: str(_) if _ >= 10 else "0" + str(_)
     # month
     value1112 = " ".join(posrule(x) for x in xrange(1, 13))
@@ -44,10 +46,10 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
                         for v1718 in value1718.split(' '):
                             if v1718 != "":
                                 if encodeflag == "":
-                                    f.write(head + v1112 + v1314 + v1516 + v1718 + tail + "\n")
+                                    f.write(head + v1112 + v1314 + v1516 + v1718 + tail + CRLF)
                                     count += 1
                                 else:
-                                    f.write(operator.get(encodeflag)(head + v1112 + v1314 + v1516 + v1718 + tail) + "\n")
+                                    f.write(operator.get(encodeflag)(head + v1112 + v1314 + v1516 + v1718 + tail) + CRLF)
                                     count += 1
         elif posflag == 'pid6':
                 for v1314 in value1314.split(' '):
@@ -55,10 +57,10 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
                         for v1718 in value1718.split(' '):
                             if v1718 != "":
                                 if encodeflag == "":
-                                    f.write(head + v1314 + v1516 + v1718 + tail + "\n")
+                                    f.write(head + v1314 + v1516 + v1718 + tail + CRLF)
                                     count += 1
                                 else:
-                                    f.write(operator.get(encodeflag)(head + v1314 + v1516 + v1718 + tail) + "\n")
+                                    f.write(operator.get(encodeflag)(head + v1314 + v1516 + v1718 + tail) + CRLF)
                                     count += 1
-    finishprint(count, storepath)
+    finishprinter(count, storepath)
 
