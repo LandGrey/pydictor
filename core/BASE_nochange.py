@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# build a common dictionary
+# build a common dictionary 
 """
 Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
