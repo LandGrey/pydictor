@@ -5,6 +5,15 @@
 ##### Build by LandGrey
 ###### Email: LandGrey@qq.com
 -
+
+##### 快速使用:
+```
+git clone https://www.github.com/landgrey/pydictor.git
+cd pydictor/
+chmod 755 pydictor.py
+./pydictor.py
+```
+
 ```
 
 

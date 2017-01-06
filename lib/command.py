@@ -60,7 +60,7 @@ Choose from  [pid6 pid8]
     parser.add_argument('-o', dest='output', metavar='Output', type=str, default='',
                         help='''
 Set the directory output path
-    default: %s\\''' % get_result_store_path())
+    default: %s''' % get_result_store_path())
 
     parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],
                         metavar='Sex', type=str, default=default_sex,
