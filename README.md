@@ -30,8 +30,8 @@ pydictor.py [options]
                -base     type
                -char     customchar
                -chunk    <chunk1> <chunk2> ...
-               -id       <pid6, pid8>
-               -o        output
+               -plug     <pid6, pid8, extend>
+               -o        output path
                --sex     <m, f, all>
                --len     minlen maxlen
                --head    prefix
@@ -39,7 +39,7 @@ pydictor.py [options]
                --encode  <b64,md5,md516,sha1,url,sha256,sha512>
                --conf    conf file
                --sedb
-               --shred   file/directory
+               --shred   prefix or file or directory
 
 *[+] A Useful Hacker Dictionary  Builder. [+]*
  [+] Build by LandGrey    email:LandGrey@qq.com
@@ -58,24 +58,26 @@ optional arguments:
   -char Character       Use   [Custom Character]  build the dictionary
   -chunk Chunk [Chunk ...]
                         Use the string [Chunk Multiplication] build the dictionary
-  -id Plug
-                        Choose from  [pid6 pid8]
-                            pid6 [Id Card post 6 num]     sex[m:male f:female] default:all
-                            pid8 [Id Card post 8 num]     sex[m:male f:female] default:all
+  -plug Plug [Plug ...]
+
+                        Choose plug from  [pid6 pid8 extend]
+                            pid6 [Id Card post 6 number]     default sex:all
+                            pid8 [Id Card post 8 number]     default sex:all
+                            extend [file path]
   -o Output
                         Set the directory output path
-                            default: pydictor\results\
+                            default: pydictor\results
   --sex Sex
-                        Choose from         [m f all]
-                            m: Male         f: Female   all: Male and Female
-                            Provided for    [-id]
+                        Choose sex from    [m f all]
+                            m: Male        f: Female   all: Male and Female
+                            Provided for   [pid6 | pid8]
   --len Minlen Maxlen
-                        Minimun Length  Maximun Length (excluded head tail encode)
+                        Minimun Length  Maximun Length (excluded head | tail | encode)
                                         Default: min=2  max=4
   --head Prefix         Add string head for the dictionary
   --tail Suffix         Add string tail for the dictionary
   --encode Encode
-                        Choose the form of encrytion
+                        Choose encode or encrytion from:
                             b64     base64 encode
                             md5     md5 encryption (32)
                             md516   md5 encryption (16)
@@ -86,16 +88,15 @@ optional arguments:
   --conf [Conf file]
                         Use the configuration file build the dictionary
                             Default: pydictor\build.conf
-                            Viewing build.conf for detail
   --sedb                Enter   the Social Engineering Dictionary Builder
   --shred [target]
                         Safe shredded the [target]:
                                                     [!!! Warning !!!]
-                            Once this function is enabled, the data will be caused that non recoverable damage
+                            Once this function is enabled, the data will be shredded
                             default              pydictor\results
                             common file          specified the complete file path
-                            prefix file          <prefix> choice from five types as follow:
-                                                         [base/BASE] [chunk/CHUNK] [conf/CONF] [sedb/SEDB] [idcard/IDCARD]
+                            prefix file          <prefix> choice from 6 types as follow:
+                                                 [base | chunk | conf | sedb | idcard | extend]
                             directory            specified the complete directory
 
 ```
