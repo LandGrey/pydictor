@@ -55,7 +55,8 @@ CHUNK_prefix = "CHUNK"
 CONF_prefix = "CONF"
 SEDB_prefix = "SEDB"
 IDCARD_prefix = "IDCARD"
-prefix_range = [BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix]
+EXTEND_prefix = "EXTEND"
+prefix_range = [BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix, EXTEND_prefix]
 
 # configuration file element description
 head = "head"

@@ -8,7 +8,7 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 import sys
 import argparse
-from lib.data import CRLF, minimum_length, maximum_length, default_sex, get_result_store_path, get_conf_path
+from lib.data import CRLF, prefix_range, minimum_length, maximum_length, default_sex, get_result_store_path, get_conf_path
 from lib.fun import lengthchecker
 
 
@@ -22,8 +22,8 @@ pydictor.py [options]
                -base     type
                -char     customchar
                -chunk    <chunk1> <chunk2> ...
-               -id       <pid6, pid8>
-               -o        output
+               -plug     <pid6, pid8, extend>
+               -o        output path
                --sex     <m, f, all>
                --len     minlen maxlen
                --head    prefix
@@ -31,7 +31,7 @@ pydictor.py [options]
                --encode  <b64,md5,md516,sha1,url,sha256,sha512>
                --conf    conf file
                --sedb
-               --shred   file/directory''')
+               --shred   prefix or file or directory''')
 
     parser.add_argument('-base', dest='type', choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type',
                         default='', help='''
@@ -50,12 +50,12 @@ dLc   Mix d, L and c      [0-9 a-z A-Z]''')
     parser.add_argument('-chunk', dest='chunk', metavar='Chunk', nargs='+', type=str, default='',
                         help='Use the string [Chunk Multiplication] build the dictionary')
 
-    parser.add_argument('-id', dest='plugins', choices=['pid6', 'pid8'],
-                        metavar='Plug', type=str, default='',
+    parser.add_argument('-plug', dest='plugins', metavar='Plug', nargs='+', type=str, default='',
                         help='''
-Choose from  [pid6 pid8]
-    pid6 [Id Card post 6 num]     sex[m:male f:female] default:%s
-    pid8 [Id Card post 8 num]     sex[m:male f:female] default:%s''' % (default_sex, default_sex))
+Choose plug from  [pid6 pid8 extend]
+    pid6 [Id Card post 6 number]     default sex:%s
+    pid8 [Id Card post 8 number]     default sex:%s
+    extend [file path]''' % (default_sex, default_sex))
 
     parser.add_argument('-o', dest='output', metavar='Output', type=str, default='',
                         help='''
@@ -65,13 +65,13 @@ Set the directory output path
     parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],
                         metavar='Sex', type=str, default=default_sex,
                         help='''
-Choose from         [m f all]
-    m: Male         f: Female   all: Male and Female
-    Provided for    [-id]''')
+Choose sex from    [m f all]
+    m: Male        f: Female   all: Male and Female
+    Provided for   [pid6 | pid8]''')
 
     parser.add_argument('--len', dest='len', metavar=('Minlen', 'Maxlen'), nargs=2, type=int,
                         default=(minimum_length, maximum_length), help='''
-Minimun Length  Maximun Length (excluded head tail encode)
+Minimun Length  Maximun Length (excluded head | tail | encode)
                 Default: min=%s  max=%s''' % (minimum_length, maximum_length))
 
     parser.add_argument('--head', dest='head', metavar='Prefix', type=str, default='',
@@ -83,7 +83,7 @@ Minimun Length  Maximun Length (excluded head tail encode)
     parser.add_argument('--encode', dest='encode', metavar='Encode', default='',
                         choices=['b64', 'md5', 'md516', 'sha1', 'url', 'sha256', 'sha512'],
                         help='''
-Choose the form of encrytion
+Choose encode or encrytion from:
     b64     base64 encode
     md5     md5 encryption (32)
     md516   md5 encryption (16)
@@ -95,8 +95,7 @@ Choose the form of encrytion
     parser.add_argument('--conf', dest='conf', nargs='?', metavar='Conf file', default='default', const='const',
                         help='''
 Use the configuration file build the dictionary
-    Default: %s
-    Viewing build.conf for detail''' % get_conf_path())
+    Default: %s''' % get_conf_path())
 
     parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
                         help='Enter   the Social Engineering Dictionary Builder')
@@ -105,12 +104,15 @@ Use the configuration file build the dictionary
                         help='''
 Safe shredded the [target]:
                             [!!! Warning !!!]
-    Once this function is enabled, the data will be caused that non recoverable damage
+    Once this function is enabled, the data will be shredded
     default              %s
     common file          specified the complete file path
-    prefix file          <prefix> choice from five types as follow:
-                                 [base/BASE] [chunk/CHUNK] [conf/CONF] [sedb/SEDB] [idcard/IDCARD]
-    directory            specified the complete directory''' % get_result_store_path())
+    prefix file          <prefix> choice from %s types as follow:
+                         [%s | %s | %s | %s | %s | %s]
+    directory            specified the complete directory''' % (get_result_store_path(), str(len(prefix_range)),
+                                                                prefix_range[0].lower(), prefix_range[1].lower(),
+                                                                prefix_range[2].lower(), prefix_range[3].lower(),
+                                                                prefix_range[4].lower(), prefix_range[5].lower()))
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

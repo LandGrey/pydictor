@@ -63,9 +63,8 @@ def shreder_dir(directory, rewritecounts=dir_rewrite_count):
         os.rename(directory, newdirectoryname)
         directory = newdirectoryname
     except:
-        print "[!] Error: cannot rename root directory name"
         traceback.print_exc()
-        exit()
+        exit(CRLF + "[-] Error: cannot rename root directory name")
 
     for rootpath, subdirsname, filenames in os.walk(directory):
         # get all directories
