@@ -99,6 +99,33 @@ optional arguments:
                                                  [base | chunk | conf | sedb | idcard | extend]
                             directory            specified the complete directory
 
+
+                     _______                __   _          _
+                    |_   __ \              |  ] (_)        / |_
+                      | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
+                      |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
+                     _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
+                    |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
+                             \__.'
+
+
+                               Social Engineering Dictionary Builder
+                                                                        Build by LandGrey
+          ----------------------------------[ command ]------------------------------------
+          [+]help desc     (View the description) |  [+]show setting  (Show current settings)
+          [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
+          [+]run           (Build the dictionary) |
+                                                  |
+          Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)
+          -------------------------------[ setting options ]--------------------------------
+          [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
+          [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
+          [+]jobnum     [+]otherdate  [+]usedchar |
+                                                  |
+          Usage Exp :nickname zwell zhangs zsan   |  * Each setting supports multiple values
+
+pydictor SEDB>>
+
 ```
 
 #### 功能速览:
