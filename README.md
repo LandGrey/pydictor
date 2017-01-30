@@ -1,7 +1,7 @@
 # pydictor  
 
-		一个实用的黑客字典建立工具
-		A useful hacker dictionary  builder
+		一个具有高效内置密码字典与生成字典功能相结合的实用黑客暴力破解字典建立工具
+		A useful hacker dictionary builder that build-in and generate password for a brute-force attack
 ##### Build by LandGrey
 ###### Email: LandGrey@qq.com
 -
@@ -98,33 +98,6 @@ optional arguments:
                             prefix file          <prefix> choice from 6 types as follow:
                                                  [base | chunk | conf | sedb | idcard | extend]
                             directory            specified the complete directory
-
-
-                     _______                __   _          _
-                    |_   __ \              |  ] (_)        / |_
-                      | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-                      |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-                     _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-                    |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                             \__.'
-
-
-                               Social Engineering Dictionary Builder
-                                                                        Build by LandGrey
-          ----------------------------------[ command ]------------------------------------
-          [+]help desc     (View the description) |  [+]show setting  (Show current settings)
-          [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
-          [+]run           (Build the dictionary) |
-                                                  |
-          Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)
-          -------------------------------[ setting options ]--------------------------------
-          [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
-          [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
-          [+]jobnum     [+]otherdate  [+]usedchar |
-                                                  |
-          Usage Exp :nickname zwell zhangs zsan   |  * Each setting supports multiple values
-
-pydictor SEDB>>
 
 ```
 
@@ -259,30 +232,59 @@ pydictor SEDB>>
   例:
      `python pydictor.py --sedb ` 进入社工字典生成界面
 
+
+
+
+                     _______                __   _          _
+                    |_   __ \              |  ] (_)        / |_
+                      | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
+                      |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
+                     _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
+                    |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
+                             \__.'
+
+
+                               Social Engineering Dictionary Builder
+                                                                        Build by LandGrey
+          ----------------------------------[ command ]------------------------------------
+          [+]help desc     (View the description) |  [+]show setting  (Show current settings)
+          [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
+          [+]run           (Build the dictionary) |
+                                                  |
+          Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)
+          -------------------------------[ setting options ]--------------------------------
+          [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
+          [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
+          [+]jobnum     [+]otherdate  [+]usedchar |
+                                                  |
+          Usage Exp :nickname zwell zhangs zsan   |  * Each setting supports multiple values
+
+	      pydictor SEDB>>
+
 -
 #### 社会工程学字典生成功能介绍:
 
 ##### 1. 内置15项收集数据
-	[+]cname        Chinese name's phonetic          中文名拼音全拼
-	[+]ename        English name                     英文名 
-	[+]sname        Simple spellings phonetic        姓名简拼 
-	[+]birth        Birthday [YYYYMMDD]              生日
-	[+]usedpwd      Used password                    曾用密码
-	[+]phone        Cell phone number                手机号
-	[+]uphone       Used phone                       曾用手机号
-	[+]hphone       Homephone number                 老家座机号
-	[+]email        E-mail accounts                  电子邮箱账号
-	[+]postcode     Postcode                         老家邮政编码
-	[+]nickname     Commonly used nickname           常用昵称
-	[+]idcard       Identity card number             身份证号
-	[+]jobnum       Job or student number            学号或工号或其简写等
-	[+]otherdate    Others date [YYYYMMDD] 			 其他亲人生日等特殊日期
-	[+]usedchar     Commonly used characters         其他常用字符串数字等
+	cname        Chinese name's phonetic          中文名拼音全拼
+	ename        English name                     英文名 
+	sname        Simple spellings phonetic        姓名简拼 
+	birth        Birthday [YYYYMMDD]              生日
+	usedpwd      Used password                    曾用密码
+	phone        Cell phone number                手机号
+	uphone       Used phone                       曾用手机号
+	hphone       Homephone number                 老家座机号
+	email        E-mail accounts                  电子邮箱账号
+	postcode     Postcode                         老家邮政编码
+	nickname     Commonly used nickname           常用昵称
+	idcard       Identity card number             身份证号
+	jobnum       Job or student number            学号或工号或其简写等
+	otherdate    Others date [YYYYMMDD] 			 其他亲人生日等特殊日期
+	usedchar     Commonly used characters         其他常用字符串数字等
 
 ##### 2. 命令速通
 	进入 Social Engineering Dictionary Builder 界面后,可以使用
 	[项目名] [v1] [...]	设置某项数据的值 
-	help disc			查看15项数据的意义描述;
+	help desc			查看15项数据的意义描述;
 	help [具体项]		查看某项数据的意义描述;
 	show				查看15项数据的当前设置情况;
 	show [具体项]		查看某项数据的当前设置情况;
