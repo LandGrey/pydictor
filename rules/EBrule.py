@@ -10,7 +10,7 @@ from CBrule import CBrule
 
 
 def EBrule(ename, birth):
-    res = CBrule(ename, birth)
+    for _ in CBrule(ename, birth):
+        yield _
     # You can continue to add new and useful rules
     #
-    return res

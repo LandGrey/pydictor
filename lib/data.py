@@ -14,6 +14,9 @@ from lib.encode import *
 # global CRLF
 CRLF = "\n"
 
+# filename extension
+filextension = ".txt"
+
 # default length
 minimum_length = 2
 maximum_length = 4
@@ -39,8 +42,10 @@ conf_path = os.path.join(root_path, "build.conf")
 # default results store directory
 result_store_path = os.path.join(root_path, "results")
 
-# format the time of build the dictionary
-buildtime = str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time())))
+
+# get the current format the time of build the dictionary
+def get_buildtime():
+    return str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time())))
 
 # default sex(range <m, f, all>)
 default_sex = "all"

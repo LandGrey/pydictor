@@ -8,58 +8,59 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 
 def SingleRule(cname, ename, sname, birth, usedpwd, phone, uphone, hphone, email, postcode, nickname, idcard, jobnum, otherdate, usedchar):
-    res = []
     for cn in cname:
-        res.append(cn)
+        yield cn
+        yield cn.upper()
+        yield cn[:1].upper() + cn[1:].lower()
     for en in ename:
-        res.append(en)
-        res.append(str(en).upper())
+        yield en
+        yield en.upper()
+        yield en[:1].upper() + en[1:].lower()
     for sn in sname:
-        res.append(sn)
+        yield sn.lower()
+        yield sn.upper()
         # {sname _ SNAME}
-        res.append(str(sn).lower() + '_' + str(sn).upper())
+        yield sn.lower() + '_' + sn.upper()
         # {sname @ SNAME}
-        res.append(str(sn).lower() + '@' + str(sn).upper())
+        yield sn.lower() + '@' + sn.upper()
         # {sname SNAME .}
-        res.append(str(sn).lower() + str(sn).upper() + '.')
+        yield sn.lower() + sn.upper() + '.'
     for bd in birth:
-        res.append(bd)
-        res.append(str(bd)[2:])
-        res.append(str(bd)[:4] + str(bd)[4:].replace('0', ''))
+        yield bd
+        yield bd[2:]
+        yield bd[:4] + bd[4:].replace('0', '')
     for upass in usedpwd:
-        res.append(upass)
+        yield upass
         # {upass .}
-        res.append(upass + '.')
+        yield upass + '.'
         # {upass _}
-        res.append(upass + '_')
+        yield upass + '_'
         # {_ upass}
-        res.append('_' + upass)
+        yield '_' + upass
     for ph in phone:
-        res.append(ph)
+        yield ph
     for uph in uphone:
-        res.append(uph)
+        yield uph
     for hp in hphone:
-        res.append(hp)
+        yield hp
     for em in email:
-        res.append(em)
+        yield em
         # {@xxx.xxx}
-        res.append('@' + str(em).split('@')[1])
+        yield '@' + em.split('@')[1]
     for pc in postcode:
-        res.append(pc)
+        yield pc
     for nn in nickname:
-        res.append(nn)
+        yield nn
     for ic in idcard:
-        res.append(ic[:6])
-        res.append(ic[-4:])
-        res.append(ic[-6:])
-        res.append(ic[-8:])
+        yield ic[:6]
+        yield ic[-4:]
+        yield ic[-6:]
+        yield ic[-8:]
     for jn in jobnum:
-        res.append(jn)
+        yield jn
     for od in otherdate:
-        res.append(od)
-        res.append(str(od)[2:])
-        res.append(str(od)[:4] + str(od)[4:].replace('0', ''))
+        yield od
+        yield od[2:]
+        yield od[:4] + od[4:].replace('0', '')
     for uc in usedchar:
-        res.append(uc)
-
-    return res
+        yield uc

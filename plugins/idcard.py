@@ -7,14 +7,13 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
 import os
-from lib.data import get_result_store_path, buildtime, operator, CRLF, IDCARD_prefix
-from lib.fun import finishprinter
+from lib.data import get_result_store_path, get_buildtime, operator, CRLF, IDCARD_prefix, filextension
+from lib.fun import finishprinter, finishcounter
 
 
 def getIDCardPost(posflag, encodeflag, head, tail, sex):
-    count = 0
-    storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s.txt" %
-                             (IDCARD_prefix, str(posflag)[-1:], buildtime, encodeflag))
+    storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s%s" %
+                             (IDCARD_prefix, str(posflag)[-1:], get_buildtime(), encodeflag, filextension))
     posrule = lambda _: str(_) if _ >= 10 else "0" + str(_)
     # month
     value1112 = " ".join(posrule(x) for x in xrange(1, 13))
@@ -47,10 +46,8 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
                             if v1718 != "":
                                 if encodeflag == "":
                                     f.write(head + v1112 + v1314 + v1516 + v1718 + tail + CRLF)
-                                    count += 1
                                 else:
                                     f.write(operator.get(encodeflag)(head + v1112 + v1314 + v1516 + v1718 + tail) + CRLF)
-                                    count += 1
         elif posflag == 'pid6':
                 for v1314 in value1314.split(' '):
                     for v1516 in value1516.split(' '):
@@ -58,9 +55,7 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
                             if v1718 != "":
                                 if encodeflag == "":
                                     f.write(head + v1314 + v1516 + v1718 + tail + CRLF)
-                                    count += 1
                                 else:
                                     f.write(operator.get(encodeflag)(head + v1314 + v1516 + v1718 + tail) + CRLF)
-                                    count += 1
-    finishprinter(count, storepath)
+    finishprinter(finishcounter(storepath), storepath)
 

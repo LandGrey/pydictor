@@ -9,8 +9,8 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 import os
 import string
 import itertools
-from lib.data import get_result_store_path, buildtime, operator, CRLF, BASE_prefix
-from lib.fun import finishprinter
+from lib.data import get_result_store_path, get_buildtime, operator, CRLF, BASE_prefix, filextension
+from lib.fun import finishprinter, finishcounter
 from lib.fun import countchecker
 
 # dictionary type
@@ -50,16 +50,13 @@ def getchars(typeflag):
 def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     countchecker(len(objflag), minlength, maxlength)
     global description
-    count = 0
-    storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s_%s_%s.txt" %
-                           (BASE_prefix, minlength, maxlength, description, buildtime, encodeflag))
+    storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s_%s_%s%s" %
+                             (BASE_prefix, minlength, maxlength, description, get_buildtime(), encodeflag, filextension))
     with open(storepath, "w") as f:
         for i in xrange(minlength, maxlength+1):
             for item in itertools.product(objflag, repeat=i):
                 if encodeflag == "":
                     f.write(head+"".join(item)+tail + CRLF)
-                    count += 1
                 else:
                     f.write(operator.get(encodeflag)(head + "".join(item) + tail) + CRLF)
-                    count += 1
-    finishprinter(count, storepath)
+    finishprinter(finishcounter(storepath), storepath)

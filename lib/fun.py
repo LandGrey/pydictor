@@ -15,6 +15,14 @@ def finishprinter(count, storepath):
           "[+] Store in %s " % storepath
 
 
+def finishcounter(storepath):
+    line_count = 0
+    with open(storepath, 'r') as files:
+        for _ in files:
+            line_count += 1
+    return line_count
+
+
 def lengthchecker(minlen, maxlen):
     if str(minlen).isdigit() and str(maxlen).isdigit():
         if int(minlen) <= int(maxlen):

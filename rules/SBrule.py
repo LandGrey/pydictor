@@ -10,22 +10,19 @@ from CBrule import CBrule
 
 
 def SBrule(sname, birth):
-    res = CBrule(sname, birth)
-    # You can continue to add new and useful rules
-    #
+    for _ in CBrule(sname, birth):
+        yield _
     for sn in sname:
         for bd in birth:
             # {sname birth SNAME}
-            res.append(str(sn).lower() + bd +str(sn).upper())
-            res.append(str(sn).lower() + str(bd)[2:] + str(sn).upper())
-            res.append(str(sn).lower() + str(bd)[:4] + str(bd)[4:].replace('0', '') + str(sn).upper())
+            yield sn.lower() + bd + sn.upper()
+            yield sn.lower() + bd[2:] + sn.upper()
+            yield sn.lower() + bd[:4] + bd[4:].replace('0', '') + sn.upper()
             # {sname birth SNAME .}
-            res.append(str(sn).lower() + bd + str(sn).upper() + '.')
-            res.append(str(sn).lower() + str(bd)[2:] + str(sn).upper() + '.')
-            res.append(str(sn).lower() + str(bd)[:4] + str(bd)[4:].replace('0', '') + str(sn).upper() + '.')
+            yield sn.lower() + bd + sn.upper() + '.'
+            yield sn.lower() + bd[2:] + sn.upper() + '.'
+            yield sn.lower() + bd[:4] + bd[4:].replace('0', '') + sn.upper() + '.'
             # {sname birth SNAME _}
-            res.append(str(sn).lower() + bd + str(sn).upper() + '_')
-            res.append(str(sn).lower() + str(bd)[2:] + str(sn).upper() + '_')
-            res.append(str(sn).lower() + str(bd)[:4] + str(bd)[4:].replace('0', '') + str(sn).upper() + '_')
-
-    return res
+            yield sn.lower() + bd + sn.upper() + '_'
+            yield sn.lower() + bd[2:] + sn.upper() + '_'
+            yield sn.lower() + bd[:4] + bd[4:].replace('0', '') + sn.upper() + '_'

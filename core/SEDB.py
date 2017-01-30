@@ -11,8 +11,8 @@ import sys
 import cmd
 sys.path.append('..')
 from lib.text import help_dict, settings_dict, helpmsg, pydictor_ascii_text_2 as pydictor_art_text
-from lib.data import get_result_store_path, buildtime, CRLF, SEDB_prefix
-from lib.fun import finishprinter
+from lib.data import get_result_store_path, get_buildtime, CRLF, SEDB_prefix, filextension
+from lib.fun import finishprinter, finishcounter
 from rules.CBrule import CBrule
 from rules.EBrule import EBrule
 from rules.SBrule import SBrule
@@ -69,7 +69,9 @@ class SEDB(cmd.Cmd):
     def do_birth(self, args):
         for item in str(args).split(' '):
             if len(item) != 8 or str(item).isdigit() is False:
-                print 'Input format:[YYYYMMDD] exp:19890512'
+                print "[!] Input format:[YYYYMMDD] exp:19900512"
+            elif int(item[4:6]) > 12 or int(item[4:6]) < 1 or int(item[6:8]) > 31 or int(item[6:8]) < 1:
+                print "[!] Date format {1 <= month <= 12} and {1 <= day <=31}"
             else:
                 settings_dict['birth'].append(item)
 
@@ -104,7 +106,7 @@ class SEDB(cmd.Cmd):
     def do_idcard(self, args):
         for item in str(args).split(' '):
             if len(item) < 15:
-                print 'Identity card number length too short (should >=15)'
+                print "[!] Identity card number length too short (should >=15)"
             else:
                 settings_dict['idcard'].append(item)
 
@@ -115,7 +117,7 @@ class SEDB(cmd.Cmd):
     def do_otherdate(self, args):
         for item in str(args).split(' '):
             if len(item) != 8 or str(item).isdigit() is False:
-                print 'Input format:[YYYYMMDD] exp:19890512'
+                print "[!] Input format:[YYYYMMDD] exp:19900512"
             else:
                 settings_dict['otherdate'].append(item)
 
@@ -134,8 +136,8 @@ class SEDB(cmd.Cmd):
                 print "%-10s :%s" % (args, ' '.join([x for x in settings_dict[args]]))
 
     def do_run(self, args):
-        count = 0
-        storepath = os.path.join(get_result_store_path(), '%s_%s.txt' % (SEDB_prefix, buildtime))
+        results = []
+        storepath = os.path.join(get_result_store_path(), '%s_%s%s' % (SEDB_prefix, get_buildtime(), filextension))
         with open(storepath, 'w') as f:
             # SingleRule
             for single in SingleRule(settings_dict['cname'], settings_dict['ename'], settings_dict['sname'],
@@ -143,23 +145,22 @@ class SEDB(cmd.Cmd):
                                      settings_dict['uphone'], settings_dict['hphone'], settings_dict['email'],
                                      settings_dict['postcode'], settings_dict['nickname'], settings_dict['idcard'],
                                      settings_dict['jobnum'], settings_dict['otherdate'], settings_dict['usedchar']):
-                f.write(single + CRLF)
-                count += 1
+                results.append(single)
             # CBrule
             for cb in CBrule(settings_dict['cname'], settings_dict['birth']):
-                f.write(cb + CRLF)
-                count += 1
+                results.append(cb)
             # EBrule
             for eb in EBrule(settings_dict['ename'], settings_dict['birth']):
-                f.write(eb + CRLF)
-                count += 1
+                results.append(eb)
             # SBrule
             for sb in SBrule(settings_dict['sname'], settings_dict['birth']):
-                f.write(sb + CRLF)
-                count += 1
+                results.append(sb)
             # WeakPass
             for weakpwd in weak_pass_set:
-                f.write(weakpwd + CRLF)
-                count += 1
-        finishprinter(count, storepath)
+                results.append(weakpwd)
+
+            # de-duplication
+            for _ in reduce(lambda x, y: x if y in x else x + [y], [[], ] + results):
+                f.write(_ + CRLF)
+        finishprinter(finishcounter(storepath), storepath)
 

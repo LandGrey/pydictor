@@ -27,7 +27,7 @@ if __name__ == '__main__':
     try:
         if not os.path.exists(get_result_store_path()):
             os.mkdir(get_result_store_path())
-    except Exception as e:
+    except:
         exit(CRLF + "[-] Cannot create %s " % get_result_store_path())
     if args.output:
         if os.path.exists(args.output):

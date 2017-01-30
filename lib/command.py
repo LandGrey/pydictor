@@ -26,12 +26,12 @@ pydictor.py [options]
                -o        output path
                --sex     <m, f, all>
                --len     minlen maxlen
-               --head    prefix
-               --tail    suffix
+               --head    prefix string
+               --tail    suffix string
                --encode  <b64,md5,md516,sha1,url,sha256,sha512>
-               --conf    conf file
+               --conf    configuration file path
                --sedb
-               --shred   prefix or file or directory''')
+               --shred   <prefix | file path | directory path>''')
 
     parser.add_argument('-base', dest='type', choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type',
                         default='', help='''
@@ -98,7 +98,7 @@ Use the configuration file build the dictionary
     Default: %s''' % get_conf_path())
 
     parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
-                        help='Enter   the Social Engineering Dictionary Builder')
+                        help='Enter the Social Engineering Dictionary Builder')
 
     parser.add_argument('--shred', dest='clean', nargs='?', metavar='target', default='default', const='const',
                         help='''
