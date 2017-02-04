@@ -6,8 +6,9 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import os
-from lib.data import get_result_store_path, get_buildtime, operator, CRLF, IDCARD_prefix, filextension
+from lib.data import get_result_store_path, get_buildtime, operator, CRLF, IDCARD_prefix, filextension, range_compatible
 from lib.fun import finishprinter, finishcounter
 
 
@@ -16,10 +17,10 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
                              (IDCARD_prefix, str(posflag)[-1:], get_buildtime(), encodeflag, filextension))
     posrule = lambda _: str(_) if _ >= 10 else "0" + str(_)
     # month
-    value1112 = " ".join(posrule(x) for x in xrange(1, 13))
+    value1112 = " ".join(posrule(x) for x in range_compatible(1, 13))
     # day
-    value1314 = " ".join(posrule(x) for x in xrange(1, 32))
-    value1516 = " ".join(posrule(x) for x in xrange(1, 100))
+    value1314 = " ".join(posrule(x) for x in range_compatible(1, 32))
+    value1516 = " ".join(posrule(x) for x in range_compatible(1, 100))
     post18 = "0 1 2 3 4 5 6 7 8 9 X"
     value1718 = ""
     if sex == 'm':
@@ -33,7 +34,7 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
             for _p in post18.split(' '):
                 value1718 += _ + _p + " "
     else:
-        rand = " ".join(str(_) for _ in xrange(10))
+        rand = " ".join(str(_) for _ in range_compatible(0, 10))
         for _ in rand.split(' '):
             for _p in post18.split(' '):
                 value1718 += _ + _p + " "
@@ -58,4 +59,3 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
                                 else:
                                     f.write(operator.get(encodeflag)(head + v1314 + v1516 + v1718 + tail) + CRLF)
     finishprinter(finishcounter(storepath), storepath)
-

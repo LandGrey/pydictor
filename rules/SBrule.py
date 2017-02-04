@@ -6,7 +6,8 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
-from CBrule import CBrule
+from __future__ import unicode_literals
+from rules.CBrule import CBrule
 
 
 def SBrule(sname, birth):

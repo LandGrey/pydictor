@@ -6,10 +6,11 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import os
 import itertools
 from lib.data import head, char, minlen, maxlen, encode, tail
-from lib.data import get_result_store_path, get_conf_path, get_buildtime, operator, CRLF, CONF_prefix, no_encode_flag, filextension
+from lib.data import get_result_store_path, get_conf_path, get_buildtime, operator, CRLF, CONF_prefix, no_encode_flag, filextension, range_compatible
 from lib.fun import finishprinter, finishcounter, countchecker, lengthchecker
 from lib.confparse import confmatcher
 from lib.confparse import confparser
@@ -17,15 +18,15 @@ from lib.confparse import confparser
 
 def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     diclist = []
-    for i in xrange(minlength, maxlength+1):
+    for i in range_compatible(minlength, maxlength+1):
         for item in itertools.product(objflag, repeat=i):
             if encodeflag == no_encode_flag:
                 diclist.append(head + "".join(item) + tail)
             elif encodeflag in operator.keys():
                 diclist.append(operator.get(encodeflag)(head + "".join(item) + tail))
             else:
-                print CRLF + '[-] wrong encode type'
-                exit()
+                exit(CRLF + '[-] wrong encode type')
+
     # items count check
     countchecker(-1, len(diclist))
     return diclist

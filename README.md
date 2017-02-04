@@ -1,7 +1,7 @@
 # pydictor  
 
-		一个具有高效内置密码字典与生成字典功能相结合的实用黑客暴力破解字典建立工具
-		A useful hacker dictionary builder that build-in and generate password for a brute-force attack
+		一个实用高效的黑客暴力破解字典建立工具
+		A useful hacker dictionary builder for a brute-force attack
 ##### Build by LandGrey
 ###### Email: LandGrey@qq.com
 -

@@ -6,9 +6,11 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import sys
 import argparse
-from lib.data import CRLF, prefix_range, minimum_length, maximum_length, default_sex, get_result_store_path, get_conf_path
+from lib.data import CRLF, prefix_range, minimum_length, maximum_length, default_sex, get_result_store_path, \
+    get_conf_path
 from lib.fun import lengthchecker
 
 
@@ -123,6 +125,3 @@ Safe shredded the [target]:
 
 def check_args(args):
     lengthchecker(args.len[0], args.len[1])
-
-
-

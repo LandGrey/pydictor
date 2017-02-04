@@ -5,14 +5,16 @@
 Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
+
+from __future__ import unicode_literals
+from functools import reduce
 import os
 from lib.data import CRLF, maxlen_switcher, count_switcher, prefix_range, get_result_store_path
 from lib.shreder import shreder_file, shreder_dir
 
 
 def finishprinter(count, storepath):
-    print "[+] A total of %s lines%s" % (str(count), CRLF) + \
-          "[+] Store in %s " % storepath
+    print("[+] A total of %s lines%s[+] Store in %s" % (str(count), CRLF, storepath))
 
 
 def finishcounter(storepath):

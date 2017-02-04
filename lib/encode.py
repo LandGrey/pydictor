@@ -6,9 +6,14 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
-from urllib import quote
 from base64 import b64encode
 import hashlib
+try:
+    # python 2
+    from urllib import quote
+except:
+    # python 3
+    from urllib.parse import quote
 
 
 def base64_encode(item):

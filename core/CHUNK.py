@@ -6,6 +6,7 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import os
 import itertools
 from lib.data import get_result_store_path, get_buildtime, operator, CRLF, CHUNK_prefix, filextension

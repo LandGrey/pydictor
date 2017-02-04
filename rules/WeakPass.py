@@ -6,6 +6,8 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
+
 
 # The 20 Most Common Keyboard Patterns
 top_20_kb = [

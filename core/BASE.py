@@ -6,10 +6,11 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import os
 import string
 import itertools
-from lib.data import get_result_store_path, get_buildtime, operator, CRLF, BASE_prefix, filextension
+from lib.data import get_result_store_path, get_buildtime, operator, CRLF, BASE_prefix, filextension, range_compatible
 from lib.fun import finishprinter, finishcounter
 from lib.fun import countchecker
 
@@ -26,19 +27,19 @@ def getchars(typeflag):
         chars = string.digits
         description = 'digits'
     elif flag == "L":
-        chars = string.lowercase
+        chars = string.ascii_lowercase
         description = 'lowercase'
     elif flag == "c":
-        chars = string.uppercase
+        chars = string.ascii_uppercase
         description = 'uppercase'
     elif flag == "dL":
         chars = string.printable[:36]
         description = 'digits_lowercase'
     elif flag == "dc":
-        chars = string.digits + string.uppercase
+        chars = string.digits + string.ascii_uppercase
         description = 'digits_uppercase'
     elif flag == "Lc":
-        chars = string.letters
+        chars = string.ascii_letters
         description = 'letters'
     elif flag == "dLc":
         chars = string.printable[:62]
@@ -53,7 +54,7 @@ def get_base_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     storepath = os.path.join(get_result_store_path(), "%s_%s_%s_%s_%s_%s%s" %
                              (BASE_prefix, minlength, maxlength, description, get_buildtime(), encodeflag, filextension))
     with open(storepath, "w") as f:
-        for i in xrange(minlength, maxlength+1):
+        for i in range_compatible(minlength, maxlength+1):
             for item in itertools.product(objflag, repeat=i):
                 if encodeflag == "":
                     f.write(head+"".join(item)+tail + CRLF)

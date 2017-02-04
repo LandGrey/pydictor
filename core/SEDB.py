@@ -6,12 +6,12 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
+from functools import reduce
 import os
-import sys
 import cmd
-sys.path.append('..')
 from lib.text import help_dict, settings_dict, helpmsg, pydictor_ascii_text_2 as pydictor_art_text
-from lib.data import get_result_store_path, get_buildtime, CRLF, SEDB_prefix, filextension
+from lib.data import get_result_store_path, get_buildtime, CRLF, SEDB_prefix, filextension, get_platform
 from lib.fun import finishprinter, finishcounter
 from rules.CBrule import CBrule
 from rules.EBrule import EBrule
@@ -23,36 +23,40 @@ from rules.WeakPass import weak_pass_set
 class SEDB(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
-        reload(sys)
-        sys.setdefaultencoding('utf-8')
-        os.system("cls")
+        # reload(sys)
+        # sys.setdefaultencoding('utf-8')
+        self.do_cls('')
         self.prompt = "pydictor SEDB>>"
-        self.do_help(self)
+        self.do_help('')
 
     def do_EOF(self):
         return True
 
     def do_help(self, key):
-        if key in help_dict.keys():
-            print help_dict[key]
+        if key in help_dict:
+            print(help_dict[key])
         elif key == 'desc':
             for k in help_dict.keys():
-                print help_dict[k]
+                print(help_dict[k])
         else:
-            print pydictor_art_text
-            print helpmsg
+            self.do_cls('')
+            print(pydictor_art_text)
+            print(helpmsg)
 
-    def do_exit(self):
+    def do_exit(self, args):
         return True
 
-    def do_quit(self):
+    def do_quit(self, args):
         return True
 
     def do_cls(self, line):
-        os.system("cls")
+        if get_platform() == "Windows":
+            os.system("cls")
+        else:
+            os.system("clear")
 
     def do_clear(self, line):
-        os.system("cls")
+        self.do_cls(self)
 
     def do_cname(self, args):
         for item in str(args).split(' '):
@@ -69,9 +73,9 @@ class SEDB(cmd.Cmd):
     def do_birth(self, args):
         for item in str(args).split(' '):
             if len(item) != 8 or str(item).isdigit() is False:
-                print "[!] Input format:[YYYYMMDD] exp:19900512"
+                print("[!] Input format:[YYYYMMDD] exp:19900512")
             elif int(item[4:6]) > 12 or int(item[4:6]) < 1 or int(item[6:8]) > 31 or int(item[6:8]) < 1:
-                print "[!] Date format {1 <= month <= 12} and {1 <= day <=31}"
+                print("[!] Date format {1 <= month <= 12} and {1 <= day <=31}")
             else:
                 settings_dict['birth'].append(item)
 
@@ -106,7 +110,7 @@ class SEDB(cmd.Cmd):
     def do_idcard(self, args):
         for item in str(args).split(' '):
             if len(item) < 15:
-                print "[!] Identity card number length too short (should >=15)"
+                print("[!] Identity card number length too short (should >=15)")
             else:
                 settings_dict['idcard'].append(item)
 
@@ -117,7 +121,7 @@ class SEDB(cmd.Cmd):
     def do_otherdate(self, args):
         for item in str(args).split(' '):
             if len(item) != 8 or str(item).isdigit() is False:
-                print "[!] Input format:[YYYYMMDD] exp:19900512"
+                print("[!] Input format:[YYYYMMDD] exp:19900512")
             else:
                 settings_dict['otherdate'].append(item)
 
@@ -128,12 +132,12 @@ class SEDB(cmd.Cmd):
     def do_show(self, key):
         if key in settings_dict.keys():
             if type(settings_dict[key]) is str:
-                print "%-10s :%s" % (key, settings_dict[key])
+                print("%-10s :%s" % (key, settings_dict[key]))
             else:
-                print "%-10s :%s" % (key, ' '.join([x for x in settings_dict[key]]))
+                print("%-10s :%s" % (key, ' '.join([x for x in settings_dict[key]])))
         else:
-            for args in settings_dict.keys():
-                print "%-10s :%s" % (args, ' '.join([x for x in settings_dict[args]]))
+            for key in settings_dict.keys():
+                print("%-10s :%s" % (key, ' '.join([x for x in settings_dict[key]])))
 
     def do_run(self, args):
         results = []

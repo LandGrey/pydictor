@@ -6,6 +6,7 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import os
 from lib.fun import cleaner
 from lib.text import pydictor_ascii_text_2 as pydictor_art_text
@@ -21,13 +22,13 @@ from plugins.extend import getExtendDic
 
 
 if __name__ == '__main__':
-    print pydictor_art_text
+    print(pydictor_art_text)
     args = parse_args()
 
     try:
         if not os.path.exists(get_result_store_path()):
             os.mkdir(get_result_store_path())
-    except:
+    except IOError:
         exit(CRLF + "[-] Cannot create %s " % get_result_store_path())
     if args.output:
         if os.path.exists(args.output):
@@ -36,9 +37,9 @@ if __name__ == '__main__':
             try:
                 os.mkdir(args.output)
                 tmppath = os.path.abspath(args.output)
-            except:
+            except IOError:
                 tmppath = ""
-                print CRLF + "[-] Cannot create %s, default %s" % (args.output, get_result_store_path())
+                print(CRLF + "[-] Cannot create %s, default %s" % (args.output, get_result_store_path()))
         if os.path.isdir(tmppath):
             set_result_store_path(tmppath)
 
@@ -71,8 +72,8 @@ if __name__ == '__main__':
         try:
             shell = SEDB()
             shell.cmdloop()
-        except:
-            exit()
+        except Exception as e:
+            exit(e)
     elif args.conf != 'default':
         if args.conf == 'const':
             if os.path.isfile(get_conf_path()):

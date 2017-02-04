@@ -6,9 +6,10 @@ Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydicto
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+from __future__ import unicode_literals
 import re
 import string
-from lib.data import head, char, minlen, maxlen, encode, tail
+from lib.data import head, char, minlen, maxlen, encode, tail, CRLF
 from lib.data import dicts, char_range_split, chars_split, length_split, conf_annotator
 
 
@@ -25,14 +26,12 @@ def confmatcher(confpath):
                     for m in match:
                         configures.append(m)
     if configures:
-        if len(configures) / 5 > 10:
-            print '[-] Max support 10 parser'
-            exit()
+        if len(configures) // 5 > 10:
+            exit(CRLF + '[-] Max support 10 parser')
         else:
             return configures
     else:
-        print '[-] Match configuration file for nothing'
-        exit()
+        exit(CRLF + '[-] Match configuration file for nothing')
 
 
 def confparser(configures):
