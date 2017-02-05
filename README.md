@@ -1,7 +1,7 @@
 # pydictor
 [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv3-red.svg)](http://www.gnu.de/documents/gpl-3.0.en.html)
 
-		一个实用高效的黑客暴力破解字典建立工具
+		一个小巧实用的黑客暴力破解字典建立工具
 		A useful hacker dictionary builder for a brute-force attack
 #
                      _______                __   _          _
