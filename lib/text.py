@@ -71,7 +71,7 @@ helpmsg = '''
           [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
           [+]jobnum     [+]otherdate  [+]usedchar |
                                                   |
-          Usage Exp :nickname zwell zhangs zsan   |  * Each setting supports multiple values
+          Usage Exp :sname zhang wei zw zwell     |  * Each setting supports multiple values
           '''
 
 settings_dict = OrderedDict([

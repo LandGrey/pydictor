@@ -1,22 +1,9 @@
-# pydictor  
+# pydictor
+[![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv3-red.svg)](http://www.gnu.de/documents/gpl-3.0.en.html)
 
 		一个实用高效的黑客暴力破解字典建立工具
 		A useful hacker dictionary builder for a brute-force attack
-##### Build by LandGrey
-###### Email: LandGrey@qq.com
--
-
-##### 快速使用:
-```
-git clone https://www.github.com/landgrey/pydictor.git
-cd pydictor/
-chmod 755 pydictor.py
-./pydictor.py
-```
-
-```
-
-
+#
                      _______                __   _          _
                     |_   __ \              |  ] (_)        / |_
                       | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
@@ -25,7 +12,19 @@ chmod 755 pydictor.py
                     |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
                              \__.'
 
-usage:
+##### Email: LandGrey@qq.com
+-
+
+### Start:
+```
+git clone https://www.github.com/landgrey/pydictor.git
+cd pydictor/
+chmod 755 pydictor.py
+./pydictor.py
+```
+
+### Usage:
+```
 pydictor.py [options]
                -base     type
                -char     customchar
@@ -101,11 +100,11 @@ optional arguments:
 
 ```
 
-#### 功能速览:
+###function:
   总览:
 
-    1. 在本程序的参数命令中，凡是以一个"-"开头的命令，如"-base"，其后至少要有1个参数；
-    2. 在本程序的参数命令中，凡是以两个"--"开头的命令，如"--conf"，其后若无参数，将使用程序默认数值，否则使用用户指定的一个参数；
+    1. 在本程序的参数命令中，以"-"开头的命令，如"-base"，其后至少要有1个参数；
+    2. 在本程序的参数命令中，以"--"开头的命令，如"--conf"，其后若无参数，将使用程序默认数值，否则使用用户指定的一个参数；
     3. 用户可以控制的程序的所有默认设置，如最大长度限制，字典的最大行数等，都在lib\data.py中；
     如果受到限制，请先明确它们的意义后更改，否则不要轻易修改，以避免使程序异常；
 
@@ -215,13 +214,13 @@ optional arguments:
 	python pydictor.py --shred 			删除默认的 results 目录及其所有字典文件
     python pydictor.py --shred base 	删除当前输出目录(默认为results)下，以"BASE"开头的所有字典文件
 
-因为输出时前缀固定，所以可以用这种方式删除某一类字典文件
+因为输出时字典文件名前缀固定，所以可以用这种方式删除某一类字典文件
 
-当前支持的前缀(不区分大小写)有5种:base、chunk、conf、sedb、idcard
+当前支持的前缀(不区分大小写)有6种:base、chunk、conf、sedb、idcard、extend
 
    另外,--shred选项还支持将传入的任意位置的一个目录、文件，整个的安全删除，程序会自动判断待删除的是目录还是文件，从而自动工作
 
-    python pydictor.py --shred D:\mess			删除整个D:\mess目录
+    python pydictor.py --shred /data/mess	    删除整个/data/mess目录
     python pydictor.py --shred D:\mess\1.zip	删除D:\mess\1.zip 文件
 
   为提高安全删除速度，默认使用1遍擦除重写，如有更高安全需要，可修改lib\data.py中的file_rewrite_count和dir_rewrite_count，提高擦除次数；建议最高修改次数为3次；
@@ -231,9 +230,6 @@ optional arguments:
 ##### 12. 支持建立社会工程学字典
   例:
      `python pydictor.py --sedb ` 进入社工字典生成界面
-
-
-
 
                      _______                __   _          _
                     |_   __ \              |  ] (_)        / |_
@@ -257,9 +253,8 @@ optional arguments:
           [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
           [+]jobnum     [+]otherdate  [+]usedchar |
                                                   |
-          Usage Exp :nickname zwell zhangs zsan   |  * Each setting supports multiple values
-
-	      pydictor SEDB>>
+          Usage Exp :sname zhang wei zw zwell     |  * Each setting supports multiple values
+    pydictor SEDB>>
 
 -
 #### 社会工程学字典生成功能介绍:
@@ -272,14 +267,14 @@ optional arguments:
 	usedpwd      Used password                    曾用密码
 	phone        Cell phone number                手机号
 	uphone       Used phone                       曾用手机号
-	hphone       Homephone number                 老家座机号
+	hphone       Homephone number                 家庭座机号
 	email        E-mail accounts                  电子邮箱账号
-	postcode     Postcode                         老家邮政编码
+	postcode     Postcode                         家庭邮政编码
 	nickname     Commonly used nickname           常用昵称
 	idcard       Identity card number             身份证号
 	jobnum       Job or student number            学号或工号或其简写等
-	otherdate    Others date [YYYYMMDD] 			 其他亲人生日等特殊日期
-	usedchar     Commonly used characters         其他常用字符串数字等
+	otherdate    Others date [YYYYMMDD]           其他亲人生日等特殊日期
+	usedchar     Commonly used characters         其他社交平台账号等常用字符
 
 ##### 2. 命令速通
 	进入 Social Engineering Dictionary Builder 界面后,可以使用
@@ -296,9 +291,74 @@ optional arguments:
 
 ##### 3. 15项数据说明
 		(1) 以上15项,每一项都支持用空格隔开输入多个数据,不清楚的可以不填;
-		    命令: nickname Tomcat Zwell zer0
+		    命令: sname zhang wei zw zwell
 		(2) 其他的一些目标信息可以在otherid和usedchar项目输入;
             比如宠物名、个人图腾、特殊意义字符、爱人亲人生日等等各种相关的信息
 		(3) 准确的社工字典不仅需要大量的目标信息,而且还需要结合目标的性格特征，比如:懒惰、完美主义、身份特征、目标平台等;
 		    然而,由于缺少人物画像,对目标的性格和爆破平台密码策略不详,所以生成字典难免可能有累赘,不准确,请谅解。
-		(4) 为了解决(3)的问题,可以自己在rules中修改/增加规则,修改相应代码来定制相关的生成策略。
+		(4) 为了解决(3)的问题,可以自己在rules目录中修改/增加规则,修改相应代码来定制相关的生成策略。
+
+###development:
+##### 开发理念:
+
+实用、高效、中小型字典、即用即得
+
+##### 目录结构:
+```
+│
+│  build.conf
+│  pydictor.py
+│
+├─build-in dict
+│      MariaBotPass.txt
+│      OrdinaryUserCommonPass.txt
+│      TinyCommonWifiWeakPass.txt
+│
+├─core
+│  │  BASE.py
+│  │  CHUNK.py
+│  │  CONF.py
+│  │  SEDB.py
+│  └─__init__.py
+│
+│
+├─lib
+│  │  command.py
+│  │  confparse.py
+│  │  data.py
+│  │  encode.py
+│  │  fun.py
+│  │  shreder.py
+│  │  text.py
+│  └─__init__.py
+│
+│
+├─plugins
+│  │  extend.py
+│  │  idcard.py
+│  └─ __init__.py
+│
+│
+├─results
+└─rules
+    │  CBrule.py
+    │  EBrule.py
+    │  SBrule.py
+    │  SingleRule.py
+    │  WeakPass.py
+    └─ __init__.py
+
+
+```
+
+##### 解释:
+```
+build.conf		生成字典默认使用的配置文件，使用时需要根据自己的需求修改；
+pydictor.py		程序入口文件；
+build-in dict	内置高效实用的字典文件；
+core			程序主功能文件存放的目录；
+lib				提供一些数据和简单功能；
+plugins			插件目录；
+results			生成字典的默认保存目录；
+rules			存放社会工程学字典的生成规则；
+```
