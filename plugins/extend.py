@@ -9,12 +9,12 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 import os
 from lib.data import get_result_store_path, get_buildtime, operator, CRLF, EXTEND_prefix, filextension
-from lib.fun import finishprinter, finishcounter
+from lib.fun import finishprinter, finishcounter, cool
 
 
 def getExtendDic(rawlist, encodeflag=""):
     if rawlist == []:
-        exit(CRLF + "[-] raw extend file cannot be empty")
+        exit(CRLF + cool.red("[-] raw extend file cannot be empty"))
     storepath = os.path.join(get_result_store_path(), "%s_%s_%s%s" %
                              (EXTEND_prefix, get_buildtime(), encodeflag, filextension))
     with open(storepath, 'w') as f:
@@ -26,7 +26,7 @@ def getExtendDic(rawlist, encodeflag=""):
                 else:
                     f.write(operator.get(encodeflag)(_ + CRLF))
         except:
-            exit(CRLF + "[-] File's character encoding maybe error")
+            exit(CRLF + cool.red("[-] File's character encoding maybe error"))
     finishprinter(finishcounter(storepath), storepath)
 
 

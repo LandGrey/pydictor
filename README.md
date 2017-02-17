@@ -4,13 +4,15 @@
 		一个小巧实用的黑客暴力破解字典建立工具
 		A useful hacker dictionary builder for a brute-force attack
 #
-                     _______                __   _          _
-                    |_   __ \              |  ] (_)        / |_
-                      | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-                      |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-                     _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-                    |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                             \__.'
+
+             _______                __   _          _
+            |_   __ \              |  ] (_)        / |_
+              | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
+              |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
+             _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
+            |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
+                     \__.'
+
 
 ##### Email: LandGrey@qq.com
 -
@@ -25,20 +27,21 @@ chmod 755 pydictor.py
 
 ### Usage:
 ```
+usage:
 pydictor.py [options]
                -base     type
                -char     customchar
                -chunk    <chunk1> <chunk2> ...
                -plug     <pid6, pid8, extend>
-               -o        output path
+               -o        output_path
+               -tool     [tool_name] <arguments ...>
                --sex     <m, f, all>
                --len     minlen maxlen
-               --head    prefix
-               --tail    suffix
+               --head    prefix_string
+               --tail    suffix_string
                --encode  <b64,md5,md516,sha1,url,sha256,sha512>
-               --conf    conf file
+               --conf    configuration_file_path
                --sedb
-               --shred   prefix or file or directory
 
 *[+] A Useful Hacker Dictionary  Builder. [+]*
  [+] Build by LandGrey    email:LandGrey@qq.com
@@ -46,37 +49,41 @@ pydictor.py [options]
 optional arguments:
   -h, --help            show this help message and exit
   -base Type
-                        Choose from  [d L c dL dc Lc dLc]
-                        d     digital             [0 - 9]
-                        L     lowercase letters   [a - z]
-                        c     capital letters     [A - Z]
-                        dL    Mix d and L         [0-9 a-z]
-                        dc    Mix d and c         [0-9 A-Z]
-                        Lc    Mix L and c         [a-z A-Z]
-                        dLc   Mix d, L and c      [0-9 a-z A-Z]
+                        Choose from  (d, L, c, dL, dc, Lc, dLc)
+                            d     digital             [0 - 9]
+                            L     lowercase letters   [a - z]
+                            c     capital letters     [A - Z]
+                            dL    Mix d and L         [0-9 a-z]
+                            dc    Mix d and c         [0-9 A-Z]
+                            Lc    Mix L and c         [a-z A-Z]
+                            dLc   Mix d, L and c      [0-9 a-z A-Z]
   -char Character       Use   [Custom Character]  build the dictionary
   -chunk Chunk [Chunk ...]
                         Use the string [Chunk Multiplication] build the dictionary
   -plug Plug [Plug ...]
 
-                        Choose plug from  [pid6 pid8 extend]
-                            pid6 [Id Card post 6 number]     default sex:all
-                            pid8 [Id Card post 8 number]     default sex:all
-                            extend [file path]
+                        Choose from  (pid6, pid8, extend)
+                            pid6   [Id Card post 6 number]     default sex:all
+                            pid8   [Id Card post 8 number]     default sex:all
+                            extend [file_path]
   -o Output
                         Set the directory output path
                             default: pydictor\results
+  -tool Tool [Tool ...]
+
+                        Choose from  (shredder, uniqify)
+                            shredder [file_path_or_dir]
+                            uniqify [file_path]
   --sex Sex
-                        Choose sex from    [m f all]
+                        Choose from  (m, f, all)
                             m: Male        f: Female   all: Male and Female
                             Provided for   [pid6 | pid8]
   --len Minlen Maxlen
-                        Minimun Length  Maximun Length (excluded head | tail | encode)
-                                        Default: min=2  max=4
-  --head Prefix         Add string head for the dictionary
-  --tail Suffix         Add string tail for the dictionary
+                        [Minimun_Length]  [Maximun_Length]
+                                            Default: min=2  max=4
+  --head Prefix         Add string head for the items
+  --tail Suffix         Add string tail for the items
   --encode Encode
-                        Choose encode or encrytion from:
                             b64     base64 encode
                             md5     md5 encryption (32)
                             md516   md5 encryption (16)
@@ -84,20 +91,11 @@ optional arguments:
                             url     urlencode
                             sha256  sha256 encrytion
                             sha512  sha512 encrytion
-  --conf [Conf file]
+  --conf [Conf_file_path]
+
                         Use the configuration file build the dictionary
                             Default: pydictor\build.conf
-  --sedb                Enter   the Social Engineering Dictionary Builder
-  --shred [target]
-                        Safe shredded the [target]:
-                                                    [!!! Warning !!!]
-                            Once this function is enabled, the data will be shredded
-                            default              pydictor\results
-                            common file          specified the complete file path
-                            prefix file          <prefix> choice from 6 types as follow:
-                                                 [base | chunk | conf | sedb | idcard | extend]
-                            directory            specified the complete directory
-
+  --sedb                Enter the Social Engineering Dictionary Builder
 ```
 
 ###function:
@@ -132,7 +130,7 @@ optional arguments:
   
 **注**:  当需要空格等特殊字符时,请加双引号单独包围特殊字符,如:abc " " 123 asdf;此类字典的生成长度为块数的阶乘.
 
-##### 6. 支持使用特殊功能的字典生成插件
+#### 6. 支持使用特殊功能的字典生成插件
     6.1 pid6插件
         中国公民身份证后6位爆破字典生成
   例:
@@ -173,7 +171,7 @@ optional arguments:
 **注**: 如指定的目录不存在, 则会尝试创建；如果创建失败，则使用或创建默认的results目录；
 
 
-##### 10. 配置文件解析功能
+#### 10. 配置文件解析功能
   此功能可以完成"-base"和"-char"的所有功能，并在此基础上有更精细化的提升；
 
     python pydictor.py --conf				    使用默认位置的build.conf 配置文件建立字典
@@ -210,50 +208,60 @@ optional arguments:
 
 ```
 
-##### 11. 安全删除指定文件或目录功能	
-	python pydictor.py --shred 			删除默认的 results 目录及其所有字典文件
-    python pydictor.py --shred base 	删除当前输出目录(默认为results)下，以"BASE"开头的所有字典文件
+#### 11. 提供处理字典的实用功能
+##### 11.1 安全删除工具shredder
+
+	python pydictor.py -tool shredder 			删除指定的字典输出目录及其所有字典文件
+    python pydictor.py -tool shredder base 		删除当前输出目录(默认为results)下，以"BASE"开头的所有字典文件
 
 因为输出时字典文件名前缀固定，所以可以用这种方式删除某一类字典文件
 
-当前支持的前缀(不区分大小写)有6种:base、chunk、conf、sedb、idcard、extend
+当前支持的前缀(不区分大小写)有7种:base、chunk、conf、sedb、idcard、extend、uniqify
 
-   另外,--shred选项还支持将传入的任意位置的一个目录、文件，整个的安全删除，程序会自动判断待删除的是目录还是文件，从而自动工作
+   另外,-tool shredder 选项还支持将传入的任意位置的一个目录、文件，整个的安全删除，程序会自动判断待删除的是目录还是文件，从而自动工作
 
-    python pydictor.py --shred /data/mess	    删除整个/data/mess目录
-    python pydictor.py --shred D:\mess\1.zip	删除D:\mess\1.zip 文件
+    python pydictor.py -tool shredder /data/mess	    删除整个/data/mess目录
+    python pydictor.py -tool shredder D:\mess\1.zip	删除D:\mess\1.zip 文件
 
   为提高安全删除速度，默认使用1遍擦除重写，如有更高安全需要，可修改lib\data.py中的file_rewrite_count和dir_rewrite_count，提高擦除次数；建议最高修改次数为3次；
 
   **注**: 安全删除功能请谨慎使用，造成重要数据不可恢复与本程序开发者无任何关系!
 
-##### 12. 支持建立社会工程学字典
+##### 11.2 文件条目去重工具uniqify
+
+	python pydictor.py -tool uniqify /tmp/my.dic		对/tmp/my.dic文件中的条目做快速去重处理，生成新的无重复字典
+
+
+#### 12. 支持建立社会工程学字典
   例:
      `python pydictor.py --sedb ` 进入社工字典生成界面
 
-                     _______                __   _          _
-                    |_   __ \              |  ] (_)        / |_
-                      | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-                      |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-                     _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-                    |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                             \__.'
+
+             _______                __   _          _
+            |_   __ \              |  ] (_)        / |_
+              | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
+              |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
+             _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
+            |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
+                     \__.'
 
 
-                               Social Engineering Dictionary Builder
-                                                                        Build by LandGrey
-          ----------------------------------[ command ]------------------------------------
-          [+]help desc     (View the description) |  [+]show setting  (Show current settings)
-          [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
-          [+]run           (Build the dictionary) |
-                                                  |
-          Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)
-          -------------------------------[ setting options ]--------------------------------
-          [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
-          [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
-          [+]jobnum     [+]otherdate  [+]usedchar |
-                                                  |
-          Usage Exp :sname zhang wei zw zwell     |  * Each setting supports multiple values
+                       Social Engineering Dictionary Builder
+                                                                Build by LandGrey
+    ----------------------------------[ command ]------------------------------------
+    [+]help desc     (View the description) |  [+]show setting  (Show current settings)
+    [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
+    [+]run           (Build the dictionary) |
+                                          	|
+    Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)
+
+    -------------------------------[ setting options ]--------------------------------
+    [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
+    [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
+    [+]jobnum     [+]otherdate  [+]usedchar |
+                                          	|
+    Usage Exp :sname zhang wei zw zwell     |  * Each setting supports multiple values
+
     pydictor SEDB>>
 
 -
@@ -334,6 +342,7 @@ optional arguments:
 │  │  fun.py
 │  │  shreder.py
 │  │  text.py
+│  │  tool.py
 │  └─__init__.py
 │
 │
@@ -361,7 +370,7 @@ build.conf		生成字典默认使用的配置文件，使用时需要根据自�
 pydictor.py		程序入口文件；
 build-in dict	内置高效实用的字典文件；
 core			程序主功能文件存放的目录；
-lib				提供一些数据和简单功能；
+lib				提供一些数据和功能函数；
 plugins			插件目录；
 results			生成字典的默认保存目录；
 rules			存放社会工程学字典的生成规则；

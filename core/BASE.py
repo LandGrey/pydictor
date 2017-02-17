@@ -10,12 +10,11 @@ from __future__ import unicode_literals
 import os
 import string
 import itertools
-from lib.data import get_result_store_path, get_buildtime, operator, CRLF, BASE_prefix, filextension, range_compatible
-from lib.fun import finishprinter, finishcounter
-from lib.fun import countchecker
+from lib.data import get_result_store_path, get_buildtime, operator, CRLF, BASE_prefix, filextension
+from lib.fun import finishprinter, finishcounter, countchecker, range_compatible
 
 # dictionary type
-description = " "
+description = "char"
 
 
 # get the dictionary list

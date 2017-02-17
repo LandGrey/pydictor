@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 import os
 import sys
 import time
-import platform
 from lib.encode import *
 
 # global CRLF
@@ -63,7 +62,11 @@ CONF_prefix = "CONF"
 SEDB_prefix = "SEDB"
 IDCARD_prefix = "IDCARD"
 EXTEND_prefix = "EXTEND"
-prefix_range = [BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix, EXTEND_prefix]
+UNIQIFY_prefix = "UNIQIFY"
+prefix_range = (BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix, EXTEND_prefix, UNIQIFY_prefix)
+
+# tool's function string
+tool_fun_str = ("shredder", "uniqify")
 
 # configuration file element description
 head = "head"
@@ -86,25 +89,6 @@ no_encode_flag = "none"
 
 # configuration file  annotator
 conf_annotator = '#'
-
-
-# python version egt 3
-def py_ver_egt_3():
-    if int(platform.python_version()[0]) >= 3:
-        return True
-
-
-# judge run platform
-# window return 'Windows' and linux  return 'Linux'
-def get_platform():
-    return platform.system()
-
-
-def range_compatible(minlength, maxlength_large_one):
-    if py_ver_egt_3():
-        return range(minlength, maxlength_large_one)
-    else:
-        return xrange(minlength, maxlength_large_one)
 
 
 # share and access the globle path variable

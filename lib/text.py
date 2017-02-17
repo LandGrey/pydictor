@@ -8,6 +8,8 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 from collections import OrderedDict
+from lib.fun import cool
+
 
 pydictor_ascii_text_0 = '''
                                 ##
@@ -22,57 +24,48 @@ pydictor_ascii_text_0 = '''
                        ##
 '''
 
-pydictor_ascii_text_1 = '''
-            ooooooooo.                     .o8   o8o                .
-            `888   `Y88.                  "888   `"'              .o8
-             888   .d88' oooo    ooo  .oooo888  oooo   .ooooo.  .o888oo  .ooooo.  oooo d8b
-             888ooo88P'   `88.  .8'  d88' `888  `888  d88' `"Y8   888   d88' `88b `888""8P
-             888           `88..8'   888   888   888  888         888   888   888  888
-             888            `888'    888   888   888  888   .o8   888 . 888   888  888
-            o888o            .8'     `Y8bod88P" o888o `Y8bod8P'   "888" `Y8bod8P' d888b
-                         .o..P'
-                         `Y8P'
-'''
 
 pydictor_ascii_text_2 = '''
-                     _______                __   _          _
-                    |_   __ \              |  ] (_)        / |_
-                      | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-                      |  ___/[ \ [  ]/ /'`\' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-                     _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-                    |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                             \__.'
+             _______                __   _          _
+            |_   __ \              |  ] (_)        / |_
+              | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
+              |  ___/[ \ [  ]/ /'`\' | [  | / /'`\]| | / .'`\ \[ `/'`\]
+             _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
+            |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
+                     \__.'
 '''
 
 pydictor_ascii_text_3 = '''
-                                     o
-                                    O  o
-                                    o             O
-                                    o            oOo
-                    .oOo. O   o .oOoO  O  .oOo    o   .oOo. `OoOo.
-                    O   o o   O o   O  o  O       O   O   o  o
-                    o   O O   o O   o  O  o       o   o   O  O
-                    oOoO' `OoOO `OoO'o o' `OoO'   `oO `OoO'  o
-                    O         o
-                    o'     OoO'
+                             o
+                            O  o
+                            o             O
+                            o            oOo
+            .oOo. O   o .oOoO  O  .oOo    o   .oOo. `OoOo.
+            O   o o   O o   O  o  O       O   O   o  o
+            o   O O   o O   o  O  o       o   o   O  O
+            oOoO' `OoOO `OoO'o o' `OoO'   `oO `OoO'  o
+            O         o
+            o'     OoO'
 '''
 
 helpmsg = '''
-                               Social Engineering Dictionary Builder
-                                                                        Build by LandGrey
-          ----------------------------------[ command ]------------------------------------
-          [+]help desc     (View the description) |  [+]show setting  (Show current settings)
-          [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
-          [+]run           (Build the dictionary) |
-                                                  |
-          Usage Exp :show  (Show all of settings) |  help [setting]   (Show selected setting)
-          -------------------------------[ setting options ]--------------------------------
-          [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
-          [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
-          [+]jobnum     [+]otherdate  [+]usedchar |
-                                                  |
-          Usage Exp :sname zhang wei zw zwell     |  * Each setting supports multiple values
-          '''
+                       {0}
+                                                                {1}
+    ----------------------------------[ {2} ]------------------------------------
+    [+]help desc     (View the description) |  [+]show setting  (Show current settings)
+    [+]cls/clear     (Clean the screen)     |  [+]quit/exit     (Quit the progress)
+    [+]run           (Build the dictionary) |
+                                            |
+    Usage Exp :show  (Show all of settings) |  help desc   (view all of descriptions)
+
+    -------------------------------[ {3} ]--------------------------------
+    [+]cname      [+]ename      [+]sname    |  [+]birth      [+]usedpwd    [+]phone
+    [+]uphone     [+]hphone     [+]email    |  [+]postcode   [+]nickname   [+]idcard
+    [+]jobnum     [+]otherdate  [+]usedchar |
+                                            |
+    Usage Exp :sname zhang wei zw zwell     |  * Each setting supports multiple values
+'''.format(cool.orange("Social Engineering Dictionary Builder"), cool.green("Build by LandGrey"), cool.yellow("command")
+           , cool.yellow("setting options"))
 
 settings_dict = OrderedDict([
     ('cname', []), ('ename', []), ('sname', []), ('birth', []),

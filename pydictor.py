@@ -8,9 +8,8 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 import os
-from lib.fun import cleaner
 from lib.text import pydictor_ascii_text_2 as pydictor_art_text
-from lib.data import set_result_store_path, get_result_store_path, set_conf_path, get_conf_path, CRLF
+from lib.data import set_result_store_path, get_result_store_path, set_conf_path, get_conf_path, tool_fun_str, CRLF
 from lib.command import parse_args
 from core.BASE import get_base_dic
 from core.BASE import getchars
@@ -19,17 +18,18 @@ from core.CONF import build_conf_dic
 from core.SEDB import SEDB
 from plugins.idcard import getIDCardPost
 from plugins.extend import getExtendDic
+from lib.fun import cool
+from lib.tool import uniqify_enter, cleaner
 
 
 if __name__ == '__main__':
-    print(pydictor_art_text)
+    print("{}".format(cool.green(pydictor_art_text)))
     args = parse_args()
-
     try:
         if not os.path.exists(get_result_store_path()):
             os.mkdir(get_result_store_path())
     except IOError:
-        exit(CRLF + "[-] Cannot create %s " % get_result_store_path())
+        exit(CRLF + cool.red("[-] Cannot create %s " % get_result_store_path()))
     if args.output:
         if os.path.exists(args.output):
             tmppath = os.path.abspath(args.output)
@@ -39,7 +39,7 @@ if __name__ == '__main__':
                 tmppath = os.path.abspath(args.output)
             except IOError:
                 tmppath = ""
-                print(CRLF + "[-] Cannot create %s, default %s" % (args.output, get_result_store_path()))
+                print(CRLF + cool.red("[-] Cannot create %s, default %s" % (args.output, get_result_store_path())))
         if os.path.isdir(tmppath):
             set_result_store_path(tmppath)
 
@@ -59,15 +59,15 @@ if __name__ == '__main__':
         elif len(args.plugins) == 1 and args.plugins[0] == 'pid8':
             getIDCardPost('pid8', args.encode, args.head, args.tail, args.sex)
         elif len(args.plugins) == 1 and args.plugins[0] == 'extend':
-            exit(CRLF + "[-] extend file don't specified")
+            exit(CRLF + cool.red("[-] extend file don't specified"))
         elif len(args.plugins) == 2 and args.plugins[0] == 'extend':
             if os.path.isfile(args.plugins[1]):
                 with open(args.plugins[1], 'r') as f:
                     getExtendDic(f.readlines(), encodeflag=args.encode, )
             else:
-                exit(CRLF + "[-] file:%s don't exists" % args.plugins[1])
+                exit(CRLF + cool.red("[-] file:%s don't exists" % args.plugins[1]))
         else:
-            exit(CRLF + "[-] argument option error")
+            exit(CRLF + cool.red("[-] argument option error"))
     elif args.sedb:
         try:
             shell = SEDB()
@@ -82,13 +82,30 @@ if __name__ == '__main__':
             set_conf_path(args.conf)
             build_conf_dic()
         else:
-            exit(CRLF + "[-] Please specified the exists configuration file")
+            exit(CRLF + cool.red("[-] Please specified the exists configuration file"))
 
-    if args.clean != 'default':
-        if args.clean == 'const':
-            if os.listdir(get_result_store_path()):
-                cleaner(get_result_store_path())
+    if args.tool:
+        if len(args.tool) >= 1:
+            if args.tool[0] in tool_fun_str:
+                # shredder
+                if args.tool[0] == tool_fun_str[0]:
+                    if len(args.tool) == 1 and os.listdir(get_result_store_path()):
+                        cleaner(get_result_store_path())
+                    elif len(args.tool) == 1:
+                        exit(CRLF + cool.orange("[+] %s has been clean" % get_result_store_path()))
+                    elif len(args.tool) == 2:
+                        cleaner(args.tool[1])
+                    else:
+                        exit(CRLF + cool.red("[-] %s arguments wrong" % tool_fun_str[0]))
+                # uniqify
+                elif len(args.tool) == 2 and args.tool[0] == tool_fun_str[1] and os.path.isfile(args.tool[1]):
+                    uniqify_enter(args.tool[1])
+                elif len(args.tool) == 1:
+                    exit(CRLF + cool.red("[-] need other extra arguments"))
+                else:
+                    exit(CRLF + cool.red("[-] %s don't exists " % args.tool[1]))
             else:
-                exit(CRLF + "[+] %s has been clean" % get_result_store_path())
+                exit(CRLF + cool.red("[-] No tool named %s" % args.tool[0]))
         else:
-            cleaner(args.clean)
+            exit(CRLF + cool.red("[-] Please specified tool name"))
+

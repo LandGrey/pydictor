@@ -8,8 +8,8 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 import os
-from lib.data import get_result_store_path, get_buildtime, operator, CRLF, IDCARD_prefix, filextension, range_compatible
-from lib.fun import finishprinter, finishcounter
+from lib.data import get_result_store_path, get_buildtime, operator, CRLF, IDCARD_prefix, filextension
+from lib.fun import finishprinter, finishcounter, range_compatible
 
 
 def getIDCardPost(posflag, encodeflag, head, tail, sex):

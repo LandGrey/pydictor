@@ -11,6 +11,7 @@ import re
 import string
 from lib.data import head, char, minlen, maxlen, encode, tail, CRLF
 from lib.data import dicts, char_range_split, chars_split, length_split, conf_annotator
+from lib.fun import cool
 
 
 def confmatcher(confpath):
@@ -27,11 +28,11 @@ def confmatcher(confpath):
                         configures.append(m)
     if configures:
         if len(configures) // 5 > 10:
-            exit(CRLF + '[-] Max support 10 parser')
+            exit(CRLF + cool.red('[-] Max support 10 parser'))
         else:
             return configures
     else:
-        exit(CRLF + '[-] Match configuration file for nothing')
+        exit(CRLF + cool.red('[-] Match configuration file for nothing'))
 
 
 def confparser(configures):

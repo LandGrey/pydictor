@@ -10,8 +10,7 @@ from __future__ import unicode_literals
 import os
 import itertools
 from lib.data import get_result_store_path, get_buildtime, operator, CRLF, CHUNK_prefix, filextension
-from lib.fun import finishprinter, finishcounter
-from lib.fun import countchecker
+from lib.fun import finishprinter, finishcounter, countchecker
 
 
 # create the dictionary files
