@@ -14,13 +14,16 @@ from lib.data import CRLF, maxlen_switcher, count_switcher
 
 
 # judge run platform
-# windows return 'Windows' and linux  return 'Linux'
 def is_Windows():
     return platform.system() == "Windows"
 
 
 def is_Linux():
     return platform.system() == "Linux"
+
+
+def is_Mac():
+    return platform.system() == "Darwin"
 
 
 # text highlight
@@ -87,11 +90,11 @@ def py_ver_egt_3():
         return True
 
 
-def range_compatible(minlength, maxlength_large_one):
+def range_compatible(minlength, maxlength_plus_one):
     if py_ver_egt_3():
-        return range(minlength, maxlength_large_one)
+        return range(minlength, maxlength_plus_one)
     else:
-        return xrange(minlength, maxlength_large_one)
+        return xrange(minlength, maxlength_plus_one)
 
 
 def lengthchecker(minlen, maxlen):
@@ -111,7 +114,7 @@ def countchecker(charslength, *args):
     count_check = 0
     # chunk
     if len(args) == 0:
-        if reduce(lambda a, b: a*b, range(1, charslength + 1)) > count_switcher:
+        if reduce(lambda a, b: a*b, range_compatible(1, charslength + 1)) > count_switcher:
             exit(CRLF + cool.fuchsia("[!] Build items more than count_switcher: %s" % str(count_switcher)))
     # conf
     elif len(args) == 1 and charslength == -1:
@@ -123,14 +126,14 @@ def countchecker(charslength, *args):
             exit(CRLF + cool.fuchsia("[!] Build items more than count_switcher: %s" % str(count_switcher)))
     # base
     elif len(args) == 2 and charslength != -1:
-        for _ in range(args[0], args[1] + 1):
+        for _ in range_compatible(args[0], args[1] + 1):
             count_check += pow(charslength, _)
         if count_check > count_switcher:
             exit(CRLF + cool.fuchsia("[!] Build items more than count_switcher: %s" % str(count_switcher)))
     # conf
     elif len(args) >= 3 and charslength == -1:
         allitems = 1
-        for x in range(len(args)):
+        for x in range_compatible(0, len(args)):
             allitems *= args[x]
         if allitems > count_switcher:
             exit(CRLF + cool.fuchsia("[!] Build items more than count_switcher: %s" % str(count_switcher)))

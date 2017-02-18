@@ -17,29 +17,29 @@ except:
 
 
 def base64_encode(item):
-    return b64encode(item)
+    return str(b64encode(item.encode('utf-8')))
 
 
 def md5_encode(item):
-    return hashlib.md5(item).hexdigest()
+    return hashlib.md5(item.encode("utf-8")).hexdigest()
 
 
 def md5_16_encode(item):
-    return hashlib.md5(item).hexdigest()[8:-8]
+    return hashlib.md5(item.encode("utf-8")).hexdigest()[8:-8]
 
 
 def sha1_encode(item):
-    return hashlib.sha1(item).hexdigest()
+    return hashlib.sha1(item.encode("utf-8")).hexdigest()
 
 
 def url_encode(item):
-    return quote(item)
+    return quote(item.encode("utf-8"))
 
 
 def sha256_encode(item):
-    return hashlib.sha256(item).hexdigest()
+    return hashlib.sha256(item.encode("utf-8")).hexdigest()
 
 
 def sha512_encode(item):
-    return hashlib.sha512(item).hexdigest()
+    return hashlib.sha512(item.encode("utf-8")).hexdigest()
 

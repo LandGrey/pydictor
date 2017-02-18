@@ -21,38 +21,39 @@ def getIDCardPost(posflag, encodeflag, head, tail, sex):
     # day
     value1314 = " ".join(posrule(x) for x in range_compatible(1, 32))
     value1516 = " ".join(posrule(x) for x in range_compatible(1, 100))
-    post18 = "0 1 2 3 4 5 6 7 8 9 X"
+    post18 = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X")
     value1718 = ""
     if sex == 'm':
-        rand = "1 3 5 7 9"
-        for _ in rand.split(' '):
-            for _p in post18.split(' '):
+        rand = ("1", "3", "5", "7", "9")
+        for _ in rand:
+            for _p in post18:
                 value1718 += _ + _p + " "
     elif sex == 'f':
-        rand = "0 2 4 6 8"
-        for _ in rand.split(' '):
-            for _p in post18.split(' '):
+        rand = ("0", "2", "4", "6", "8")
+        for _ in rand:
+            for _p in post18:
                 value1718 += _ + _p + " "
     else:
         rand = " ".join(str(_) for _ in range_compatible(0, 10))
-        for _ in rand.split(' '):
-            for _p in post18.split(' '):
+        for _ in rand.split(" "):
+            for _p in post18:
                 value1718 += _ + _p + " "
+
     with open(storepath, "w") as f:
         if posflag == 'pid8':
-            for v1112 in value1112.split(' '):
-                for v1314 in value1314.split(' '):
-                    for v1516 in value1516.split(' '):
-                        for v1718 in value1718.split(' '):
+            for v1112 in value1112.split(" "):
+                for v1314 in value1314.split(" "):
+                    for v1516 in value1516.split(" "):
+                        for v1718 in value1718.split(" "):
                             if v1718 != "":
                                 if encodeflag == "":
                                     f.write(head + v1112 + v1314 + v1516 + v1718 + tail + CRLF)
                                 else:
                                     f.write(operator.get(encodeflag)(head + v1112 + v1314 + v1516 + v1718 + tail) + CRLF)
         elif posflag == 'pid6':
-                for v1314 in value1314.split(' '):
-                    for v1516 in value1516.split(' '):
-                        for v1718 in value1718.split(' '):
+                for v1314 in value1314.split(" "):
+                    for v1516 in value1516.split(" "):
+                        for v1718 in value1718.split(" "):
                             if v1718 != "":
                                 if encodeflag == "":
                                     f.write(head + v1314 + v1516 + v1718 + tail + CRLF)

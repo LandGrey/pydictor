@@ -1,5 +1,5 @@
 # pydictor
-[![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv3-red.svg)](http://www.gnu.de/documents/gpl-3.0.en.html)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor) [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv3-red.svg)](http://www.gnu.de/documents/gpl-3.0.en.html)
 
 		一个小巧实用的黑客暴力破解字典建立工具
 		A useful hacker dictionary builder for a brute-force attack
@@ -216,7 +216,7 @@ optional arguments:
 
 因为输出时字典文件名前缀固定，所以可以用这种方式删除某一类字典文件
 
-当前支持的前缀(不区分大小写)有7种:base、chunk、conf、sedb、idcard、extend、uniqify
+当前支持的前缀(不区分大小写)有8种:base、chunk、conf、sedb、idcard、extend、uniqify、counter
 
    另外,-tool shredder 选项还支持将传入的任意位置的一个目录、文件，整个的安全删除，程序会自动判断待删除的是目录还是文件，从而自动工作
 
@@ -231,6 +231,11 @@ optional arguments:
 
 	python pydictor.py -tool uniqify /tmp/my.dic		对/tmp/my.dic文件中的条目做快速去重处理，生成新的无重复字典
 
+##### 11.3 词频统计工具counter
+
+	python pydictor.py -tool counter vs /tmp/mess.txt 100	对/tmp/mess.txt文件中的词进行频率统计，选取出现次数最高的100个词输出到终端并保存到文件中
+
+  **注**: 词频统计默认选取前10条打印或保存；词频统计分隔符号默认为换行符"\n",可修改lib\data.py中counter_split变量来更改分隔符
 
 #### 12. 支持建立社会工程学字典
   例:

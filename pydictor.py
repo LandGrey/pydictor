@@ -19,7 +19,7 @@ from core.SEDB import SEDB
 from plugins.idcard import getIDCardPost
 from plugins.extend import getExtendDic
 from lib.fun import cool
-from lib.tool import uniqify_enter, cleaner
+from lib.tool import uniqify_enter, shredder_enter, counter_enter
 
 
 if __name__ == '__main__':
@@ -59,15 +59,15 @@ if __name__ == '__main__':
         elif len(args.plugins) == 1 and args.plugins[0] == 'pid8':
             getIDCardPost('pid8', args.encode, args.head, args.tail, args.sex)
         elif len(args.plugins) == 1 and args.plugins[0] == 'extend':
-            exit(CRLF + cool.red("[-] extend file don't specified"))
+            exit(CRLF + cool.red("[-] Extend file don't specified"))
         elif len(args.plugins) == 2 and args.plugins[0] == 'extend':
             if os.path.isfile(args.plugins[1]):
                 with open(args.plugins[1], 'r') as f:
                     getExtendDic(f.readlines(), encodeflag=args.encode, )
             else:
-                exit(CRLF + cool.red("[-] file:%s don't exists" % args.plugins[1]))
+                exit(CRLF + cool.red("[-] File:%s don't exists" % args.plugins[1]))
         else:
-            exit(CRLF + cool.red("[-] argument option error"))
+            exit(CRLF + cool.red("[-] Argument option error"))
     elif args.sedb:
         try:
             shell = SEDB()
@@ -90,20 +90,21 @@ if __name__ == '__main__':
                 # shredder
                 if args.tool[0] == tool_fun_str[0]:
                     if len(args.tool) == 1 and os.listdir(get_result_store_path()):
-                        cleaner(get_result_store_path())
+                        shredder_enter(get_result_store_path())
                     elif len(args.tool) == 1:
                         exit(CRLF + cool.orange("[+] %s has been clean" % get_result_store_path()))
                     elif len(args.tool) == 2:
-                        cleaner(args.tool[1])
+                        shredder_enter(args.tool[1])
                     else:
                         exit(CRLF + cool.red("[-] %s arguments wrong" % tool_fun_str[0]))
                 # uniqify
                 elif len(args.tool) == 2 and args.tool[0] == tool_fun_str[1] and os.path.isfile(args.tool[1]):
                     uniqify_enter(args.tool[1])
                 elif len(args.tool) == 1:
-                    exit(CRLF + cool.red("[-] need other extra arguments"))
-                else:
-                    exit(CRLF + cool.red("[-] %s don't exists " % args.tool[1]))
+                    exit(CRLF + cool.red("[-] Need other extra arguments"))
+                # counter
+                elif counter_enter(args.encode, args.head, args.tail, args.tool):
+                    pass
             else:
                 exit(CRLF + cool.red("[-] No tool named %s" % args.tool[0]))
         else:

@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 import sys
 import argparse
 from lib.data import CRLF, minimum_length, maximum_length, default_sex, get_result_store_path, \
-    get_conf_path, tool_fun_str
+    get_conf_path, tool_fun_str, just_view_counter, just_save_counter, save_and_view
 from lib.fun import lengthchecker, Colored
 
 cool = Colored()
@@ -21,7 +21,7 @@ def parse_args():
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description=cool.green('*[+] A Useful Hacker Dictionary  Builder. [+]*') + CRLF +
                                                  cool.green(' [+] Build by LandGrey    email:LandGrey@qq.com') + CRLF,
-                                     usage=cool.blue('''
+                                     usage=cool.orange('''
 pydictor.py [options]
                -base     type
                -char     customchar
@@ -68,16 +68,18 @@ Set the directory output path
 
     parser.add_argument('-tool', dest='tool', metavar='Tool', nargs='+', type=str, default='',
                         help=cool.yellow('''
-Choose from  ({0}, {1})
-    {0:4} [file_path_or_dir]
-    {1:4} [file_path]'''.format(tool_fun_str[0], tool_fun_str[1])))
+Choose from  ({0}, {1}, {2})
+    {0:8} [file_path_or_dir]
+    {1:8} [file_path]
+    {2:8} [choose_from '{3}','{4}','{5}'] [file_path] [view_items]
+'''.format(tool_fun_str[0], tool_fun_str[1], tool_fun_str[2], just_view_counter, just_save_counter, save_and_view)))
 
     parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],
                         metavar='Sex', type=str, default=default_sex,
                         help=cool.yellow('''
 Choose from  (m, f, all)
     m: Male        f: Female   all: Male and Female
-    Provided for   [pid6 | pid8]'''))
+    Provided for   <pid6,pid8>'''))
 
     parser.add_argument('--len', dest='len', metavar=('Minlen', 'Maxlen'), nargs=2, type=int,
                         default=(minimum_length, maximum_length), help=cool.yellow('''

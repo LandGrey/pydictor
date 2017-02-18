@@ -34,6 +34,9 @@ file_rewrite_count = 1
 # shredded dir rewrite counts
 dir_rewrite_count = 1
 
+# view the 'counter' tool counts
+view_counter_switcher = 1000
+
 # project root path
 root_path = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])))
 
@@ -42,11 +45,6 @@ conf_path = os.path.join(root_path, "build.conf")
 
 # default results store directory
 result_store_path = os.path.join(root_path, "results")
-
-
-# get the current format the time of build the dictionary
-def get_buildtime():
-    return str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time())))
 
 # default sex(range <m, f, all>)
 default_sex = "all"
@@ -63,10 +61,24 @@ SEDB_prefix = "SEDB"
 IDCARD_prefix = "IDCARD"
 EXTEND_prefix = "EXTEND"
 UNIQIFY_prefix = "UNIQIFY"
-prefix_range = (BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix, EXTEND_prefix, UNIQIFY_prefix)
+COUNTER_prefix = "COUNTER"
+prefix_range = (BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix, EXTEND_prefix, UNIQIFY_prefix,
+                COUNTER_prefix)
 
 # tool's function string
-tool_fun_str = ("shredder", "uniqify")
+tool_fun_str = ("shredder", "uniqify", "counter")
+
+# counter command string
+just_view_counter = "v"
+just_save_counter = "s"
+save_and_view = "vs"
+counter_cmd_str = (just_save_counter, just_view_counter, save_and_view)
+
+# default counter view items
+default_view_items = 10
+
+# counter tool split word
+counter_split = "\n"
 
 # configuration file element description
 head = "head"
@@ -89,6 +101,11 @@ no_encode_flag = "none"
 
 # configuration file  annotator
 conf_annotator = '#'
+
+
+# get the current format the time of build the dictionary
+def get_buildtime():
+    return str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time())))
 
 
 # share and access the globle path variable

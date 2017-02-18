@@ -12,7 +12,7 @@ import os
 import cmd
 from lib.text import help_dict, settings_dict, helpmsg, pydictor_ascii_text_2 as pydictor_art_text
 from lib.data import get_result_store_path, get_buildtime, CRLF, SEDB_prefix, filextension
-from lib.fun import finishprinter, finishcounter, is_Windows, is_Linux, cool
+from lib.fun import finishprinter, finishcounter, is_Windows, is_Linux, is_Mac, cool
 from rules.CBrule import CBrule
 from rules.EBrule import EBrule
 from rules.SBrule import SBrule
@@ -23,8 +23,6 @@ from rules.WeakPass import weak_pass_set
 class SEDB(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
-        # reload(sys)
-        # sys.setdefaultencoding('utf-8')
         self.do_cls('')
         self.prompt = cool.green("pydictor SEDB>>")
         self.do_help('')
@@ -53,6 +51,8 @@ class SEDB(cmd.Cmd):
         if is_Windows():
             os.system("cls")
         elif is_Linux():
+            os.system("clear")
+        elif is_Mac():
             os.system("clear")
 
     def do_clear(self, line):
