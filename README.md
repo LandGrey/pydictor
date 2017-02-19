@@ -71,13 +71,15 @@ optional arguments:
                             default: pydictor\results
   -tool Tool [Tool ...]
 
-                        Choose from  (shredder, uniqify)
+                        Choose from  (shredder, uniqify, counter)
                             shredder [file_path_or_dir]
-                            uniqify [file_path]
+                            uniqify  [file_path]
+                            counter  [choose_from 'v','s','vs'] [file_path] [view_items]
+
   --sex Sex
                         Choose from  (m, f, all)
                             m: Male        f: Female   all: Male and Female
-                            Provided for   [pid6 | pid8]
+                            Provided for   <pid6,pid8>
   --len Minlen Maxlen
                         [Minimun_Length]  [Maximun_Length]
                                             Default: min=2  max=4
