@@ -26,6 +26,18 @@ def is_Mac():
     return platform.system() == "Darwin"
 
 
+# Windows 10 (v1511) Adds Support for ANSI Escape Sequences
+def is_higher_win10_v1511():
+    if is_Windows():
+        try:
+            if int(platform.version().split('.')[0]) >= 10 and int(platform.version().split('.')[-1]) >= 1511:
+                return True
+            else:
+                return False
+        except:
+            return False
+
+
 # text highlight
 class Colored(object):
     if is_Windows():
@@ -42,11 +54,10 @@ class Colored(object):
     RESET = '\033[0m'
 
     def color_str(self, color, s):
-        return '{}{}{}'.format(
-            getattr(self, color),
-            s,
-            self.RESET
-        )
+        if is_higher_win10_v1511() or is_Linux() or is_Mac():
+            return '{}{}{}'.format(getattr(self, color), s, self.RESET)
+        else:
+            return '{}'.format(s)
 
     def red(self, s):
         return self.color_str('RED', s)
