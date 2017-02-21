@@ -62,11 +62,13 @@ IDCARD_prefix = "IDCARD"
 EXTEND_prefix = "EXTEND"
 UNIQIFY_prefix = "UNIQIFY"
 COUNTER_prefix = "COUNTER"
+COMBINER_prefix = "COMBINER"
+UNIQBINER_prefix = "UNIQBINER"
 prefix_range = (BASE_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix, IDCARD_prefix, EXTEND_prefix, UNIQIFY_prefix,
-                COUNTER_prefix)
+                COUNTER_prefix, COMBINER_prefix, UNIQBINER_prefix)
 
 # tool's function string
-tool_fun_str = ("shredder", "uniqify", "counter")
+tool_fun_str = ("shredder", "uniqify", "counter", 'combiner', 'uniqbiner')
 
 # counter command string
 just_view_counter = "v"

@@ -210,7 +210,7 @@ optional arguments:
 
 ```
 
-#### 11. 提供处理字典的实用功能
+#### 11. 提供处理字典的实用工具
 ##### 11.1 安全删除工具shredder
 
 	python pydictor.py -tool shredder 			删除指定的字典输出目录及其所有字典文件
@@ -238,6 +238,14 @@ optional arguments:
 	python pydictor.py -tool counter vs /tmp/mess.txt 100	对/tmp/mess.txt文件中的词进行频率统计，选取出现次数最高的100个词输出到终端并保存到文件中
 
   **注**: 词频统计默认选取前10条打印或保存；词频统计分隔符号默认为换行符"\n",可修改lib\data.py中counter_split变量来更改分隔符
+
+##### 11.4 文本合并工具combiner
+
+	python pydictor.py -tool combiner /my/messdir	对/my/messdir目录及其子目录中的所有文本文件进行合并,保存到一个文件中
+
+##### 11.5 文本合并去重工具uniqbiner
+
+	python pydictor.py -tool uniqbiner /my/messdir	对/my/messdir目录及其子目录中的所有文本文件先进行合并,然后对合并后的文件去重后保存
 
 #### 12. 支持建立社会工程学字典
   例:

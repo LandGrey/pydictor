@@ -19,7 +19,7 @@ from core.SEDB import SEDB
 from plugins.idcard import getIDCardPost
 from plugins.extend import getExtendDic
 from lib.fun import cool
-from lib.tool import uniqify_enter, shredder_enter, counter_enter
+from lib.tool import uniqify_enter, shredder_enter, counter_enter, combiner_enter
 
 
 if __name__ == '__main__':
@@ -100,13 +100,22 @@ if __name__ == '__main__':
                 # uniqify
                 elif len(args.tool) == 2 and args.tool[0] == tool_fun_str[1] and os.path.isfile(args.tool[1]):
                     uniqify_enter(args.tool[1])
+                # combiner
+                elif len(args.tool) == 2 and args.tool[0] == tool_fun_str[3]:
+                    combiner_enter(args.tool[1])
+                # uniqbiner
+                elif len(args.tool) == 2 and args.tool[0] == tool_fun_str[4]:
+                    combiner_enter(args.tool[1], need_uniqify=True)
                 elif len(args.tool) == 1:
                     exit(CRLF + cool.red("[-] Need other extra arguments"))
                 # counter
                 elif counter_enter(args.encode, args.head, args.tail, args.tool):
                     pass
             else:
-                exit(CRLF + cool.red("[-] No tool named %s" % args.tool[0]))
+                exit(CRLF + cool.red("[-] No tool named %s" % args.tool[0]) +
+                     CRLF + "[!] Choose from  ({0}, {1}, {2}, {3}, {4})".format(cool.fuchsia(tool_fun_str[0]),
+                           cool.fuchsia(tool_fun_str[1]), cool.fuchsia(tool_fun_str[2]), cool.fuchsia(tool_fun_str[3]),
+                                                                                cool.fuchsia(tool_fun_str[4])))
         else:
             exit(CRLF + cool.red("[-] Please specified tool name"))
 

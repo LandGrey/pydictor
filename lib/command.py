@@ -68,11 +68,13 @@ Set the directory output path
 
     parser.add_argument('-tool', dest='tool', metavar='Tool', nargs='+', type=str, default='',
                         help=cool.yellow('''
-Choose from  ({0}, {1}, {2})
+Choose from  ({0}, {1}, {2}, {3}, {4})
     {0:8} [file_path_or_dir]
     {1:8} [file_path]
-    {2:8} [choose_from '{3}','{4}','{5}'] [file_path] [view_items]
-'''.format(tool_fun_str[0], tool_fun_str[1], tool_fun_str[2], just_view_counter, just_save_counter, save_and_view)))
+    {2:8} [choose_from '{5}','{6}','{7}'] [file_path] [view_num]
+    {3:8} [directory]
+    {4:8} [directory]'''.format(tool_fun_str[0], tool_fun_str[1], tool_fun_str[2], tool_fun_str[3], tool_fun_str[4],
+                                just_view_counter, just_save_counter, save_and_view)))
 
     parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],
                         metavar='Sex', type=str, default=default_sex,

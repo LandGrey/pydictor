@@ -58,7 +58,7 @@ def renamedir(dirpaths):
 def shreder_dir(directory, rewritecounts=dir_rewrite_count):
     filepaths = []
     dirpaths = []
-    print(CRLF + cool.orange("[+] Shredding '%s' ..." % directory))
+    print(CRLF + "[+] Shredding '%s' ..." % cool.orange(directory))
     try:
         newdirectoryname = os.path.join(os.path.dirname(directory), "".join(chr(random.randint(97, 122))
                                                                             for _ in range_compatible(1, 6)))
@@ -108,4 +108,4 @@ def shreder_file(filepath, rewritecounts=file_rewrite_count):
     truncating(filepath)
     newname = renamefile(filepath)
     os.remove(newname)
-    print(cool.orange("[+] Shredded %s Completely!" % filepath))
+    print("[+] Shredded %s Completely!" % cool.orange(filepath))

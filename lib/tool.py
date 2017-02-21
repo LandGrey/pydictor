@@ -8,12 +8,15 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 import os
+import sys
 import time
 import string
+import mimetypes
+import traceback
 from collections import Counter
 from lib.data import operator, CRLF, filextension, get_result_store_path, get_buildtime, prefix_range, UNIQIFY_prefix, \
     COUNTER_prefix, view_counter_switcher, default_view_items, counter_cmd_str, just_view_counter, just_save_counter, \
-    save_and_view, tool_fun_str, counter_split
+    save_and_view, tool_fun_str, counter_split, COMBINER_prefix, UNIQBINER_prefix
 from lib.fun import finishcounter, finishprinter, cool
 from lib.shredder import shreder_file, shreder_dir
 
@@ -35,8 +38,11 @@ def fast_uniqify(seq, idfun=None):
     return results
 
 
-def uniqify_enter(original_file_path):
-    storepath = os.path.join(get_result_store_path(), "%s_%s%s" % (UNIQIFY_prefix, get_buildtime(), filextension))
+def uniqify_enter(original_file_path, from_combiner=False):
+    if from_combiner:
+        storepath = os.path.join(get_result_store_path(), "%s_%s%s" % (UNIQBINER_prefix, get_buildtime(), filextension))
+    else:
+        storepath = os.path.join(get_result_store_path(), "%s_%s%s" % (UNIQIFY_prefix, get_buildtime(), filextension))
     with open(original_file_path) as o_f:
         with open(storepath, 'a') as s_f:
             for _ in fast_uniqify(o_f.readlines()):
@@ -48,6 +54,7 @@ def uniqify_enter(original_file_path):
 
 
 def shredder_enter(*args):
+    fnum = 0
     _ = "".join(args)
     if _ and os.path.isdir(_):
         shreder_dir(_)
@@ -55,8 +62,11 @@ def shredder_enter(*args):
         shreder_file(_)
     elif _ and _.upper() in prefix_range:
         for filename in os.listdir(get_result_store_path()):
-            if _.upper() in str(filename[0:8]).upper():
+            if _.upper() in str(filename[0:10]).upper():
+                fnum += 1
                 shreder_file(os.path.join(get_result_store_path(), filename))
+        if fnum == 0:
+            exit(CRLF + cool.orange("[+] prefix %s files has been clean" % _.upper()))
     else:
         exit(CRLF + cool.red("[-] invalid shredder path_or_dir arguments"))
 
@@ -125,3 +135,29 @@ def counter_operator(original_file_path, justsave, justview, encodeflag, head, t
                 else:
                     f.write(operator.get(encodeflag)(head + _[0] + tail) + CRLF)
         finishprinter(finishcounter(storepath), storepath)
+
+
+def combiner_enter(directory=os.path.abspath(sys.argv[0]), need_uniqify=False):
+    if not os.path.isdir(directory):
+        exit(CRLF + cool.red("[-] path: {} don't exists".format(directory)))
+    filepaths = []
+    combine_list = []
+    storepath = os.path.join(get_result_store_path(), "%s_%s%s" % (COMBINER_prefix, get_buildtime(), filextension))
+    for rootpath, subdirsname, filenames in os.walk(directory):
+        filepaths.extend([os.path.abspath(os.path.join(rootpath, _)) for _ in filenames])
+    if len(filepaths) > 0:
+        for _ in filepaths:
+            if mimetypes.guess_type(_)[0] == 'text/plain':
+                combine_list.append(_)
+    try:
+        with open(storepath, 'a') as f:
+            for onefile in combine_list:
+                with open(onefile, 'r') as tf:
+                    f.write(tf.read())
+        if not need_uniqify:
+            finishprinter(finishcounter(storepath), storepath)
+        else:
+            uniqify_enter(storepath, from_combiner=True)
+    except Exception as ex:
+        print(CRLF + cool.red("[-] Combine file failed, Looking: "))
+        exit(CRLF + traceback.print_exc())
