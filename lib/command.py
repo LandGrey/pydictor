@@ -73,7 +73,7 @@ Choose from  ({0}, {1}, {2}, {3}, {4})
     {1:8} [file_path]
     {2:8} [choose_from '{5}','{6}','{7}'] [file_path] [view_num]
     {3:8} [directory]
-    {4:8} [directory]'''.format(tool_fun_str[0], tool_fun_str[1], tool_fun_str[2], tool_fun_str[3], tool_fun_str[4],
+    {4:8}[directory]'''.format(tool_fun_str[0], tool_fun_str[1], tool_fun_str[2], tool_fun_str[3], tool_fun_str[4],
                                 just_view_counter, just_save_counter, save_and_view)))
 
     parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],

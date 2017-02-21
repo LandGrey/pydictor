@@ -71,11 +71,12 @@ optional arguments:
                             default: pydictor\results
   -tool Tool [Tool ...]
 
-                        Choose from  (shredder, uniqify, counter)
+                        Choose from  (shredder, uniqify, counter, combiner, uniqbiner)
                             shredder [file_path_or_dir]
                             uniqify  [file_path]
-                            counter  [choose_from 'v','s','vs'] [file_path] [view_items]
-
+                            counter  [choose_from 'v','s','vs'] [file_path] [view_num]
+                            combiner [directory]
+                            uniqbiner[directory]
   --sex Sex
                         Choose from  (m, f, all)
                             m: Male        f: Female   all: Male and Female
