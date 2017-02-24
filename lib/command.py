@@ -9,9 +9,9 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 import sys
 import argparse
-from lib.data import CRLF, minimum_length, maximum_length, default_sex, get_result_store_path, \
-    get_conf_path, tool_fun_str, just_view_counter, just_save_counter, save_and_view
 from lib.fun import lengthchecker, Colored
+from lib.data import CRLF, sex_range, default_sex, get_result_store_path, get_conf_path, tool_range, just_view_counter, \
+    just_save_counter, save_and_view, plug_range, minimum_length, maximum_length, encode_range, base_dic_type
 
 cool = Colored()
 
@@ -23,43 +23,52 @@ def parse_args():
                                                  cool.green(' [+] Build by LandGrey    email:LandGrey@qq.com') + CRLF,
                                      usage=cool.orange('''
 pydictor.py [options]
-               -base     type
-               -char     customchar
-               -chunk    <chunk1> <chunk2> ...
-               -plug     <pid6, pid8, extend>
-               -o        output_path
-               -tool     [tool_name] <arguments ...>
-               --sex     <m, f, all>
-               --len     minlen maxlen
-               --head    prefix_string
-               --tail    suffix_string
-               --encode  <b64,md5,md516,sha1,url,sha256,sha512>
-               --conf    configuration_file_path
-               --sedb'''))
+           -o        output_path
+           -base     type
+           -char     custom_char
+           -chunk    <chunk1> <chunk2> ...
+           -plug     [%s,%s,%s,%s]
+           -tool     [%s,%s,%s,%s,%s] <arguments ...>
+           --len     minlen maxlen
+           --sex     [%s, %s, %s]
+           --head    prefix_string
+           --tail    suffix_string
+           --encode  [%s,%s,%s,%s,%s,%s,%s,%s]
+           --conf    config_file_path
+           --sedb''' % (plug_range[0], plug_range[1], plug_range[2], plug_range[3], tool_range[0], tool_range[1],
+                            tool_range[2], tool_range[3], tool_range[4], sex_range[0], sex_range[1], sex_range[2],
+                            encode_range[0], encode_range[1], encode_range[2], encode_range[3], encode_range[4],
+                            encode_range[5], encode_range[6], encode_range[7]))
+)
 
-    parser.add_argument('-base', dest='type', choices=['d', 'L', 'c', 'dL', 'dc', 'Lc', 'dLc'], metavar='Type',
+    parser.add_argument('-base', dest='base', choices=[base_dic_type[0], base_dic_type[1], base_dic_type[2],
+                                                       base_dic_type[3], base_dic_type[4], base_dic_type[5],
+                                                       base_dic_type[6]], metavar='Type',
                         default='', help=cool.yellow('''
-Choose from  (d, L, c, dL, dc, Lc, dLc)
-    d     digital             [0 - 9]
-    L     lowercase letters   [a - z]
-    c     capital letters     [A - Z]
-    dL    Mix d and L         [0-9 a-z]
-    dc    Mix d and c         [0-9 A-Z]
-    Lc    Mix L and c         [a-z A-Z]
-    dLc   Mix d, L and c      [0-9 a-z A-Z]'''))
+Choose from  ({0}, {1}, {2}, {3}, {4}, {5}, {6})
+    {0}     digital             [0 - 9]
+    {1}     lowercase letters   [a - z]
+    {2}     capital letters     [A - Z]
+    {3}    Mix {0} and {1}         [0-9 a-z]
+    {4}    Mix {0} and {2}         [0-9 A-Z]
+    {5}    Mix {1} and {2}         [a-z A-Z]
+    {6}   Mix {0}, {1} and {3}     [0-9 a-z A-Z]'''.format(base_dic_type[0], base_dic_type[1], base_dic_type[2],
+                                                            base_dic_type[3], base_dic_type[4], base_dic_type[5],
+                                                            base_dic_type[6])))
 
     parser.add_argument('-char', dest='customchar', metavar='Character', default='',
-                        help=cool.yellow('Use   [Custom Character]  build the dictionary'))
+                        help=cool.yellow('Use Custom Character build the dictionary'))
 
     parser.add_argument('-chunk', dest='chunk', metavar='Chunk', nargs='+', type=str, default='',
                         help=cool.yellow('Use the string [Chunk Multiplication] build the dictionary'))
 
     parser.add_argument('-plug', dest='plugins', metavar='Plug', nargs='+', type=str, default='',
                         help=cool.yellow('''
-Choose from  (pid6, pid8, extend)
-    pid6   [Id Card post 6 number]     default sex:%s
-    pid8   [Id Card post 8 number]     default sex:%s
-    extend [file_path]''' % (default_sex, default_sex)))
+Choose from    ({0}, {1}, {2}, {3})
+    {0:10} [id_card_post_6_number]     default sex:{4}
+    {1:10} [id_card_post_8_number]     default sex:{4}
+    {2:10} [file_path]
+    {3:10} [url_or_file_path]'''.format(plug_range[0], plug_range[1], plug_range[2], plug_range[3], default_sex)))
 
     parser.add_argument('-o', dest='output', metavar='Output', type=str, default='',
                         help=cool.yellow('''
@@ -68,20 +77,19 @@ Set the directory output path
 
     parser.add_argument('-tool', dest='tool', metavar='Tool', nargs='+', type=str, default='',
                         help=cool.yellow('''
-Choose from  ({0}, {1}, {2}, {3}, {4})
-    {0:8} [file_path_or_dir]
-    {1:8} [file_path]
-    {2:8} [choose_from '{5}','{6}','{7}'] [file_path] [view_num]
-    {3:8} [directory]
-    {4:8}[directory]'''.format(tool_fun_str[0], tool_fun_str[1], tool_fun_str[2], tool_fun_str[3], tool_fun_str[4],
-                                just_view_counter, just_save_counter, save_and_view)))
+Choose from    ({0}, {1}, {2}, {3}, {4})
+    {0:10} [file_or_dir]
+    {1:10} [file_path]
+    {2:10} ['{5}','{6}','{7}'] [file_path] [view_num]
+    {3:10} [dir]
+    {4:10} [dir]'''.format(tool_range[0], tool_range[1], tool_range[2], tool_range[3], tool_range[4], just_view_counter,
+                           just_save_counter, save_and_view)))
 
-    parser.add_argument('--sex', dest='sex', choices=['m', 'f', 'all'],
+    parser.add_argument('--sex', dest='sex', choices=[sex_range[0], sex_range[1], sex_range[2]],
                         metavar='Sex', type=str, default=default_sex,
                         help=cool.yellow('''
-Choose from  (m, f, all)
-    m: Male        f: Female   all: Male and Female
-    Provided for   <pid6,pid8>'''))
+Choose from  ({0}, {1}, {2})
+    {0}: Male        {1}: Female   {2}: Male and Female'''.format(sex_range[0], sex_range[1], sex_range[2])))
 
     parser.add_argument('--len', dest='len', metavar=('Minlen', 'Maxlen'), nargs=2, type=int,
                         default=(minimum_length, maximum_length), help=cool.yellow('''
@@ -94,16 +102,13 @@ Choose from  (m, f, all)
     parser.add_argument('--tail', dest='tail', metavar='Suffix', type=str, default='',
                         help=cool.yellow('Add string tail for the items'))
 
-    parser.add_argument('--encode', dest='encode', metavar='Encode', default='',
-                        choices=['b64', 'md5', 'md516', 'sha1', 'url', 'sha256', 'sha512'],
+    parser.add_argument('--encode', dest='encode', metavar='Encode', default='none',
+                        choices=[encode_range[0], encode_range[1], encode_range[2], encode_range[3], encode_range[4],
+                                 encode_range[5], encode_range[6], encode_range[7]],
                         help=cool.yellow('''
-    b64     base64 encode
-    md5     md5 encryption (32)
-    md516   md5 encryption (16)
-    sha1    sha1 encryption
-    url     urlencode
-    sha256  sha256 encrytion
-    sha512  sha512 encrytion'''))
+Choose from [%s, %s, %s, %s, %s, %s, %s, %s]''' % (encode_range[0], encode_range[1], encode_range[2],
+                                                   encode_range[3], encode_range[4], encode_range[5],
+                                                   encode_range[6], encode_range[7])))
 
     parser.add_argument('--conf', dest='conf', nargs='?', metavar='Conf_file_path', default='default', const='const',
                         help=cool.yellow('''

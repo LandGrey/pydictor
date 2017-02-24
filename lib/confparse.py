@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# build a common dictionary
+# conf function parser
 """
 Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -9,9 +9,9 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 import re
 import string
-from lib.data import head, char, minlen, maxlen, encode, tail, CRLF
-from lib.data import dicts, char_range_split, chars_split, length_split, conf_annotator
 from lib.fun import cool
+from lib.data import dicts, char_range_split, chars_split, length_split, annotator, head, char, minlen, maxlen, \
+    encode, tail, CRLF
 
 
 def confmatcher(confpath):
@@ -19,7 +19,7 @@ def confmatcher(confpath):
     with open(confpath) as f:
         for item in f.readlines():
             confline = item.strip()
-            if len(confline) >= 1 and confline[0] == conf_annotator:
+            if len(confline) >= 1 and confline[0] == annotator:
                 pass
             else:
                 matches = re.findall('(.*?)\[(.*?)\]\{(.*?)\}\<(.*?)\>([^[]*)', confline)

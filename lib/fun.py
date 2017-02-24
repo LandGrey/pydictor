@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# some simple function for others import
+# Store some simple functions for others module to import
 """
 Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -8,9 +8,10 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 import os
+import time
 import platform
 from functools import reduce
-from lib.data import CRLF, maxlen_switcher, count_switcher
+from lib.data import CRLF, maxlen_switcher, count_switcher, startime
 
 
 # judge run platform
@@ -84,7 +85,10 @@ cool = Colored()
 
 
 def finishprinter(count, storepath):
-    print("[+] A total of {0} lines{1}[+] Store in {2}".format(cool.orange(str(count)), CRLF, cool.orange(storepath)))
+    print("[+] A total of :{0} lines{1}"
+          "[+] Store in   :{2} {1}"
+          "[+] Cost       :{3} seconds".format(cool.orange(str(count)), CRLF, cool.orange(storepath),
+                                               cool.orange(str(time.time() - startime)[:6])))
 
 
 def finishcounter(storepath):

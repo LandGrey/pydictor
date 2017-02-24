@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 # coding:utf-8
-# function: shredding single file or directory
+# pydictor dictionary-handler tool: shredder
 """
 Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
+
 from __future__ import unicode_literals
 import os
 import stat
+import string
 import random
 import shutil
-import string
 import traceback
-from lib.data import CRLF, dir_rewrite_count, file_rewrite_count
 from lib.fun import range_compatible, cool
+from lib.data import CRLF, dir_rewrite_count, file_rewrite_count, get_result_store_path,  prefix_range
 
 
 def rewrite(filepath):
@@ -30,7 +31,7 @@ def truncating(filepath):
     # default: 2 times
     for _ in range_compatible(0, 2):
         try:
-            with open(filepath, 'w') as f:
+            with open(filepath, "w"):
                 pass
         except:
             pass
@@ -95,7 +96,7 @@ def shreder_dir(directory, rewritecounts=dir_rewrite_count):
     except OSError as ex:
         print(cool.fuchsia("[!] Error: Cannot removing directory: '%s' " % directory))
         traceback.print_exc()
-    print(cool.orange("[+] Completely!") + CRLF)
+    print(cool.orange("[+] Completely!"))
 
 
 def shreder_file(filepath, rewritecounts=file_rewrite_count):
@@ -109,3 +110,21 @@ def shreder_file(filepath, rewritecounts=file_rewrite_count):
     newname = renamefile(filepath)
     os.remove(newname)
     print("[+] Shredded %s Completely!" % cool.orange(filepath))
+
+
+def shredder_enter(*args):
+    fnum = 0
+    _ = "".join(args)
+    if _ and os.path.isdir(_):
+        shreder_dir(_)
+    elif _ and os.path.isfile(_):
+        shreder_file(_)
+    elif _ and _.upper() in prefix_range:
+        for filename in os.listdir(get_result_store_path()):
+            if _.upper() in str(filename[0:10]).upper():
+                fnum += 1
+                shreder_file(os.path.join(get_result_store_path(), filename))
+        if fnum == 0:
+            exit(CRLF + cool.orange("[+] prefix %s files has been clean" % _.upper()))
+    else:
+        exit(CRLF + cool.red("[-] invalid shredder path_or_dir arguments"))

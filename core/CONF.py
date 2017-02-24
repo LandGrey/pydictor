@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# build dictionary depend on configuration file
+# Build a dictionary based on configuration file
 """
 Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -9,20 +9,18 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 import os
 import itertools
-from lib.data import head, char, minlen, maxlen, encode, tail
-from lib.data import get_result_store_path, get_conf_path, get_buildtime, operator, CRLF, CONF_prefix, no_encode_flag, filextension
-from lib.fun import finishprinter, finishcounter, countchecker, lengthchecker, range_compatible, cool
 from lib.confparse import confmatcher
 from lib.confparse import confparser
+from lib.fun import finishprinter, finishcounter, countchecker, lengthchecker, range_compatible, cool
+from lib.data import get_result_store_path, get_conf_path, get_buildtime, operator, CRLF, CONF_prefix, filextension, \
+    head, char, minlen, maxlen, encode, tail
 
 
 def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     diclist = []
     for i in range_compatible(minlength, maxlength+1):
         for item in itertools.product(objflag, repeat=i):
-            if encodeflag == no_encode_flag:
-                diclist.append(head + "".join(item) + tail)
-            elif encodeflag in operator.keys():
+            if encodeflag in operator.keys():
                 diclist.append(operator.get(encodeflag)(head + "".join(item) + tail))
             else:
                 exit(CRLF + cool.red('[-] wrong encode type'))
@@ -32,6 +30,7 @@ def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     return diclist
 
 
+# if you have better way to actualize it, please pull request
 def build_conf_dic():
     confdicts = confparser(confmatcher(get_conf_path()))
     finalen = len(confdicts[head])
