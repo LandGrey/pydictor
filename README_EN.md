@@ -21,7 +21,7 @@
 Q: Why pydictor was born ?
 A: Writing an excellent password-generation security tool to help a large number of penetration testing researchers.
 
-Q: Why I need to use pyictor ?
+Q: Why I need to use pydictor ?
 A: Too many reasons, whether you are using Python 2.7 version or Python 3.x version , pydictor can be run on Windows, Linux or Mac;
    you can use pydictor to generate common blasting password dictionary, custom password dictionary based on web content ,
    social engineering password dictionary, a series of advanced dictionary and etc., it can help you almost all works

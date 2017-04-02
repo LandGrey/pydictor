@@ -88,7 +88,7 @@ def scratchword(siteList):
                     elif 9 <= len(y) <= 25 and True if scrabbler in passcratch_white_list and y not in scrabbler else False:
                         y_arr.append(y)
         except Exception:
-            print(CRLF + cool.red("[-] process abort, Looking: ") + CRLF)
+            print(CRLF + cool.red("[-] Process abort, please check url and looking error info: ") + CRLF)
             traceback.print_exc()
             exit(CRLF)
     y_arr_unique = OrderedDict.fromkeys(y_arr).keys()
@@ -101,18 +101,11 @@ def scratchword(siteList):
 
 
 def checkurl(urlike):
-    site_pattern = re.compile('^(?:(?:ht|f)tp(?:s?)\:\/\/|~\/|\/)?(?:\w+:\w+@)?((?:(?:[-\w\d{1-3}]+\.)+(?:com|org|net|'
-                              'gov|mil|biz|info|mobi|name|aero|jobs|edu|co\.uk|ac\.uk|it|fr|tv|museum|asia|local|travel'
-                              '|[a-z]{2}))|((\b25[0-5]\b|\b[2][0-4][0-9]\b|\b[0-1]?[0-9]?[0-9]\b)(\.(\b25[0-5]\b|\b[2]'
-                              '[0-4][0-9]\b|\b[0-1]?[0-9]?[0-9]\b)){3}))(?::[\d]{1,5})?(?:(?:(?:\/(?:[-\w~!$+|.,=]|%'
-                              '[a-f\d]{2})+)+|\/)+|\?|#)?(?:(?:\?(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=?(?:[-\w~!$+|.,*:=]|%'
-                              '[a-f\d]{2})*)(?:&(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=?(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)*)*'
-                              '(?:#(?:[-\w~!$ |\/.,*:;=]|%[a-f\d]{2})*)?$', re.IGNORECASE)
     try:
-        if len(site_pattern.findall(str(urlike))[0][0]) > 0:
-            return True
+        if not str(urlike).startswith('http'):
+            return 'http://' + urlike.split('/')[0]
         else:
-            exit("[-] Incorrect url/uri: {0}".format(cool.red(urlike)))
+            return urlike
     except:
         exit("[-] Incorrect url/uri: {0}".format(cool.red(urlike)))
 
@@ -124,10 +117,8 @@ def get_passcratch_dic(target=scrabble_site_path, encodeflag='none'):
             for _ in f.readlines():
                 if _.startswith(annotator):
                     pass
-                elif checkurl(_):
-                    sites.append(_)
-    elif not checkurl(target):
-        pass
+                else:
+                    sites.append(checkurl(_))
     else:
-        sites.append(target)
+        sites.append(checkurl(target))
     get_extend_dic(scratchword(sites), encodeflag=encodeflag, need_passcratch=True)

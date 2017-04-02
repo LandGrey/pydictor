@@ -84,6 +84,8 @@ def raw_extend(_):
     yield _ + 'FUCK'
     yield _ + 'fucker'
     yield _ + 'qwer'
+    yield _ + 'admin'
+    yield 'admin' + _
     yield 'test' + _
     yield 'Test' + _
     yield 'test_' + _
