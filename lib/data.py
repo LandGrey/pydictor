@@ -16,7 +16,7 @@ from lib.encode import *
 startime = time.time()
 
 # project root path
-root_path = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])))
+root_path = unicode(os.path.join(os.path.abspath(os.path.dirname(sys.argv[0]))), 'utf-8')
 
 
 # ---------------------------------- you can modify it ----------------------------------
