@@ -1,7 +1,7 @@
 # """
 # Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
 # License: GNU GENERAL PUBLIC LICENSE Version 3
-#
+# """
 # Common Web Site Administrators Password list
 #
 0
@@ -58,6 +58,7 @@ qazwsx
 qweasd
 qwerty
 shadow
+system
 tester
 webadm
 1234567
@@ -92,7 +93,6 @@ admin123
 admin666
 admin888
 adminaaa
-adobe123
 asdfasdf
 asdfjkl'
 password
@@ -100,6 +100,7 @@ q1w2e3r4
 qqqqqqqq
 qwer1234
 qwerasdf
+rootroot
 testtest
 webadmin
 000000000
@@ -118,6 +119,18 @@ admin#123
 admin#abc
 admin1234
 admin1qaz
+admin2008
+admin2009
+admin2010
+admin2011
+admin2012
+admin2013
+admin2014
+admin2015
+admin2016
+admin2017
+admin8080
+admin8081
 admin@111
 admin@123
 admin@666
@@ -133,12 +146,23 @@ lkjhgfdsa
 password1
 qazwsxedc
 qweasdzxc
+system123
 webadmin1
 !Q@W#E$R%T
 1111111111
 1234567890
 1q2w3e4r5t
 a123456789
+admin@2008
+admin@2009
+admin@2010
+admin@2011
+admin@2012
+admin@2013
+admin@2014
+admin@2015
+admin@2016
+admin@2017
 admin@asdf
 admin@qwer
 adminQWERT

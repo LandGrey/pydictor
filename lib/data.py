@@ -10,14 +10,16 @@ from __future__ import unicode_literals
 import os
 import sys
 import time
+import platform
 from lib.encode import *
 
 # start time
 startime = time.time()
 
 # project root path
-root_path = unicode(os.path.join(os.path.abspath(os.path.dirname(sys.argv[0]))), 'utf-8')
-
+root_path = (os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))).encode('utf-8').decode()
+             if int(platform.python_version()[0]) >= 3
+             else unicode(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))), 'utf-8'))
 
 # ---------------------------------- you can modify it ----------------------------------
 
@@ -76,13 +78,13 @@ extend_replace = {"s": "5", "S": "5", "l": "1", "1": "l", "o": "0",
 # passcratch plug useless string white list(lowercase), string length >= 5 will work, but don not add too much string
 passcratch_white_list = (
     "a1ert", "about", "academic", "action", "actions", "alerts", "align", "alphanum", "analyze", "android",
-    "apache", "application", "archives", "author", "baidu", "banner", "before", "bigger", "blank", "board",
+    "apache", "application", "archives", "author", "baidu", "banner", "before", "bigger", "bigbox", "blank", "board",
     "bootcss", "border", "bottle", "bottom", "build", "button", "calendar", "center", "change", "changing",
-    "charset", "china", "chinese", "chrome", "class", "classroom", "clear", "click", "color", "colored",
+    "charset", "china", "chinese", "chrome", "class", "classroom", "clean", "clear", "clearer", "click", "color", "colored",
     "colorful", "coming", "complete", "contain", "content", "context", "cookie", "copyright", "correct", "count",
     "crete", "database", "datetime", "default", "describe", "description", "device", "digital", "disp1ay", "django",
     "doctype", "document", "dotted", "download", "eclipse", "element", "email", "english", "equiv", "error", "event",
-    "every", "expand", "expanded", "export", "extend_enter", "extended", "failed", "favicon", "firefox", "focus",
+    "every", "expand", "expanded", "export", "extend_enter", "extended", "failed", "favicon", "finder", "firefox", "focus",
     "footer", "format", "friend", "friendly", "friends", "function", "github", "handheld", "handle", "header", "hello",
     "house", "https", "image", "images", "import", "index", "initial", "input", "insert", "jquery", "keyword",
     "keywords", "large", "length", "letter", "links", "linux", "listen", "listening", "lookup", "margin", "maximum",
@@ -90,7 +92,7 @@ passcratch_white_list = (
     "parent", "people", "powered", "press", "privacy", "public", "publish", "python", "query", "quote", "readme",
     "regex", "report", "reports", "request", "requests", "restrict", "result", "results", "right", "scale", "school",
     "script", "search", "section", "service", "services", "share", "shortcut", "shtml", "sizes", "static", "status",
-    "strict", "string", "style", "styles", "stylesheet", "submit", "success", "suggestion", "table", "target",
+    "strict", "string", "style", "styles", "stylesheet", "submit", "subnav", "success", "suggestion", "table", "target",
     "template", "themes", "think", "thinking", "title", "today", "tomorrow", "topic", "upload", "uploads", "value",
     "version", "views", "website", "weibo", "weight", "welcome", "width", "windows", "windows", "without", "wordpress",
     "world", "writing", "wrong", "xhtml", "xhtml1", "xmlns",
@@ -112,7 +114,7 @@ chars_split = ","
 char_range_split = "-"
 length_split = ":"
 
-# configuration file and scratch site file annotator
+# annotator
 annotator = '#'
 
 # ---------------------------------- don not modify it ----------------------------------
@@ -163,7 +165,7 @@ sedb_range = ("cname", "ename", "sname", "birth", "usedpwd",
 
 # get the current format the time of build the dictionary
 def get_buildtime():
-    return str(time.strftime("%Y%m%d_%H.%M.%S", time.localtime(time.time())))
+    return str(time.strftime("%Y%m%d_%H%M%S", time.localtime(time.time())))
 
 
 # share and access the globle path variable
