@@ -181,8 +181,8 @@ optional arguments:
 
   为提高安全删除速度，默认使用1遍擦除重写，可修改lib\data.py中的file_rewrite_count和dir_rewrite_count，提高擦除次数；
 
-##### 示例9: 字典去重工具uniqify
-	python pydictor.py -tool uniqify /tmp/my.dic				
+##### 示例9: 字典去重工具uniqifer
+	python pydictor.py -tool uniqifer /tmp/my.dic				
 
 ##### 示例10: 词频统计工具counter
 	python pydictor.py -tool counter vs /tmp/mess.txt 100		选取/tmp/mess.txt文件中出现次数最多的100个词输出到终端并保存到文件中

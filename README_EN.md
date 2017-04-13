@@ -180,8 +180,8 @@ prefix(case insensitive) range in 12 items:base,char,chunk,conf,sedb,idcard,exte
 
   for improving the security delete speed, the default uses 1 times to erase and rewrite，you can modify lib\data.py file's file_rewrite_count and dir_rewrite_count value
 
-##### example 9: remove duplicates tool uniqify
-	python pydictor.py -tool uniqify /tmp/my.dic
+##### example 9: remove duplicates tool uniqifer
+	python pydictor.py -tool uniqifer /tmp/my.dic
 
 ##### example 10: word frequency statistics tool counter
 	python pydictor.py -tool counter vs /tmp/mess.txt 100		select 100 words in /tmp/mess.txt file that appear in the most times and output to the terminal and saved to file
