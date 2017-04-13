@@ -17,10 +17,12 @@ from lib.encode import *
 startime = time.time()
 
 # project root path
-root_path = (os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))).encode('utf-8').decode()
-             if int(platform.python_version()[0]) >= 3
-             else unicode(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))), 'utf-8'))
-
+try:
+    root_path = (os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))).encode('utf-8').decode()
+                 if int(platform.python_version()[0]) >= 3
+                 else unicode(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))), 'utf-8'))
+except:
+    exit("\n[-] Please ensure pydictor root path is ascii strings!")
 # ---------------------------------- you can modify it ----------------------------------
 
 # output file prefix
