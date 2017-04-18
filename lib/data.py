@@ -59,7 +59,7 @@ file_rewrite_count = 1
 dir_rewrite_count = 1
 
 # view the 'counter' tool counts
-view_counter_switcher = 100
+vs_counter_switcher = 10000
 
 # counter tool split word
 counter_split = "\n"
@@ -109,7 +109,7 @@ prefix_range = (BASE_prefix, CHAR_prefix, CHUNK_prefix, CONF_prefix, SEDB_prefix
                 UNIQIFER_prefix, COUNTER_prefix, COMBINER_prefix, UNIQBINER_prefix, PASSCRAPER_prefix)
 
 # default counter view items
-default_view_items = 10
+default_vs_items = 50
 
 # configuration file split char
 chars_split = ","

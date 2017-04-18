@@ -13,17 +13,17 @@ import string
 from collections import Counter
 from lib.fun import finishcounter, finishprinter, cool
 from lib.data import operator, CRLF, filextension, get_result_store_path, get_buildtime, COUNTER_prefix, \
-    view_counter_switcher, default_view_items, counter_cmd_range, just_view_counter, just_save_counter, \
+    vs_counter_switcher, default_vs_items, counter_cmd_range, just_view_counter, just_save_counter, \
     save_and_view, tool_range, counter_split, startime
 
 
-def counter_operator(original_file_path, justsave, justview, encodeflag, head, tail, view_count=default_view_items):
-    items = Counter(open(original_file_path, 'r').read().replace(string.punctuation, "").split(counter_split)).most_common(view_count)
+def counter_operator(original_file_path, justsave, justview, encodeflag, head, tail, vs_count=default_vs_items):
+    items = Counter(open(original_file_path, 'r').read().replace(string.punctuation, "").split(counter_split)).most_common(vs_count)
     items_length = len(items)
     storepath = os.path.join(get_result_store_path(), "%s_%s%s" % (COUNTER_prefix, get_buildtime(), filextension))
-    if view_count > view_counter_switcher:
-        exit(CRLF + cool.fuchsia("[!] view items should Leq {0}".format(view_counter_switcher)))
-    elif items_length < view_count:
+    if vs_count > vs_counter_switcher:
+        exit(CRLF + cool.fuchsia("[!] view items should Leq {0}".format(vs_counter_switcher)))
+    elif items_length < vs_count:
         exit(CRLF + cool.fuchsia("[!] max items is {0}".format(items_length)))
     print("{0}Welcome to the COUNTER tool".format("   "*8))
     if justsave:
@@ -59,20 +59,23 @@ def counter_enter(encodeflag, head, tail, *args):
     # counter
     elif len(args) >= 3 and args[0] == tool_range[2] and args[1] in counter_cmd_range:
         if os.path.isfile(args[2]):
-            # counter f file
+            # counter s file
             if len(args) == 3 and args[1] == just_save_counter:
                 counter_operator(args[2], True, False, encodeflag, head, tail)
             # counter v file
             elif len(args) == 3 and args[1] == just_view_counter:
                 counter_operator(args[2], False, True, encodeflag, head, tail)
-            # counter fv file
+            # counter vs file
             elif len(args) == 3 and args[1] == save_and_view:
                 counter_operator(args[2], False, False, encodeflag, head, tail)
             # counter v file 100
             elif len(args) == 4 and args[1] == just_view_counter and str(args[3]).isdigit():
-                counter_operator(args[2], False, True, encodeflag, head, tail, view_count=int(args[3]))
-            # counter fv file 100
+                counter_operator(args[2], False, True, encodeflag, head, tail, vs_count=int(args[3]))
+            # counter s file 100
+            elif len(args) == 4 and args[1] == just_save_counter and str(args[3]).isdigit():
+                counter_operator(args[2], True, False, encodeflag, head, tail, vs_count=int(args[3]))
+            # counter vs file 100
             elif len(args) == 4 and args[1] == save_and_view and str(args[3]).isdigit():
-                counter_operator(args[2], False, False, encodeflag, head, tail, view_count=int(args[3]))
+                counter_operator(args[2], False, False, encodeflag, head, tail, vs_count=int(args[3]))
             else:
                 exit(CRLF + cool.red("[-] Some unexpected input"))
