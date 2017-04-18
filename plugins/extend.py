@@ -179,11 +179,10 @@ def get_extend_dic(rawlist, encodeflag='none', need_passcratch=False):
     storepath = os.path.join(get_result_store_path(), "%s_%s_%s%s" % (prefix, get_buildtime(), encodeflag, filextension))
     with open(storepath, "a") as f:
         try:
-            if need_passcratch:
-                with open(os.path.join(build_in_dict_path, 'CommonWebAdminPass.txt'), 'r') as wap:
-                    for _ in wap.readlines():
-                        if _.strip() != '' and _.strip()[0] != annotator:
-                            f.write(operator.get(encodeflag)(str(_).strip() + CRLF))
+            with open(os.path.join(build_in_dict_path, 'CommonWebAdminPass.txt'), 'r') as wap:
+                for _ in wap.readlines():
+                    if _.strip() != '' and _.strip()[0] != annotator:
+                        f.write(operator.get(encodeflag)(str(_).strip() + CRLF))
             for _ in extend_enter(rawlist):
                 f.write(operator.get(encodeflag)(str(_) + CRLF))
         except:
