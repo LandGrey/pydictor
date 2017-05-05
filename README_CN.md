@@ -131,7 +131,7 @@ optional arguments:
     python pydictor.py -base dL --len 1 3
 
 ##### 示例3: 使用数字、小写字母与大写字母3者组合的任意位数的爆破字典生成
-    python pydictor.py -base dLc					默认字典长度:最小1，最大4
+    python pydictor.py -base dLc				默认字典长度:最小1，最大4
 
 
 ### 二. 自定义字符字典
@@ -196,7 +196,7 @@ python pydictor.py -plug extend D:\word.txt -o D:\awesome\wordlist
 4.  和extend一样，你可以将自己的弱密码字典放在 /wordlist/Web 目录下，生成的字典会包含它们
 
 ```
-python pydictor.py -plug passcraper							使用默认scraper.sites作为多个目标的输入文件
+python pydictor.py -plug passcraper			使用默认scraper.sites作为多个目标的输入文件
 python pydictor.py -plug passcraper http://www.example.com
 ```
 
@@ -204,7 +204,7 @@ python pydictor.py -plug passcraper http://www.example.com
 ### 八. 字典处理工具
 ##### 命令: -tool
 ##### 示例8: 安全删除字典工具shredder
-	python pydictor.py -tool shredder 			删除当前指定的字典输出目录(默认为results)及其所有字典文件
+	python pydictor.py -tool shredder 		删除当前指定的字典输出目录(默认为results)及其所有字典文件
     python pydictor.py -tool shredder base 		删除当前指定的字典输出目录下,以"BASE"开头的所有字典文件
 
 支持的前缀(不区分大小写)有13种:base,char, chunk, conf,sedb,idcard,extend,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
@@ -220,7 +220,7 @@ python pydictor.py -plug passcraper http://www.example.com
 	python pydictor.py -tool uniqifer /tmp/my.dic				
 
 ##### 示例10: 词频统计工具counter
-	python pydictor.py -tool counter vs /tmp/mess.txt 100		选取/tmp/mess.txt文件中出现次数最多的100个词输出到终端并保存到文件中
+	python pydictor.py -tool counter vs /tmp/mess.txt 100	选取/tmp/mess.txt文件中出现次数最多的100个词输出到终端并保存到文件中
 
   **注**: 默认选取前100条打印或保存；默认分隔符号为换行符"\n",可修改lib/data/data.py中counter_split变量来更改分隔符
 
@@ -235,7 +235,7 @@ python pydictor.py -plug passcraper http://www.example.com
 ##### 命令: --conf
    此功能可以完成"-base"和"-char"的所有功能，并在此基础上有更精细化的字典控制力
 
-    python pydictor.py --conf				    		使用默认位置的build.conf 配置文件建立字典
+    python pydictor.py --conf				使用默认位置的build.conf 配置文件建立字典
     python pydictor.py --conf /my/other/awesome.conf	使用/my/other/awesome.conf文件建立字典
 
 **注**: 具体解析规则如下，另可参考build.conf文件示例；
@@ -300,9 +300,9 @@ s = 5
 
 ##### 模式代码
 ```
-0				默认模式，全部替换
-1				从左至右, 将第一个遇到的leet字符全部替换
-2               从右至左, 将第一个遇到的leet字符全部替换
+0			默认模式，全部替换
+1			从左至右, 将第一个遇到的leet字符全部替换
+2              		从右至左, 将第一个遇到的leet字符全部替换
 11-19			从左至右, 将第一个遇到的leet字符最多替换 code-10 个
 21-29			从右至左, 将第一个遇到的leet字符最多替换 code-20 个
 ```
@@ -366,16 +366,16 @@ s = 5
     pydictor SEDB>>
 
 ##### 命令:
-    help				重新载入界面
-	help desc			查看每项数据的意义描述
-	ls或show			查看每项数据的当前设置情况
-	clear或cls			清除当前屏幕
-	exit或quit			退出
-    set					设置选项值
-    rm					删除选项值
+    help		重新载入界面
+    help desc	        查看每项数据的意义描述
+    ls或show	       查看每项数据的当前设置情况
+    clear或cls	       清除当前屏幕
+    exit或quit	       退出
+    set			设置选项值
+    rm			删除选项值
     pick                选择每个字典项目的长度范围
     mode                开启并选择使用leet模式的指定模式
-	run					建立字典
+    run			建立字典
 
 
 注:  
