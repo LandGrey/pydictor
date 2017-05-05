@@ -366,17 +366,18 @@ s = 5
     pydictor SEDB>>
 
 ##### 命令:
-    help		重新载入界面
-    help desc	        查看每项数据的意义描述
-    ls或show	       查看每项数据的当前设置情况
-    clear或cls	       清除当前屏幕
-    exit或quit	       退出
-    set			设置选项值
-    rm			删除选项值
-    pick                选择每个字典项目的长度范围
-    mode                开启并选择使用leet模式的指定模式
-    run			建立字典
-
+```
+help				重新载入界面
+help desc	        查看每项数据的意义描述
+ls或show			查看每项数据的当前设置情况
+clear或cls			清除当前屏幕
+exit或quit			退出
+set					设置选项值
+rm					删除选项值
+pick                选择每个字典项目的长度范围
+mode                开启并选择使用leet模式的指定模式
+run					建立字典
+```
 
 注:  
 1. 修改 funcfg/sedb_tricks.cfg 文件，可以选择单词变换时加的前缀、后缀、前后缀等规则  

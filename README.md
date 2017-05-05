@@ -355,17 +355,18 @@ modify /lib/data/data.py,leet_mode_code argument, choose default mode code;
     pydictor SEDB>>
 
 ##### command:
-    help		reload interface
-    help desc		view the meaning for each items
-    ls or show		view the current settings
-    clear or cls	clear screen
-    exit or quit	exit the program
-    set			set option value
-    rm			remove option value
-    pick                select the length range
-    mode                enable leet mode and choose code
-    run			run Social Engineering Dictionary Builder
-
+```
+help				reload interface
+help desc			view the meaning for each items
+ls or show			view the current settings
+clear or cls		clear screen
+exit or quit		exit the program
+set					set option value
+rm					remove option value
+pick                select the length range
+mode                enable leet mode and choose code
+run					run Social Engineering Dictionary Builder
+```
 
 note:  
 1. you can modify funcfg/sedb_tricks.cfg file，change the word transform prefix, suffix and prefix+suffix rules
