@@ -1,24 +1,29 @@
 #!/usr/bin/env python
 # coding:utf-8
-# Build a social engineering dictionary based on input information and some weak password
+#
 """
-Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
 from __future__ import unicode_literals
-from functools import reduce
+
 import os
 import cmd
-from rules.CBrule import CBrule
-from rules.EBrule import EBrule
-from rules.SBrule import SBrule
+from rules.EB import EB
+from rules.SB import SB
+from rules.NB import NB
+from rules.SDrule import SDrule
+from rules.NNrule import NNrule
+from rules.SNrule import SNrule
+from rules.SSrule import SSrule
+from rules.Mailrule import Mailrule
 from rules.SingleRule import SingleRule
-from rules.WeakPass import weak_pass_set
 from plugins.extend import extend_enter
-from lib.fun import finishprinter, finishcounter, is_Windows, is_Linux, is_Mac, cool
-from lib.text import help_dict, settings_dict, helpmsg, pydictor_ascii_text as pydictor_art_text
-from lib.data import get_result_store_path, get_buildtime, CRLF, SEDB_prefix, filextension, sedb_range
+from lib.fun.osjudger import is_Windows, is_Linux, is_Mac
+from lib.data.text import help_dict, helpmsg, pydictor_art_text
+from lib.data.data import paths, pystrs, pyoptions
+from lib.fun.fun import cool, unique, finishprinter, finishcounter, walks_all_files, lengthchecker, mybuildtime
 
 
 class SEDB(cmd.Cmd):
@@ -33,10 +38,10 @@ class SEDB(cmd.Cmd):
 
     def do_help(self, key):
         if key in help_dict:
-            print(cool.orange(help_dict[key]))
+            print(cool.yellow(help_dict[key]))
         elif key == 'desc':
             for k in help_dict.keys():
-                print(cool.orange(help_dict[k]))
+                print(cool.yellow(help_dict[k]))
         else:
             self.do_cls('')
             print(cool.green(pydictor_art_text))
@@ -59,120 +64,258 @@ class SEDB(cmd.Cmd):
     def do_clear(self, line):
         self.do_cls(self)
 
-    def do_cname(self, args):
+    def do_set(self, args):
+        arguments = []
         for item in str(args).split(' '):
-            settings_dict[sedb_range[0]].append(item)
-
-    def do_ename(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[1]].append(item)
-
-    def do_sname(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[2]].append(item)
-
-    def do_birth(self, args):
-        for item in str(args).split(' '):
-            if len(item) != 8 or str(item).isdigit() is False:
-                print(cool.fuchsia("[!] Input format:[YYYYMMDD] exp:19900512"))
-            elif int(item[4:6]) > 12 or int(item[4:6]) < 1 or int(item[6:8]) > 31 or int(item[6:8]) < 1:
-                print(cool.fuchsia("[!] Date format {1 <= month <= 12} and {1 <= day <=31}"))
+            arguments.append(item)
+        option = arguments[0]
+        if option in pystrs.sedb_dict.keys():
+            arguments.remove(option)
+            sucessflag = True
+            if option == pystrs.sedb_range[3] or option == pystrs.sedb_range[13]:
+                for x in arguments:
+                    if len(x) != 8 or not x.isdigit():
+                        sucessflag = False
+                        print(cool.fuchsia("[!] Input format:[YYYYMMDD] exp:19900512" + pyoptions.CRLF))
+                    elif int(x[4:6]) > 12 or int(x[4:6]) < 1 or int(x[6:8]) > 31 or int(x[6:8]) < 1:
+                        sucessflag = False
+                        print(cool.fuchsia("[!] Date format {1 <= month <= 12} and {1 <= day <=31}" + pyoptions.CRLF))
+                    else:
+                        pystrs.sedb_dict[option].append(x)
+            elif option == pystrs.sedb_range[11]:
+                for x in arguments:
+                    if len(x) < 15:
+                        sucessflag = False
+                        print(cool.fuchsia("[!] Identity card number length too short (should >=15)" + pyoptions.CRLF))
+                    else:
+                        pystrs.sedb_dict[pystrs.sedb_range[11]].append(x)
             else:
-                settings_dict[sedb_range[3]].append(item)
-
-    def do_usedpwd(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[4]].append(item)
-
-    def do_phone(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[5]].append(item)
-
-    def do_uphone(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[6]].append(item)
-
-    def do_hphone(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[7]].append(item)
-
-    def do_email(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[8]].append(item)
-
-    def do_postcode(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[9]].append(item)
-
-    def do_nickname(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[10]].append(item)
-
-    def do_idcard(self, args):
-        for item in str(args).split(' '):
-            if len(item) < 15:
-                print(cool.fuchsia("[!] Identity card number length too short (should >=15)"))
-            else:
-                settings_dict[sedb_range[11]].append(item)
-
-    def do_jobnum(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[12]].append(item)
-
-    def do_otherdate(self, args):
-        for item in str(args).split(' '):
-            if len(item) != 8 or str(item).isdigit() is False:
-                print(cool.fuchsia("[!] Input format:[YYYYMMDD] exp:19900512"))
-            else:
-                settings_dict[sedb_range[13]].append(item)
-
-    def do_usedchar(self, args):
-        for item in str(args).split(' '):
-            settings_dict[sedb_range[14]].append(item)
+                for s in arguments:
+                    pystrs.sedb_dict[option].append(s)
+            if sucessflag:
+                self.do_show(option)
+        elif option != '':
+            print(cool.fuchsia("[!] no option named %s %s" % (option, pyoptions.CRLF)))
+        else:
+            print(cool.fuchsia("[!] please set option and arguments" + pyoptions.CRLF))
 
     def do_show(self, key):
-        if key in settings_dict.keys():
-            if type(settings_dict[key]) is str:
-                print(cool.blue("%-10s :%s" % (key, settings_dict[key])))
-            else:
-                print(cool.blue("%-10s :%s" % (key, ' '.join([x for x in settings_dict[key]]))))
+        if key in pystrs.sedb_dict.keys():
+            print(cool.blue("%-10s :%s" % (key, ' '.join([x for x in pystrs.sedb_dict[key]]))))
         else:
-            for key in settings_dict.keys():
-                print(cool.blue("%-10s :%s" % (key, ' '.join([x for x in settings_dict[key]]))))
+            for key in pystrs.sedb_dict.keys():
+                print(cool.blue("%-10s :%s" % (key, ' '.join([x for x in pystrs.sedb_dict[key]]))))
+
+    def do_ls(self, key):
+        SEDB.do_show(self, key)
+
+    def do_rm(self, key):
+        if key in pystrs.sedb_dict.keys():
+            pystrs.sedb_dict[key] = []
+            print(cool.white("[+] %s option was removed %s" % (key, pyoptions.CRLF)))
+        elif key == '':
+            for key in pystrs.sedb_dict.keys():
+                pystrs.sedb_dict[key] = []
+            print(cool.white("[+] all option was removed" + pyoptions.CRLF))
+        else:
+            print(cool.fuchsia("[!] no option named %s %s" % (key, pyoptions.CRLF)))
+
+    def do_pick(self, key):
+        chunk = key.split(' ')
+        if len(chunk) != 2:
+            print(cool.fuchsia("[!] usage: pick minlen maxlen" + pyoptions.CRLF))
+        else:
+            minlen = key.split(' ')[0]
+            maxlen = key.split(' ')[1]
+            if lengthchecker(minlen, maxlen, sedb=True):
+                pyoptions.args_pick = True
+                pyoptions.minlen = int(minlen)
+                pyoptions.maxlen = int(maxlen)
+                print(cool.white("[+] minlen = {0} maxlen = {1}".format(pyoptions.minlen, pyoptions.maxlen)) + pyoptions.CRLF)
+
+    def do_mode(self, key):
+        chunk = key.split(' ')
+        if len(chunk) != 1:
+            print(cool.fuchsia("[!] usage: mode code") + pyoptions.CRLF)
+        else:
+            if chunk[0].isdigit() and (0 <= int(chunk[0]) <= 2 or 11 <= int(chunk[0]) <= 19 or 21 <= int(chunk[0]) <= 29):
+                pyoptions.sedb_leet = True
+                pyoptions.leetmode_code = int(chunk[0])
+                print(cool.white("[+] code: {0}".format(chunk[0])) + pyoptions.CRLF)
+            else:
+                print(cool.fuchsia("[!] code vaule:[0, 1, 2, 11-19, 21-29]") + pyoptions.CRLF)
 
     def do_run(self, args):
         results = []
-        storepath = os.path.join(get_result_store_path(), '%s_%s%s' % (SEDB_prefix, get_buildtime(), filextension))
+        storepath = os.path.join(paths.results_path, '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(),
+                                                                  pyoptions.filextension))
         with open(storepath, "a") as f:
             # SingleRule
-            for single in SingleRule(settings_dict[sedb_range[0]], settings_dict[sedb_range[1]],
-                                     settings_dict[sedb_range[2]], settings_dict[sedb_range[3]],
-                                     settings_dict[sedb_range[4]], settings_dict[sedb_range[5]],
-                                     settings_dict[sedb_range[6]], settings_dict[sedb_range[7]],
-                                     settings_dict[sedb_range[8]], settings_dict[sedb_range[9]],
-                                     settings_dict[sedb_range[10]], settings_dict[sedb_range[11]],
-                                     settings_dict[sedb_range[12]], settings_dict[sedb_range[13]],
-                                     settings_dict[sedb_range[14]]):
+            for single in SingleRule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[1]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[2]], pystrs.sedb_dict[pystrs.sedb_range[3]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[5]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[6]], pystrs.sedb_dict[pystrs.sedb_range[7]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[9]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[11]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[12]], pystrs.sedb_dict[pystrs.sedb_range[13]],
+                                     pystrs.sedb_dict[pystrs.sedb_range[14]]):
                 results.append(single)
-            # CBrule
-            for cb in CBrule(settings_dict[sedb_range[0]], settings_dict[sedb_range[3]]):
+            # SDrule
+            for cb in SDrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
                 results.append(cb)
-            # EBrule
-            for eb in EBrule(settings_dict[sedb_range[1]], settings_dict[sedb_range[3]]):
+            for cb in SDrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(cb)
+            # EB
+            for eb in EB(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
                 results.append(eb)
-            # SBrule
-            for sb in SBrule(settings_dict[sedb_range[2]], settings_dict[sedb_range[3]]):
-                results.append(sb)
-            # WeakPass
-            for weakpwd in weak_pass_set:
-                results.append(weakpwd)
-            # Using extend_enter plug
-            for extendstr in extend_enter(settings_dict[sedb_range[0]], settings_dict[sedb_range[1]],
-                                          settings_dict[sedb_range[2]], settings_dict[sedb_range[4]],
-                                          settings_dict[sedb_range[10]], settings_dict[sedb_range[14]]):
-                results.append(extendstr)
-            # de-duplication
-            for _ in reduce(lambda x, y: x if y in x else x + [y], [[], ] + results):
-                f.write(_ + CRLF)
-        finishprinter(finishcounter(storepath), storepath)
+            for eb in EB(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(eb)
+            # Mailrule
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[0]]):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[1]]):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[2]]):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[4]]):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[10]]):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[14]]):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[3]], isstrs=False):
+                results.append(mr)
+            for mr in Mailrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[13]], isstrs=False):
+                results.append(mr)
+            # NB
+            for nn in NB(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
+                results.append(nn)
+            for nn in NB(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
 
+            # SB
+            for sb in SB(pystrs.sedb_dict[pystrs.sedb_range[2]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
+                results.append(sb)
+            for sb in SB(pystrs.sedb_dict[pystrs.sedb_range[2]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(sb)
+
+            # NNrule
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[5]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[6]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[5]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[6]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[7]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[9]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[12]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[7]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[9]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[11]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[12]]):
+                results.append(nn)
+            for nn in NNrule(pystrs.sedb_dict[pystrs.sedb_range[3]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(nn)
+
+            # SNrule
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[5]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[6]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[7]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[9]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[11]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[4]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(sn)
+
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[5]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[6]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[7]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[9]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[11]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(sn)
+
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[5]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[6]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[7]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[9]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[11]]):
+                results.append(sn)
+            for sn in SNrule(pystrs.sedb_dict[pystrs.sedb_range[14]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(sn)
+
+            # SSrule
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[1]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[4]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[8]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[10]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[14]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[4]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[8]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[10]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[14]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[10]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[8]], pystrs.sedb_dict[pystrs.sedb_range[14]]):
+                results.append(ss)
+            for ss in SSrule(pystrs.sedb_dict[pystrs.sedb_range[10]], pystrs.sedb_dict[pystrs.sedb_range[14]]):
+                results.append(ss)
+
+            # WeakPass
+            for weakpwd in walks_all_files(paths.sedblist_path):
+                results.append(weakpwd)
+            readylist = []
+            readylist.extend(pystrs.sedb_dict[pystrs.sedb_range[0]])
+            readylist.extend(pystrs.sedb_dict[pystrs.sedb_range[1]])
+            readylist.extend(pystrs.sedb_dict[pystrs.sedb_range[2]])
+            readylist.extend(pystrs.sedb_dict[pystrs.sedb_range[4]])
+            readylist.extend(pystrs.sedb_dict[pystrs.sedb_range[10]])
+            readylist.extend(pystrs.sedb_dict[pystrs.sedb_range[14]])
+            # Using extend_enter plug
+            for extendstr in extend_enter(readylist, leet=pyoptions.sedb_leet):
+                results.append(extendstr)
+
+            if not pyoptions.args_pick:
+                for ur in unique(results):
+                    f.write(ur + pyoptions.CRLF)
+            else:
+                for ur in unique(results):
+                    if pyoptions.minlen <= len(ur) <= pyoptions.maxlen:
+                        f.write(ur + pyoptions.CRLF)
+        finishprinter(finishcounter(storepath), storepath)

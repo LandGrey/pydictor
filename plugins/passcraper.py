@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # coding:utf-8
-# A web pass scraper for generating password based on plain text found using 'extend' plug
 # Referred: https://github.com/cheetz/brutescrape
+#
 """
-Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
+
 from __future__ import unicode_literals
+
 import os
 import re
-import traceback
-from collections import OrderedDict
-from lib.fun import cool
-from lib.fun import py_ver_egt_3
-from plugins.extend import get_extend_dic
-from lib.data import scrabble_site_path, passcratch_white_list, CRLF, annotator
+from plugins.extend import extend_magic
+from lib.fun.osjudger import py_ver_egt_3
+from lib.data.data import paths, pyoptions
+from lib.fun.fun import unique, cool, walk_pure_file
 
 
 # in python3: urllib + urilib2 -> urllib, and
@@ -25,8 +25,9 @@ try:
     else:
         from urllib2 import urlopen
 except ImportError:
-    print(cool.red('[-] can not import urllib or urllib2 module:') + CRLF)
-    exit(traceback.print_exc())
+    exit(cool.red('[-] can not import urllib or urllib2 module:') + pyoptions.CRLF)
+
+passcratch_white_list = walk_pure_file(paths.scraperwhitelist_path)
 
 
 def stripHTMLTags(html):
@@ -38,7 +39,7 @@ def stripHTMLTags(html):
         {r'</(div)\s*>\s*': '\n'},                     # Newline after </p> and </div> and <h1/>.
         {r'</(p|h\d)\s*>\s*': '\n\n'},                 # Newline after </p> and </div> and <h1/>.
         {r'<head>.*<\s*(/head|body)[^>]*>': ''},       # Remove <head> to </head>.
-        {r'<a\s+href="([^"]+)"[^>]*>.*</a>': r'\1'},    # Show links instead of texts.
+        {r'<a\s+href="([^"]+)"[^>]*>.*</a>': r'\1'},   # Show links instead of texts.
         {r'[ \t]*<[^<]*?/?>': ''},                     # Remove remaining tags.
         {r'^\s+': ''}                                  # Remove spaces at the beginning.
     ]
@@ -49,11 +50,11 @@ def stripHTMLTags(html):
                 text = str(regex.sub(v, text))
             except:
                 pass
-    special = {
+    htmlspecial = {
         '&nbsp;': ' ', '&amp;': '&', '&quot;': '"',
         '&lt;': '<', '&gt;': '>'
     }
-    for (k, v) in special.items():
+    for (k, v) in htmlspecial.items():
         text = text.replace(k, v)
     return text
 
@@ -70,7 +71,14 @@ def scratchword(siteList):
             response.addheaders = \
                 [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0')]
             # if you don't decode('utf-8'), it will don't work both in python2 and python3
-            x = stripHTMLTags(response.read().decode('utf-8') + site)
+            try:
+                x = stripHTMLTags(response.read().decode('utf-8') + site)
+            except:
+                try:
+                    x = stripHTMLTags(response.read().decode('GBK') + site)
+                except:
+                    exit(cool.red("[-] Page coding parse error, please use 'extend' plug instead") + pyoptions.CRLF)
+
             # Replace junk found in our response
             x = x.replace('\n', ' ')
             x = x.replace(',', ' ')
@@ -81,44 +89,45 @@ def scratchword(siteList):
             for y in x_arr:
                 y = y.strip()
                 if y and (len(y) >= 5):
-                    if ((y[0] == '2') and (y[1] == 'F')) or ((y[0] == '2') and (y[1] == '3')) or ((y[0] == '3') and (y[1] == 'F')) or ((y[0] == '3') and (y[1] == 'D')):
+                    if ((y[0] == '2') and (y[1] == 'F')) \
+                            or ((y[0] == '2') and (y[1] == '3')) \
+                            or ((y[0] == '3') and (y[1] == 'F')) or ((y[0] == '3') and (y[1] == 'D')):
                         y = y[2:]
-                    if len(y) <= 8 and y.lower() not in passcratch_white_list:
+                    if len(y) <= 8 and True if y.lower() not in passcratch_white_list else False:
                         y_arr.append(y)
-                    elif 9 <= len(y) <= 25 and True if scrabbler in passcratch_white_list and y not in scrabbler else False:
+                    elif 9 <= len(y) <= 25 and True if y.lower() not in passcratch_white_list else False:
                         y_arr.append(y)
         except Exception:
-            print(CRLF + cool.red("[-] Process abort, please check url and looking error info: ") + CRLF)
-            traceback.print_exc()
-            exit(CRLF)
-    y_arr_unique = OrderedDict.fromkeys(y_arr).keys()
-    for yy in y_arr_unique:
+            exit(cool.red("[-] Process abort, please check url and try use 'extend' plug instead") + pyoptions.CRLF)
+
+    for yy in unique(y_arr):
         if yy.strip().isdigit():
             pass
         else:
-            resluts.append(yy.strip())
-    return resluts
+            if not re.findall(pyoptions.passcraper_filter, yy.strip(), flags=re.I):
+                resluts.append(yy.strip())
+    return unique(resluts)
 
 
 def checkurl(urlike):
     try:
         if not str(urlike).startswith('http'):
-            return 'http://' + urlike.split('/')[0]
+            return 'http://' + urlike.strip()
         else:
             return urlike
     except:
-        exit("[-] Incorrect url/uri: {0}".format(cool.red(urlike)))
+        exit(cool.red("[-] Incorrect url/uri: {0}".format(cool.red(urlike.strip()))))
 
 
-def get_passcratch_dic(target=scrabble_site_path, encodeflag='none'):
+def scraper_magic(target=paths.scrapersites_path, encodeflag='none'):
     sites = []
     if os.path.isfile(target):
         with open(target, 'r') as f:
             for _ in f.readlines():
-                if _.startswith(annotator):
+                if _.startswith(pyoptions.annotator):
                     pass
                 else:
                     sites.append(checkurl(_))
     else:
         sites.append(checkurl(target))
-    get_extend_dic(scratchword(sites), encodeflag=encodeflag, need_passcratch=True)
+    extend_magic(scratchword(sites), encodeflag=encodeflag, need_passcratch=True)

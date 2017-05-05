@@ -1,0 +1,16 @@
+#                                     pydictor passcraper sites file
+#                                                                                   Build By LandGrey
+# Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+# License: GNU GENERAL PUBLIC LICENSE Version 3
+#
+########################################################################################################################
+# In this file:
+# 1. you can add a single site that you want to scratch password
+# 2. you can add multiple sites that they are related, e.g. :
+#                                                            they are belong to the same company.
+#                                                            they are have the same top domain name.
+#                                                            they are belong to the same target.
+# 3. If there too much useless words scratched by passcraper,
+#      you can pick some correct words and use 'extend' plug, they are both same effect for same words at the moment
+########################################################################################################################
+www.example.com

@@ -1,0 +1,40 @@
+# """
+# Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+# License: GNU GENERAL PUBLIC LICENSE Version 3
+# """
+# Tiny Common Wifi Weak Password list
+#
+!qaz@wsx
+00000000
+11111111
+11223344
+11qqaazz
+12345678
+1qaz2wsx
+1qazxsw2
+22222222
+33333333
+44444444
+55555555
+66666666
+66668888
+6yhn7ujm
+6yhn8ik,
+77777777
+87654321
+88888888
+99999999
+123456789
+147258369
+147852369
+741258963
+741852963
+987654321
+asdfghjkl
+lkjhgfdsa
+qazwsxedc
+0123456789
+1234567890
+9876543210
+poiuytrewq
+qwertyuiop

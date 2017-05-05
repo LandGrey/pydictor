@@ -1,3 +1,4 @@
 *.xml
 *.iml
 *.pyc
+/test
