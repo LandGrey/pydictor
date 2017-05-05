@@ -33,12 +33,12 @@ A: 1.生成密码它总会帮到你
      不管你是使用的python 2.7版本还是python 3.4 以上版本，pydictor都可以在Windows、Linux 或者是Mac上运行；
 
 Q: pydictor的目标是什么?
-A: 一个实用、帮助大量渗透测试人员更好的工作的更好的密码字典生成器。
+A: 一个实用、帮助大量渗透测试人员更好的工作的更好的密码字典生成器
 ```
 
 ## 开始:
 ```
-git clone https://www.github.com/landgrey/pydictor.git
+git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git
 cd pydictor/
 chmod 755 pydictor.py
 python pydictor.py

@@ -39,7 +39,7 @@ A: A useful and better password-generator that helps plenty of penetration teste
 
 ## Start:
 ```
-git clone https://www.github.com/landgrey/pydictor.git
+git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git
 cd pydictor/
 chmod 755 pydictor.py
 python pydictor.py
