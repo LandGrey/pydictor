@@ -132,7 +132,7 @@ optional arguments:
     python pydictor.py -base dL --len 1 3
 
 ##### example 3: generating a dictionary base on digital,lowercase letters and capital letters
-    python pydictor.py -base dLc					 	default length: min=1 and max=4
+    python pydictor.py -base dLc				default length: min=1 and max=4
 
 ### 2. generate the dictionary base on custom character
 ##### cmd: -char   
@@ -142,7 +142,7 @@ optional arguments:
 
 ### 3. chunk multiply dictionary
 ##### cmd: -chunk
-	python pydictor.py -chunk abc ABC 666 . _ @			generating all  possible permutations and combinations base on 'abc'、'ABC'、'666' 、'.'、'_'、'@'
+	python pydictor.py -chunk abc ABC 666 . _ @		generating all  possible permutations and combinations base on 'abc'、'ABC'、'666' 、'.'、'_'、'@'
   
 **note**:  When you need spaces and other special characters, double quotation marks surround all custom characters, such as:abc " " 123 asdf
 
@@ -189,13 +189,13 @@ python pydictor.py -plug extend D:\word.txt -o D:\awesome\wordlist
 4.  with same extend plugin，you can put your weak password in /wordlist/Web，new wordlist will contains them
 
 ```
-python pydictor.py -plug passcraper								using default file scraper.sites as multi-input file
+python pydictor.py -plug passcraper				using default file scraper.sites as multi-input file
 python pydictor.py -plug passcraper http://www.example.com
 ```
 ### 8. handle wordlist's tools
 ##### cmd: -tool
 ##### example 8: safe delete tool shredder
-	python pydictor.py -tool shredder 			delete the currently specified output path(default:results) files and all its dictionary files
+	python pydictor.py -tool shredder 		delete the currently specified output path(default:results) files and all its dictionary files
     python pydictor.py -tool shredder base 		delete the files of it's prefix is "BASE" in currently specified output path
 
 prefix(case insensitive) range in 13 items:base,char,chunk,conf,sedb,idcard,extend,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
@@ -225,7 +225,7 @@ prefix(case insensitive) range in 13 items:base,char,chunk,conf,sedb,idcard,exte
 ##### cmd: --conf
    this function contains all of "-base" and "-char" capacities，and more precise control
 
-    python pydictor.py --conf				    		using default file build.conf build the dictionary
+    python pydictor.py --conf				using default file build.conf build the dictionary
     python pydictor.py --conf /my/other/awesome.conf	using /my/other/awesome.conf build the dictionary
 
 **note**: parsing rules details as following，besides referred to build.conf file
@@ -290,9 +290,9 @@ s = 5
 
 ##### code
 ```
-0				default，replace all
-1				left-to-right, replace all the first encountered leet char
-2               right-to-left, replace all the first encountered leet char
+0			default，replace all
+1			left-to-right, replace all the first encountered leet char
+2               	right-to-left, replace all the first encountered leet char
 11-19			left-to-right, replace the first encountered leet char to maximum code-10 chars   
 21-29			right-to-left, replace the first encountered leet char to maximum code-20 chars
 ```
@@ -355,16 +355,16 @@ modify /lib/data/data.py,leet_mode_code argument, choose default mode code;
     pydictor SEDB>>
 
 ##### command:
-    help				reload interface
-	help desc			view the meaning for each items
-	ls or show			view the current settings
-	clear or cls	    clear screen
-	exit or quit		exit the program
-	set					set option value
-    rm					remove option value
+    help		reload interface
+    help desc		view the meaning for each items
+    ls or show		view the current settings
+    clear or cls	clear screen
+    exit or quit	exit the program
+    set			set option value
+    rm			remove option value
     pick                select the length range
     mode                enable leet mode and choose code
-	run					run Social Engineering Dictionary Builder
+    run			run Social Engineering Dictionary Builder
 
 
 note:  
