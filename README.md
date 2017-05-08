@@ -264,7 +264,7 @@ supported encoding:
 
 ##### example 13: only select the the password between the length 6-16    
 
-	python pydictor -plug extend /awesome/ext.txt --pick --len 6 16
+	python pydictor.py -plug extend /awesome/ext.txt --pick --len 6 16
 
 ### 11. use leet mode
 ##### cmd: --mode
@@ -356,16 +356,16 @@ modify /lib/data/data.py,leet_mode_code argument, choose default mode code;
 
 ##### command:
 ```
-help				reload interface
-help desc			view the meaning for each items
-ls or show			view the current settings
-clear or cls		clear screen
-exit or quit		exit the program
-set					set option value
-rm					remove option value
+help                reload interface
+help desc           view the meaning for each items
+ls or show          view the current settings
+clear or cls        clear screen
+exit or quit        exit the program
+set                 set option value
+rm                  remove option value
 pick                select the length range
 mode                enable leet mode and choose code
-run					run Social Engineering Dictionary Builder
+run                 run Social Engineering Dictionary Builder
 ```
 
 note:  

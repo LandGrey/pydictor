@@ -2,7 +2,7 @@
 # coding:utf-8
 # A useful hacker dictionary builder for a brute-force attack
 """
-Copyright (c) 2016-2017 pydictor developers (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 

@@ -273,7 +273,7 @@ python pydictor.py -plug passcraper http://www.example.com
 2.  接受由--len选项参数值限定的长度，sedb也可以在进入sedb界面时单独设置
 
 ##### 示例13: 只选取长度在6-16位之间的密码
-	python pydictor -plug extend /awesome/ext.txt --pick --len 6 16
+	python pydictor.py -plug extend /awesome/ext.txt --pick --len 6 16
 
 
 ### 十一. 使用高级leet模式
@@ -367,16 +367,16 @@ s = 5
 
 ##### 命令:
 ```
-help				重新载入界面
-help desc	        查看每项数据的意义描述
-ls或show			查看每项数据的当前设置情况
-clear或cls			清除当前屏幕
-exit或quit			退出
-set					设置选项值
-rm					删除选项值
+help                重新载入界面
+help desc           查看每项数据的意义描述
+ls 或 show          查看每项数据的当前设置情况
+clear 或 cls        清除当前屏幕
+exit 或 quit	        退出
+set                 设置选项值
+rm                  删除选项值
 pick                选择每个字典项目的长度范围
 mode                开启并选择使用leet模式的指定模式
-run					建立字典
+run                 建立字典
 ```
 
 注:  
