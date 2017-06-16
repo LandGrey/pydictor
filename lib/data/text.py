@@ -24,20 +24,21 @@ pydictor_art_text = '''
 '''
 
 
-helpmsg = '''
-               {0}
+helpmsg = \
+'''                   {0}
                                             {1}
     --------------------------[ {2} ]--------------------------
-    [+]help desc            [+]ls/show  option     [+]rm option
-    [+]exit/quit            [+]clear/cls           [+]run
-    [+]set option arguments [+]pick minlen maxlen  [+]mode code
+    [+]help desc             [+]show option
+    [+]set option arguments  [+]rm option
+    [+]len minlen maxlen     [+]level code           [+]leet code
+    [+]run                   [+]exit/quit            [+]clear/cls
 
     --------------------------[ {3} ]---------------------------
-    [+]{4}                [+]{5}               [+]{6}
-    [+]{7}                [+]{8}             [+]{9}
-    [+]{10}               [+]{11}              [+]{12}
-    [+]{13}             [+]{14}            [+]{15}
-    [+]{16}               [+]{17}           [+]{18}
+    [+]{4}                 [+]{5}                [+]{6}
+    [+]{7}                 [+]{8}              [+]{9}
+    [+]{10}                [+]{11}               [+]{12}
+    [+]{13}              [+]{14}             [+]{15}
+    [+]{16}                [+]{17}            [+]{18}
 '''.format(cool.orange("Social Engineering Dictionary Builder"), cool.green("Build by LandGrey"), cool.yellow("command")
            , cool.yellow("option"), pystrs.sedb_range[0], pystrs.sedb_range[1], pystrs.sedb_range[2],
            pystrs.sedb_range[3], pystrs.sedb_range[4], pystrs.sedb_range[5], pystrs.sedb_range[6],

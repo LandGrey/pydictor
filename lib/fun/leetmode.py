@@ -24,9 +24,9 @@ def get_leet_cfg():
 
 
 # leet mode magic function
-def leet_mode_magic(strings):
+def leet_mode_magic(strings, code, *args):
     intab = outtab = ""
-    if pyoptions.leetmode_code == 0:
+    if code == 0:
         for leet in get_leet_cfg():
             intab += leet[0]
             outtab += leet[1]
@@ -37,8 +37,8 @@ def leet_mode_magic(strings):
             maptab = str.maketrans(intab, outtab)
             ret = strings.translate(maptab)
         return ret
-    elif 11 <= pyoptions.leetmode_code <= 29 or 1 <= pyoptions.leetmode_code <= 2:
-        if 21 <= pyoptions.leetmode_code <= 29 or pyoptions.leetmode_code == 2:
+    elif 11 <= code <= 29 or 1 <= code <= 2:
+        if 21 <= code <= 29 or code == 2:
             searchstrs = strings[::-1]
         else:
             searchstrs = strings
@@ -50,17 +50,17 @@ def leet_mode_magic(strings):
             search += 1
             for leet in get_leet_cfg():
                 if leet[0] == s:
-                    if pyoptions.leetmode_code == 1:
+                    if code == 1:
                         ret = strings.replace(leet[0], leet[1])
                         return ret
-                    elif pyoptions.leetmode_code == 2:
+                    elif code == 2:
                         ret = rreplace(strings, leet[0], leet[1])
                         return ret
-                    elif 11 <= pyoptions.leetmode_code <= 19:
-                        ret = strings.replace(leet[0], leet[1], pyoptions.leetmode_code % 10)
+                    elif 11 <= code <= 19:
+                        ret = strings.replace(leet[0], leet[1], code % 10)
                         return ret
-                    elif 21 <= pyoptions.leetmode_code <= 29:
-                        ret = rreplace(strings, leet[0], leet[1], pyoptions.leetmode_code % 20)
+                    elif 21 <= code <= 29:
+                        ret = rreplace(strings, leet[0], leet[1], code % 20)
                         return ret
                     else:
                         return strings

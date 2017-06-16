@@ -12,9 +12,9 @@ import os
 import time
 
 from core.CONF import build_conf_dic
+from core.EXTEND import get_extend_dic
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.fun import cool
-from plugins.extend import extend_magic
 from plugins.idcard import idcard_magic
 from plugins.passcraper import scraper_magic
 from tools.combiner import combiner_enter
@@ -26,29 +26,21 @@ from tools.uniqifer import uniqifer_enter
 
 def plug_parser():
     if pyoptions.args_plug[0] not in pystrs.plug_range:
-        exit("[!] Choose plug from ({0}, {1}, {2}, {3})".format
+        exit("[!] Choose plug from ({0}, {1}, {2})".format
              (cool.fuchsia(pystrs.plug_range[0]), cool.fuchsia(pystrs.plug_range[1]),
-              cool.fuchsia(pystrs.plug_range[2]),
-              cool.fuchsia(pystrs.plug_range[3])))
+              cool.fuchsia(pystrs.plug_range[2])))
     else:
         # id card plugin
         if len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[0]:
             idcard_magic(pystrs.plug_range[0])
         elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[1]:
             idcard_magic(pystrs.plug_range[1])
-        # extend_enter plugin
-        elif len(pyoptions.args_plug) == 2 and pyoptions.args_plug[0] == pystrs.plug_range[2]:
-            if os.path.isfile(pyoptions.args_plug[1]):
-                with open(pyoptions.args_plug[1], 'r') as f:
-                    extend_magic(f.readlines(), encodeflag=pyoptions.encode)
-            else:
-                exit(pyoptions.CRLF + cool.red("[-] File:%s don't exists" % pyoptions.args_plug[1]))
         # passcraper plugin
-        elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[3] and \
+        elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[2] and \
                 os.path.isfile(paths.scrapersites_path):
-            scraper_magic(encodeflag=pyoptions.encode)
-        elif len(pyoptions.args_plug) == 2 and pyoptions.args_plug[0] == pystrs.plug_range[3]:
-            scraper_magic(pyoptions.args_plug[1], encodeflag=pyoptions.encode)
+            scraper_magic()
+        elif len(pyoptions.args_plug) == 2 and pyoptions.args_plug[0] == pystrs.plug_range[2]:
+            scraper_magic(pyoptions.args_plug[1])
         elif len(pyoptions.args_plug) == 1:
             exit(pyoptions.CRLF + "[-] Plug %s need other arguments" % cool.red(pyoptions.args_plug[0]))
         else:

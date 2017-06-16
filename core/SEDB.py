@@ -8,22 +8,24 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
-import os
 import cmd
-from rules.EB import EB
-from rules.SB import SB
-from rules.NB import NB
-from rules.SDrule import SDrule
-from rules.NNrule import NNrule
-from rules.SNrule import SNrule
-from rules.SSrule import SSrule
-from rules.Mailrule import Mailrule
-from rules.SingleRule import SingleRule
-from plugins.extend import extend_enter
+import os
+import time
+
+from core.EXTEND import extend_enter
+from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.osjudger import is_Windows, is_Linux, is_Mac
 from lib.data.text import help_dict, helpmsg, pydictor_art_text
-from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.fun import cool, unique, finishprinter, finishcounter, walks_all_files, lengthchecker, mybuildtime
+from rules.EB import EB
+from rules.Mailrule import Mailrule
+from rules.NB import NB
+from rules.NNrule import NNrule
+from rules.SB import SB
+from rules.SDrule import SDrule
+from rules.SNrule import SNrule
+from rules.SSrule import SSrule
+from rules.SingleRule import SingleRule
 
 
 class SEDB(cmd.Cmd):
@@ -93,21 +95,25 @@ class SEDB(cmd.Cmd):
                 for s in arguments:
                     pystrs.sedb_dict[option].append(s)
             if sucessflag:
-                self.do_show(option)
+                self.do_show(option, setflag=True)
         elif option != '':
             print(cool.fuchsia("[!] no option named %s %s" % (option, pyoptions.CRLF)))
         else:
             print(cool.fuchsia("[!] please set option and arguments" + pyoptions.CRLF))
 
-    def do_show(self, key):
+    def do_show(self, key, setflag=False):
+        if not setflag:
+            if pyoptions.args_pick:
+                print(cool.orange("{pick:11}: minlen: {0} maxlen: {1}".format(pyoptions.minlen, pyoptions.maxlen,
+                                                                                pick="pick")))
+            print(cool.orange("{level:11}: {0}".format(pyoptions.level, level="level")))
+            if pyoptions.sedb_leet:
+                print(cool.orange("{leet:11}: {0}".format(" ".join(map(str, pyoptions.leetmode_code)), leet="leet")))
         if key in pystrs.sedb_dict.keys():
             print(cool.blue("%-10s :%s" % (key, ' '.join([x for x in pystrs.sedb_dict[key]]))))
         else:
             for key in pystrs.sedb_dict.keys():
                 print(cool.blue("%-10s :%s" % (key, ' '.join([x for x in pystrs.sedb_dict[key]]))))
-
-    def do_ls(self, key):
-        SEDB.do_show(self, key)
 
     def do_rm(self, key):
         if key in pystrs.sedb_dict.keys():
@@ -120,10 +126,10 @@ class SEDB(cmd.Cmd):
         else:
             print(cool.fuchsia("[!] no option named %s %s" % (key, pyoptions.CRLF)))
 
-    def do_pick(self, key):
+    def do_len(self, key):
         chunk = key.split(' ')
         if len(chunk) != 2:
-            print(cool.fuchsia("[!] usage: pick minlen maxlen" + pyoptions.CRLF))
+            print(cool.fuchsia("[!] usage: len minlen maxlen" + pyoptions.CRLF))
         else:
             minlen = key.split(' ')[0]
             maxlen = key.split(' ')[1]
@@ -131,21 +137,38 @@ class SEDB(cmd.Cmd):
                 pyoptions.args_pick = True
                 pyoptions.minlen = int(minlen)
                 pyoptions.maxlen = int(maxlen)
-                print(cool.white("[+] minlen = {0} maxlen = {1}".format(pyoptions.minlen, pyoptions.maxlen)) + pyoptions.CRLF)
+                print(cool.white("[+] minlen: {0} maxlen: {1}".format(pyoptions.minlen, pyoptions.maxlen)) + pyoptions.CRLF)
 
-    def do_mode(self, key):
+    def do_level(self, key):
         chunk = key.split(' ')
         if len(chunk) != 1:
-            print(cool.fuchsia("[!] usage: mode code") + pyoptions.CRLF)
+            print(cool.fuchsia("[!] usage: level code" + pyoptions.CRLF))
         else:
-            if chunk[0].isdigit() and (0 <= int(chunk[0]) <= 2 or 11 <= int(chunk[0]) <= 19 or 21 <= int(chunk[0]) <= 29):
-                pyoptions.sedb_leet = True
-                pyoptions.leetmode_code = int(chunk[0])
-                print(cool.white("[+] code: {0}".format(chunk[0])) + pyoptions.CRLF)
-            else:
-                print(cool.fuchsia("[!] code vaule:[0, 1, 2, 11-19, 21-29]") + pyoptions.CRLF)
+            try:
+                if not 1 <= int(chunk[0]) <= 5:
+                    print(cool.fuchsia("[!] code range: 1-5" + pyoptions.CRLF))
+                else:
+                    pyoptions.level = int(chunk[0])
+                    print(cool.white("[+] level code: {}".format(pyoptions.level) + pyoptions.CRLF))
+            except:
+                print(cool.fuchsia("[!] code must be a digital" + pyoptions.CRLF))
+
+    def do_leet(self, key):
+        chunk = key.split(' ')
+        if not chunk:
+            print(cool.fuchsia("[!] usage: leet code code2 code3 ...") + pyoptions.CRLF)
+        else:
+            pyoptions.leetmode_code = []
+            for c in chunk:
+                if str(c).isdigit() and (0 <= int(c) <= 2 or 11 <= int(c) <= 19 or 21 <= int(c) <= 29):
+                    pyoptions.sedb_leet = True
+                    pyoptions.leetmode_code.append(int(c))
+                else:
+                    print(cool.fuchsia("[!] code vaule:[0, 1, 2, 11-19, 21-29]") + pyoptions.CRLF)
+            print(cool.white("[+] leet code: {0}".format(" ".join(map(str, pyoptions.leetmode_code)))) + pyoptions.CRLF)
 
     def do_run(self, args):
+        pystrs.startime = time.time()
         results = []
         storepath = os.path.join(paths.results_path, '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(),
                                                                   pyoptions.filextension))
@@ -161,10 +184,10 @@ class SEDB(cmd.Cmd):
                                      pystrs.sedb_dict[pystrs.sedb_range[14]]):
                 results.append(single)
             # SDrule
-            for cb in SDrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
-                results.append(cb)
-            for cb in SDrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
-                results.append(cb)
+            for sd in SDrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
+                results.append(sd)
+            for sd in SDrule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[13]]):
+                results.append(sd)
             # EB
             for eb in EB(pystrs.sedb_dict[pystrs.sedb_range[1]], pystrs.sedb_dict[pystrs.sedb_range[3]]):
                 results.append(eb)

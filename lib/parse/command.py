@@ -26,21 +26,23 @@ pydictor.py [options]
            -base     [type]
            -char     [custom_char]
            -chunk    [chunk1] [chunk2] ...
-           -plug     [%s,%s,%s,%s]
+           -extend   [str_or_file]
+           -plug     [{plug0},{plug1},{plug2}]
+           --conf    [config_file]
+           --sedb
            -o        [output_path]
-           -tool     [%s,%s,%s,%s,%s] [args] ...
+           -tool     [{tool0},{tool1},{tool2},{tool3},{tool4}] [args] ...
            --len     [minlen] [maxlen]
            --head    [prefix_string]
            --tail    [suffix_string]
-           --encode  [%s,%s,%s,%s,%s,%s,%s,%s]
-           --conf    [config_file_path]
-           --mode    [code]
-           --pick
-           --sedb''' % (pystrs.plug_range[0], pystrs.plug_range[1], pystrs.plug_range[2], pystrs.plug_range[3],
-                        pystrs.tool_range[0], pystrs.tool_range[1], pystrs.tool_range[2], pystrs.tool_range[3],
-                        pystrs.tool_range[4], pystrs.encode_range[0], pystrs.encode_range[1], pystrs.encode_range[2],
-                        pystrs.encode_range[3], pystrs.encode_range[4], pystrs.encode_range[5], pystrs.encode_range[6],
-                        pystrs.encode_range[7]))
+           --encode  [{en0},{en1},{en2},{en3},{en4},{en5},{en6},{en7}]
+           --level   [code]
+           --leet    [code]'''.format(plug0=pystrs.plug_range[0], plug1=pystrs.plug_range[1], plug2=pystrs.plug_range[2],
+                                      tool0=pystrs.tool_range[0], tool1=pystrs.tool_range[1],
+                                      tool2=pystrs.tool_range[2], tool3=pystrs.tool_range[3], tool4=pystrs.tool_range[4],
+                                      en0=pystrs.encode_range[0], en1=pystrs.encode_range[1], en2=pystrs.encode_range[2],
+                                      en3=pystrs.encode_range[3], en4=pystrs.encode_range[4], en5=pystrs.encode_range[5],
+                                      en6=pystrs.encode_range[6], en7=pystrs.encode_range[7]))
 )
 
     parser.add_argument('-base', dest='base', choices=[pystrs.base_dic_type[0], pystrs.base_dic_type[1],
@@ -66,14 +68,23 @@ Choose from  ({0}, {1}, {2}, {3}, {4}, {5}, {6})
     parser.add_argument('-chunk', dest='chunk', metavar='chunk', nargs='+', type=str, default='',
                         help=cool.yellow('Use the multi-chunk build the dictionary'))
 
+    parser.add_argument('-extend', dest='extend', metavar='target', nargs='+', type=str, default='',
+                        help=cool.yellow('Extend the string list or file'))
+
     parser.add_argument('-plug', dest='plug', metavar='plug', nargs='+', type=str, default='',
                         help=cool.yellow('''
 Choose from    ({0}, {1}, {2}, {3})
-    {0:10} [idcard_last_6_digit]   default sex:{4}
-    {1:10} [idcard_last_8_digit]   default sex:{4}
-    {2:10} [file_path]
-    {3:10} [url_or_file_path]'''.format(pystrs.plug_range[0], pystrs.plug_range[1], pystrs.plug_range[2],
-                                        pystrs.plug_range[3], pystrs.default_sex)))
+    {0:10} [idcard_last_6_digit]   default sex:{3}
+    {1:10} [idcard_last_8_digit]   default sex:{3}
+    {2:10} [url_or_file_path]'''.format(pystrs.plug_range[0], pystrs.plug_range[1], pystrs.plug_range[2], pystrs.default_sex)))
+
+    parser.add_argument('--conf', dest='conf', nargs='?', metavar='file_path', default='default', const='const',
+                        help=cool.yellow('''
+Use the configuration file build the dictionary
+    Default: %s''' % paths.buildconf_path))
+
+    parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
+                        help=cool.yellow('Enter the Social Engineering Dictionary Builder'))
 
     parser.add_argument('-o', dest='output', metavar='output', type=str, default=paths.results_path,
                         help=cool.yellow('''
@@ -95,7 +106,7 @@ Choose from    ({0}, {1}, {2},
     parser.add_argument('--len', dest='len', metavar=('minlen', 'maxlen'), nargs=2, type=int,
                         default=(pyoptions.minlen, pyoptions.maxlen), help=cool.yellow('''
 [Minimun_Length]  [Maximun_Length]
-                    Default: min=%s  max=%s''' % (pyoptions.minlen, pyoptions.maxlen)))
+    Default: min=%s  max=%s''' % (pyoptions.minlen, pyoptions.maxlen)))
 
     parser.add_argument('--head', dest='head', metavar='prefix', type=str, default='',
                         help=cool.yellow('Add string head for the items'))
@@ -112,22 +123,11 @@ From (%s, %s, %s, %s, %s, %s, %s, %s)''' % (pystrs.encode_range[0], pystrs.encod
                                             pystrs.encode_range[3], pystrs.encode_range[4], pystrs.encode_range[5],
                                             pystrs.encode_range[6], pystrs.encode_range[7])))
 
-    parser.add_argument('--conf', dest='conf', nargs='?', metavar='file_path', default='default', const='const',
-                        help=cool.yellow('''
-Use the configuration file build the dictionary
-    Default: %s''' % paths.buildconf_path))
+    parser.add_argument('--level', dest='level', metavar='code', default=pyoptions.level, type=int,
+                        help=cool.yellow('''Use code [1-5] to filter results, default: {0}'''.format(pyoptions.level)))
 
-    parser.add_argument('--mode', dest='mode', metavar='code', type=int, default=pyoptions.leetmode_code,
-                        help=cool.yellow('''
-Choose leet mode code
-    (0, 1, 2, 11-19, 21-29)      default: %s''' % pyoptions.leetmode_code))
-
-    parser.add_argument('--pick', dest='pick', default='', action="store_true",
-                        help=cool.yellow('''
-Use [minlen maxlen] to pick results'''))
-
-    parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
-                        help=cool.yellow('Enter the Social Engineering Dictionary Builder'))
+    parser.add_argument('--leet', dest='leet', metavar='code', nargs='+', type=int, default=pyoptions.leetmode_code,
+                        help=cool.yellow('Choose leet mode code (0, 1, 2, 11-19, 21-29)'))
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

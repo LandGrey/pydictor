@@ -27,8 +27,6 @@ def init_paths():
 
     paths.root_path = root_path
     paths.results_path = os.path.abspath(os.path.join(paths.root_path, "results"))
-    paths.buildconf_path = os.path.join(paths.root_path, "build.conf")
-    paths.scrapersites_path = os.path.join(paths.root_path, 'passcraper.sites')
 
     # wordlist path
     paths.wordlist_path = os.path.join(paths.root_path, "wordlist")
@@ -42,12 +40,12 @@ def init_paths():
 
     # function cfg path
     paths.funcfg_path = os.path.join(paths.root_path, "funcfg")
-    paths.leetmode_path = os.path.join(paths.funcfg_path, "leet_mode.cfg")
-    paths.extendprefix_path = os.path.join(paths.funcfg_path, "extend_prefix.cfg")
-    paths.extendsuffix_path = os.path.join(paths.funcfg_path, "extend_suffix.cfg")
-    paths.extendheadtail_path = os.path.join(paths.funcfg_path, "extend_headtail.cfg")
-    paths.scraperwhitelist_path = os.path.join(paths.funcfg_path, "passcraper_blacklist.cfg")
-    paths.sedbtrick_path = os.path.join(paths.funcfg_path, "sedb_tricks.cfg")
+    paths.buildconf_path = os.path.join(paths.funcfg_path, "build.conf")
+    paths.extendconf_path = os.path.join(paths.funcfg_path, "extend.conf")
+    paths.leetmode_path = os.path.join(paths.funcfg_path, "leet_mode.conf")
+    paths.scrapersites_path = os.path.join(paths.funcfg_path, 'passcraper.sites')
+    paths.scraperwhitelist_path = os.path.join(paths.funcfg_path, "passcraper_blacklist.conf")
+    paths.sedbtrick_path = os.path.join(paths.funcfg_path, "sedb_tricks.conf")
 
 
 def init_pystrs():
@@ -80,8 +78,6 @@ def init_pystrs():
     pystrs.conf_maxlen = "maxlen"
     pystrs.conf_encode = "encode"
     pystrs.conf_tail = "tail"
-    pystrs.dicts = {pystrs.conf_head: [], pystrs.conf_char: [], pystrs.conf_minlen: [], pystrs.conf_maxlen: [],
-                    pystrs.conf_encode: [], pystrs.conf_tail: []}
 
     pystrs.sex_range = ("m", "f", "all")
     pystrs.default_sex = "all"
@@ -99,7 +95,7 @@ def init_pystrs():
     pystrs.tool_range = ("shredder", "uniqifer", "counter", 'combiner', 'uniqbiner')
 
     # plug function string
-    pystrs.plug_range = ("pid6", "pid8", "extend", "passcraper")
+    pystrs.plug_range = ("pid6", "pid8", "passcraper")
 
     # encode function string
     pystrs.encode_range = ("none", "b64", "md5", "md516", "sha1", "url", "sha256", "sha512")
@@ -149,35 +145,45 @@ def init_pyoptions():
     # default counter view items
     pyoptions.default_vs_items = 50
 
-    # use leet mode
-    pyoptions.extend_leet = True
-    pyoptions.passcraper_leet = True
-    pyoptions.sedb_leet = False
-
     # command options
     pyoptions.args_base = ""
     pyoptions.args_char = ""
     pyoptions.args_chunk = []
+    pyoptions.args_extend = []
     pyoptions.args_plug = []
     pyoptions.args_sedb = ""
     pyoptions.args_conf = ""
     pyoptions.args_tool = []
     pyoptions.args_sedb = False
-    pyoptions.args_conf = ""
     pyoptions.args_pick = False
 
     # command arguments
     pyoptions.head = ""
     pyoptions.tail = ""
     pyoptions.encode = "none"
-    pyoptions.minlen = 1
+    pyoptions.minlen = 0
     pyoptions.maxlen = 4
-    pyoptions.leetmode_code = 0
+
+    # the lower the more items
+    pyoptions.level = 3
+
+    # leet mode
+    pyoptions.extend_leet = False
+    pyoptions.passcraper_leet = False
+    pyoptions.sedb_leet = False
+    pyoptions.leetmode_code = []
+
+    # LEQ middle_switcher will works on 'extend' plug
+    pyoptions.middle_switcher = 5
 
     # configuration file split char
     pyoptions.chars_split = ","
     pyoptions.char_range_split = "-"
-    pyoptions.length_split = ":"
+    pyoptions.length_split = ","
+    pyoptions.rangepattern = '^\[.*?\]$'
+    pyoptions.level_str_pattern = "^(\d)\s+(.*?)$"
+    pyoptions.level_str_str_pattern = "^(\d)\s+(.*?)\s+(.*?)$"
+    pyoptions.confpattern = '(.*?)\[(.*?)\]\{(.*?)\}\<(.*?)\>([^[]*)'
 
     # annotator
     pyoptions.annotator = '#'
@@ -191,6 +197,13 @@ def init_pyoptions():
     # cfg
     pyoptions.key_value_split = "="
 
+    # characters map operator
+    pyoptions.charmap = {'%space%': ' ', '%-%': '-',
+                         '%|%': ',', '%||%': ':',
+                         '%{%': '{', '%}%': '}',
+                         '%[%': '[', '%]%': ']',
+                         '%(%': '(', '%)%': ')',
+                         '%<%': '<', '%>%': '>'}
 
     # encode operator
     pyoptions.operator = {'none': none_encode, 'b64': base64_encode, 'md5': md5_encode, 'md516': md5_16_encode,

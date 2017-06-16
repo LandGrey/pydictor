@@ -8,24 +8,24 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
-from lib.fun.fun import unique
+from core.EXTEND import wordsharker
 from lib.data.data import pyoptions
-from lib.fun.leetmode import leet_mode_magic
+from lib.fun.fun import unique
 
 
-def simplejoin(firstlist, secondlist):
-    if type(firstlist) is list and type(secondlist) is list:
-        for f in firstlist:
-            for s in secondlist:
-                yield f + s
-    elif type(firstlist) is list and type(secondlist) is not list:
-        for f in firstlist:
-            yield f + secondlist
-    elif type(firstlist) is not list and type(secondlist) is list:
-            for s in secondlist:
-                yield firstlist + s
+def simplejoin(first, second):
+    ff = ss = []
+    if type(first) is list:
+        ff.extend(first)
     else:
-        yield firstlist + secondlist
+        ff.append(first)
+    if type(second) is list:
+        ff.extend(second)
+    else:
+        ff.append(second)
+    for f in ff:
+        for s in ss:
+            yield f + s
 
 
 def middlejoin(firstlist, secondlist, midstr):
@@ -131,42 +131,17 @@ def dateshaper(date):
 def wordshaper(word, *args):
     shapes = []
     if not args:
-        shapes.append(word)
-        shapes.append(word.lower())
-        shapes.append(word.upper())
-        shapes.append(word.capitalize())
-        if pyoptions.sedb_leet:
-            shapes.append(leet_mode_magic(word))
+        shapes.extend(wordsharker(word, pyoptions.sedb_leet))
     else:
         if not type(word) is list:
-            shapes.append(word)
-            shapes.append(word.lower())
-            shapes.append(word.upper())
-            shapes.append(word.capitalize())
-            if pyoptions.sedb_leet:
-                shapes.append(leet_mode_magic(word))
+            shapes.extend(wordsharker(word, pyoptions.sedb_leet))
         else:
             for w in word:
-                shapes.append(w)
-                shapes.append(w.lower())
-                shapes.append(w.upper())
-                shapes.append(w.capitalize())
-                if pyoptions.sedb_leet:
-                    shapes.append(leet_mode_magic(w))
+                shapes.extend(wordsharker(w, pyoptions.sedb_leet))
         for arg in args:
             if not type(arg) is list:
-                shapes.append(arg)
-                shapes.append(arg.lower())
-                shapes.append(arg.upper())
-                shapes.append(arg.capitalize())
-                if pyoptions.sedb_leet:
-                    shapes.append(leet_mode_magic(arg))
+                shapes.extend(wordsharker(arg, pyoptions.sedb_leet))
             else:
                 for a in arg:
-                    shapes.append(a)
-                    shapes.append(a.lower())
-                    shapes.append(a.upper())
-                    shapes.append(a.capitalize())
-                    if pyoptions.sedb_leet:
-                        shapes.append(leet_mode_magic(a))
+                    shapes.extend(wordsharker(a, pyoptions.sedb_leet))
     return unique(shapes)

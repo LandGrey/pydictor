@@ -8,24 +8,30 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
+import os
 import re
-import string
-from lib.fun.fun import cool
+from lib.fun.fun import cool, charanger
 from lib.data.data import pystrs, pyoptions
 
 
-def confmatcher(confpath):
+def confmatcher(resource):
     configures = []
-    with open(confpath) as f:
-        for item in f.readlines():
-            confline = item.strip()
-            if len(confline) >= 1 and confline[0] == pyoptions.annotator:
-                pass
-            else:
-                matches = re.findall('(.*?)\[(.*?)\]\{(.*?)\}\<(.*?)\>([^[]*)', confline)
-                for match in matches:
-                    for m in match:
-                        configures.append(m)
+    if not os.path.isfile(resource):
+        matches = re.findall(pyoptions.confpattern, resource)
+        for match in matches:
+            for m in match:
+                configures.append(m.strip())
+    else:
+        with open(resource) as f:
+            for item in f.readlines():
+                confline = item.strip()
+                if len(confline) >= 1 and confline[0] == pyoptions.annotator:
+                    pass
+                else:
+                    matches = re.findall(pyoptions.confpattern, confline)
+                    for match in matches:
+                        for m in match:
+                            configures.append(m.strip())
     if configures:
         if len(configures) // 5 > 10:
             exit(pyoptions.CRLF + cool.red('[-] Max support 10 parser'))
@@ -36,29 +42,20 @@ def confmatcher(confpath):
 
 
 def elementparser(configures):
+    dicts = {pystrs.conf_head: [], pystrs.conf_char: [], pystrs.conf_minlen: [], pystrs.conf_maxlen: [], 
+             pystrs.conf_encode: [], pystrs.conf_tail: []}
     for x in range(1, len(configures) + 1):
         count = x - 1
         x %= 5
         if x == 1:
-            pystrs.dicts[pystrs.conf_head].append(configures[count])
+            dicts[pystrs.conf_head].append(configures[count].strip())
         elif x == 2:
-            _ = []
-            for i in range(len(configures[count].split(pyoptions.chars_split))):
-                if pyoptions.char_range_split in configures[count].split(pyoptions.chars_split)[i] and \
-                                len(configures[count].split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)) == 2:
-                    start = configures[count].split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[0]
-                    end = configures[count].split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[1]
-                    for c in string.printable:
-                        if start <= c <= end:
-                            _.append(c)
-                else:
-                    _.append(configures[count].split(pyoptions.chars_split)[i])
-            pystrs.dicts[pystrs.conf_char].append(_)
+            dicts[pystrs.conf_char].append(charanger(configures[count]))
         elif x == 3:
-            pystrs.dicts[pystrs.conf_minlen].append(configures[count].split(pyoptions.length_split)[0])
-            pystrs.dicts[pystrs.conf_maxlen].append(configures[count].split(pyoptions.length_split)[1])
+            dicts[pystrs.conf_minlen].append(configures[count].split(pyoptions.length_split)[0])
+            dicts[pystrs.conf_maxlen].append(configures[count].split(pyoptions.length_split)[1])
         elif x == 4:
-            pystrs.dicts[pystrs.conf_encode].append(configures[count])
+            dicts[pystrs.conf_encode].append(configures[count])
         elif x == 0:
-            pystrs.dicts[pystrs.conf_tail].append(configures[count])
-    return pystrs.dicts
+            dicts[pystrs.conf_tail].append(configures[count].strip())
+    return dicts

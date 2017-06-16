@@ -11,10 +11,11 @@ from __future__ import unicode_literals
 
 import os
 import re
-from plugins.extend import extend_magic
-from lib.fun.osjudger import py_ver_egt_3
+
+from core.EXTEND import get_extend_dic
 from lib.data.data import paths, pyoptions
 from lib.fun.fun import unique, cool, walk_pure_file
+from lib.fun.osjudger import py_ver_egt_3
 
 
 # in python3: urllib + urilib2 -> urllib, and
@@ -119,7 +120,7 @@ def checkurl(urlike):
         exit(cool.red("[-] Incorrect url/uri: {0}".format(cool.red(urlike.strip()))))
 
 
-def scraper_magic(target=paths.scrapersites_path, encodeflag='none'):
+def scraper_magic(target=paths.scrapersites_path):
     sites = []
     if os.path.isfile(target):
         with open(target, 'r') as f:
@@ -130,4 +131,4 @@ def scraper_magic(target=paths.scrapersites_path, encodeflag='none'):
                     sites.append(checkurl(_))
     else:
         sites.append(checkurl(target))
-    extend_magic(scratchword(sites), encodeflag=encodeflag, need_passcratch=True)
+    get_extend_dic(scratchword(sites), need_passcratch=True)

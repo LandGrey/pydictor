@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 
 import os
 import time
+import string
 from functools import reduce
 from lib.fun.color import Colored
 from lib.fun.osjudger import py_ver_egt_3
@@ -38,6 +39,21 @@ def rreplace(self, old, new, *max):
     if max and str(max[0]).isdigit():
         count = max[0]
     return new.join(self.rsplit(old, count))
+
+
+def charanger(confstr):
+    ranges = []
+    for i in range(len(confstr.split(pyoptions.chars_split))):
+        if pyoptions.char_range_split in confstr.split(pyoptions.chars_split)[i] and \
+                        len(confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)) == 2:
+            start = confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[0]
+            end = confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[1]
+            for c in string.printable:
+                if start <= c <= end:
+                    ranges.append(c.strip())
+        else:
+            ranges.append(str(confstr.split(pyoptions.chars_split)[i]).strip())
+    return ranges
 
 
 def walks_all_files(directory):
