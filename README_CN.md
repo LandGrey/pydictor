@@ -58,7 +58,7 @@ python pydictor.py
 ##### 命令: -base
 ##### 示例1: 使用纯数字、纯小写字母或纯大写字母生成任意位数的爆破字典
 ```
-python pydictor.py -base d --len 6 6			生成6位纯数字字典
+python pydictor.py -base d --len 6 6            生成6位纯数字字典
 ```
 
 ##### 示例2: 使用数字、小写字母与大写字母两两组合生成任意位数的爆破字典
@@ -68,7 +68,7 @@ python pydictor.py -base dL --len 1 3
 
 ##### 示例3: 使用数字、小写字母与大写字母3者组合的任意位数的爆破字典生成
 ```
-python pydictor.py -base dLc				    默认字典长度:最小0，最大4
+python pydictor.py -base dLc                    默认字典长度:最小0，最大4
 ```
 
 
@@ -85,7 +85,7 @@ python pydictor.py -char abc123._@ --len 1 3
 ### 三. 块乘法字典
 ##### 命令: -chunk
 ```
-python pydictor.py -chunk abc ABC 666 . _ @		生成由'abc'、'ABC'、'666' 、'.'、'_'、'@'6个块组成的所有可能性的排列组合字典
+python pydictor.py -chunk abc ABC 666 . _ @     生成由'abc'、'ABC'、'666' 、'.'、'_'、'@'6个块组成的所有可能性的排列组合字典
 ```
 
 **注**:  当需要空格等特殊字符时,请加双引号单独包围特殊字符,如:abc " " 123 asdf
@@ -97,10 +97,10 @@ python pydictor.py -chunk abc ABC 666 . _ @		生成由'abc'、'ABC'、'666' 、'
 1.  extend功能主要针对web应用管理员生成密码字典
 2.  你可以将自己的弱密码字典放在 wordlist/Web 目录下，extend插件会自动去重，生成的字典将会包含它们
 3.  你可以修改 funcfg目录下的extend.conf文件，设定扩展时加入的前缀、后缀、前后缀组合、双写中间词等
-4.  extend 支持leet mode和长度筛选功能，你可以在下文看到关于它们的描述
+4.  extend 支持leet 模式、level筛选和长度筛选功能，你可以在下文看到关于它们的描述
 
 ```
-python pydictor.py -extend D:\word.txt -o D:\awesome\wordlist
+python pydictor.py -plug extend /target.txt --leet 0 1 2 11 21 --level 1 --len 4 15 -o /awesome/wordlist
 ```
 
 

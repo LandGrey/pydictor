@@ -49,8 +49,7 @@ pydictor.py [options]
                                                        pystrs.base_dic_type[2], pystrs.base_dic_type[3],
                                                        pystrs.base_dic_type[4], pystrs.base_dic_type[5],
                                                        pystrs.base_dic_type[6]], metavar='Type',
-                        default='', help=cool.yellow('''
-Choose from  ({0}, {1}, {2}, {3}, {4}, {5}, {6})
+                        default='', help=cool.yellow('''Choose from  ({0}, {1}, {2}, {3}, {4}, {5}, {6})
     {0}     digital             [0 - 9]
     {1}     lowercase letters   [a - z]
     {2}     capital letters     [A - Z]
@@ -65,35 +64,31 @@ Choose from  ({0}, {1}, {2}, {3}, {4}, {5}, {6})
     parser.add_argument('-char', dest='char', metavar='character', default='',
                         help=cool.yellow('Use Custom Character build the dictionary'))
 
-    parser.add_argument('-chunk', dest='chunk', metavar='chunk', nargs='+', type=str, default='',
+    parser.add_argument('-chunk', dest='chunk', metavar='arg', nargs='+', type=str, default='',
                         help=cool.yellow('Use the multi-chunk build the dictionary'))
 
-    parser.add_argument('-extend', dest='extend', metavar='target', nargs='+', type=str, default='',
+    parser.add_argument('-extend', dest='extend', metavar='arg', nargs='+', type=str, default='',
                         help=cool.yellow('Extend the string list or file'))
 
-    parser.add_argument('-plug', dest='plug', metavar='plug', nargs='+', type=str, default='',
-                        help=cool.yellow('''
-Choose from    ({0}, {1}, {2}, {3})
+    parser.add_argument('-plug', dest='plug', metavar='arg', nargs='+', type=str, default='',
+                        help=cool.yellow('''Choose from    ({0}, {1}, {2}, {3})
     {0:10} [idcard_last_6_digit]   default sex:{3}
     {1:10} [idcard_last_8_digit]   default sex:{3}
     {2:10} [url_or_file_path]'''.format(pystrs.plug_range[0], pystrs.plug_range[1], pystrs.plug_range[2], pystrs.default_sex)))
 
     parser.add_argument('--conf', dest='conf', nargs='?', metavar='file_path', default='default', const='const',
-                        help=cool.yellow('''
-Use the configuration file build the dictionary
+                        help=cool.yellow('''Use the configuration file build the dictionary
     Default: %s''' % paths.buildconf_path))
 
     parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
                         help=cool.yellow('Enter the Social Engineering Dictionary Builder'))
 
-    parser.add_argument('-o', dest='output', metavar='output', type=str, default=paths.results_path,
-                        help=cool.yellow('''
-Set the output directory path
+    parser.add_argument('-o', '-output', dest='output', metavar='path', type=str, default=paths.results_path,
+                        help=cool.yellow('''Set the output directory path
     default: %s''' % paths.results_path))
 
-    parser.add_argument('-tool', dest='tool', metavar='name', nargs='+', type=str, default='',
-                        help=cool.yellow('''
-Choose from    ({0}, {1}, {2},
+    parser.add_argument('-tool', dest='tool', metavar='arg', nargs='+', type=str, default='',
+                        help=cool.yellow('''Choose from    ({0}, {1}, {2},
                 {3}, {4})
     {0:10} [file_or_dir]
     {1:10} [file_path]
@@ -104,8 +99,7 @@ Choose from    ({0}, {1}, {2},
                            pystrs.save_and_view)))
 
     parser.add_argument('--len', dest='len', metavar=('minlen', 'maxlen'), nargs=2, type=int,
-                        default=(pyoptions.minlen, pyoptions.maxlen), help=cool.yellow('''
-[Minimun_Length]  [Maximun_Length]
+                        default=(pyoptions.minlen, pyoptions.maxlen), help=cool.yellow('''[Minimun_Length]  [Maximun_Length]
     Default: min=%s  max=%s''' % (pyoptions.minlen, pyoptions.maxlen)))
 
     parser.add_argument('--head', dest='head', metavar='prefix', type=str, default='',
@@ -118,10 +112,11 @@ Choose from    ({0}, {1}, {2},
                         choices=[pystrs.encode_range[0], pystrs.encode_range[1], pystrs.encode_range[2],
                                  pystrs.encode_range[3], pystrs.encode_range[4], pystrs.encode_range[5],
                                  pystrs.encode_range[6], pystrs.encode_range[7]],
-                        help=cool.yellow('''
-From (%s, %s, %s, %s, %s, %s, %s, %s)''' % (pystrs.encode_range[0], pystrs.encode_range[1], pystrs.encode_range[2],
-                                            pystrs.encode_range[3], pystrs.encode_range[4], pystrs.encode_range[5],
-                                            pystrs.encode_range[6], pystrs.encode_range[7])))
+                        help=cool.yellow
+                        ('''From (%s, %s, %s, %s, %s, %s, %s, %s)''' % (pystrs.encode_range[0], pystrs.encode_range[1],
+                                                                        pystrs.encode_range[2], pystrs.encode_range[3],
+                                                                        pystrs.encode_range[4], pystrs.encode_range[5],
+                                                                        pystrs.encode_range[6], pystrs.encode_range[7])))
 
     parser.add_argument('--level', dest='level', metavar='code', default=pyoptions.level, type=int,
                         help=cool.yellow('''Use code [1-5] to filter results, default: {0}'''.format(pyoptions.level)))

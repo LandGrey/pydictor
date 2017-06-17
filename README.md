@@ -94,13 +94,13 @@ python pydictor.py -chunk abc ABC 666 . _ @		generating all  possible permutatio
 ### 4. generate the dictionary base on extend function
 ##### cmd: -extend
 
-1.  extend plug mainly directed against web application administrator to generate password
-2.  You can put your own weak password wordlist in wordlist/Web，extend plug will auto unique them，new wordlist will contains them
-3.  You can modify funcfg/extend.conf，set prefix, suffix, prefix + suffix and middle word when extended
-4.  extend plug support leet mode and pick by lenght function，you can learn more in the following   
+1.  extend function mainly directed against web application administrator to generate password
+2.  You can put your own weak password wordlist in wordlist/Web,extend plug will auto unique them,new wordlist will contains them
+3.  You can modify funcfg/extend.conf,set prefix, suffix, prefix + suffix and middle word when extended
+4.  extend plug support leet mode,pick by level and pick by lenght function，you can learn more in the following   
 
 ```
-python pydictor.py -plug extend D:\word.txt -o D:\awesome\wordlist
+python pydictor.py -plug extend /target/word.txt --leet 0 1 2 11 21 --level 1 --len 4 15 -o /target/awesome/wordlist
 ```
 
 
@@ -124,7 +124,7 @@ python pydictor.py -plug pid8
 2.  passcraper plug will generate two wordlist，preffix with SCRATCH is raw wordlist by website plain text，
     and if you feel that there are a lot of unrelated words in the SCRATCH wordlist, 
     you can remove them, and then use the extend plugin to specify the new file to generate dictionary again.
-3.  you can modify the funcfg/passcraper_blacklist.cfg file，add or delete useless words that need to be filtered out，
+3.  you can modify the funcfg/passcraper_blacklist.conf file，add or delete useless words that need to be filtered out，
     and also can modify lib/data/data.py file passcraper_filter argument，change the filter regular expressions
 4.  with same extend plugin，you can put your weak password in /wordlist/Web，new wordlist will contains them
 
@@ -179,7 +179,7 @@ python pydictor.py -tool shredder 		delete the currently specified output path(d
 python pydictor.py -tool shredder base 		delete the files of it's prefix is "BASE" in currently specified output path
 ```
 
-prefix(case insensitive) range in 13 items:base,char,chunk,conf,sedb,idcard,extend,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
+prefix(case insensitive) range in 13 items: base,char,chunk,conf,sedb,idcard,extend,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
 
   besides，you can safe shred files or whole directory as following:
 ```
@@ -305,7 +305,7 @@ s = 5
 besides,you also can:   
 
 ```
-modify /funcfg/leet_mode.cfg, add or delete leet table items;   
+modify /funcfg/leet_mode.conf, add or delete leet table items;   
 modify /lib/lib/data.py, extend_leet、passcraper_leet、sedb_leet arguments, choose some functions whether default use leet mode;
 modify /lib/data/data.py,leet_mode_code argument, choose default mode code;
 ```
