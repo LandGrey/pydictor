@@ -1,4 +1,4 @@
 *.xml
-*.iml
+.idea/pydictor.iml
 *.pyc
 /test

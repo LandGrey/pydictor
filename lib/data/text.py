@@ -13,27 +13,28 @@ from lib.fun.fun import cool
 from lib.data.data import pystrs
 
 
-pydictor_art_text = '''
-         _______                __   _          _
-        |_   __ \              |  ] (_)        / |_
-          | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-          |  ___/[ \ [  ]/ /'`\' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-         _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-        |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                 \__.'
-'''
+pydictor_art_text = \
+'''                              _ _      _
+              _ __  _   _  __| (_) ___| |_ ___  _ __
+             | '_ \| | | |/ _` | |/ __| __/ _ \| '__|
+             | |_) | |_| | (_| | | (__| || (_) | |
+             | .__/ \__, |\__,_|_|\___|\__\___/|_|
+             |_|    |___/                            ({0})
+'''.format(cool.orange(pystrs.version))
 
 
 helpmsg = \
 '''                   {0}
                                             {1}
-    --------------------------[ {2} ]--------------------------
-    [+]help desc             [+]show option
-    [+]set option arguments  [+]rm option
-    [+]len minlen maxlen     [+]level code           [+]leet code
-    [+]run                   [+]exit/quit            [+]clear/cls
+    ----------------------------[ {2} ]---------------------------
+    [+]help desc             [+]exit/quit            [+]clear/cls
+    [+]show option           [+]set option arguments [+]rm option
+    [+]len minlen maxlen     [+]head prefix          [+]tail suffix
+    [+]encode type           [+]occur L d s          [+]types L d s
+    [+]regex string          [+]level code           [+]leet code
+    [+]output directory      [+]run
 
-    --------------------------[ {3} ]---------------------------
+    ----------------------------[ {3} ]----------------------------
     [+]{4}                 [+]{5}                [+]{6}
     [+]{7}                 [+]{8}              [+]{9}
     [+]{10}                [+]{11}               [+]{12}

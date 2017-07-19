@@ -27,6 +27,7 @@ def init_paths():
 
     paths.root_path = root_path
     paths.results_path = os.path.abspath(os.path.join(paths.root_path, "results"))
+    paths.results_file_name = None
 
     # wordlist path
     paths.wordlist_path = os.path.join(paths.root_path, "wordlist")
@@ -52,6 +53,8 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
+    pystrs.version = '2.0.0#dev'
+
     # file prefix strings
     pystrs.BASE_prefix = "BASE"
     pystrs.CHAR_prefix = "CHAR"
@@ -62,13 +65,14 @@ def init_pystrs():
     pystrs.EXTEND_prefix = "EXTEND"
     pystrs.SCFATCH_prefix = "SCRATCH"
     pystrs.PASSCRAPER_prefix = "PASSCRAPER"
+    pystrs.HANDLE_prefix = "HANDLE"
     pystrs.UNIQIFER_prefix = "UNIQIFER"
     pystrs.COUNTER_prefix = "COUNTER"
     pystrs.COMBINER_prefix = "COMBINER"
     pystrs.UNIQBINER_prefix = "UNIQBINER"
     pystrs.prefix_range = (pystrs.BASE_prefix, pystrs.CHAR_prefix, pystrs.CHUNK_prefix, pystrs.CONF_prefix,
                            pystrs.SEDB_prefix, pystrs.IDCARD_prefix, pystrs.EXTEND_prefix, pystrs.SCFATCH_prefix,
-                           pystrs.PASSCRAPER_prefix, pystrs.UNIQIFER_prefix, pystrs.COUNTER_prefix,
+                           pystrs.PASSCRAPER_prefix, pystrs.HANDLE_prefix, pystrs.UNIQIFER_prefix, pystrs.COUNTER_prefix,
                            pystrs.COMBINER_prefix,  pystrs.UNIQBINER_prefix)
 
     # build configuration file element description
@@ -151,6 +155,7 @@ def init_pyoptions():
     pyoptions.args_chunk = []
     pyoptions.args_extend = []
     pyoptions.args_plug = []
+    pyoptions.args_handle = ""
     pyoptions.args_sedb = ""
     pyoptions.args_conf = ""
     pyoptions.args_tool = []
@@ -163,6 +168,15 @@ def init_pyoptions():
     pyoptions.encode = "none"
     pyoptions.minlen = 0
     pyoptions.maxlen = 4
+    pyoptions.default_occurs = "<=99"
+    pyoptions.letter_occur = pyoptions.default_occurs
+    pyoptions.digital_occur = pyoptions.default_occurs
+    pyoptions.special_occur = pyoptions.default_occurs
+    pyoptions.default_types = ">=0"
+    pyoptions.letter_types = pyoptions.default_types
+    pyoptions.digital_types = pyoptions.default_types
+    pyoptions.special_types = pyoptions.default_types
+    pyoptions.filter_regex = ".*?"
 
     # the lower the more items
     pyoptions.level = 3

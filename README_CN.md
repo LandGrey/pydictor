@@ -1,17 +1,15 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor) [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv3-red.svg)](http://www.gnu.de/documents/gpl-3.0.en.html)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md in [English](README.md)**
 
 ##### pydictor —— 一个强大实用的黑客暴力破解字典建立工具
-
-         _______                __   _          _
-        |_   __ \              |  ] (_)        / |_
-          | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-          |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-         _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-        |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                 \__.'
+                          _ _      _
+          _ __  _   _  __| (_) ___| |_ ___  _ __
+         | '_ \| | | |/ _` | |/ __| __/ _ \| '__|
+         | |_) | |_| | (_| | | (__| || (_) | |
+         | .__/ \__, |\__,_|_|\___|\__\___/|_|
+         |_|    |___/                         
 
 
 ##### Email: LandGrey@qq.com
@@ -317,29 +315,31 @@ s = 5
 python pydictor.py --sedb
 ```
 ```
-         _______                __   _          _
-        |_   __ \              |  ] (_)        / |_
-          | |__) |_   __   .--.| |  __   .---.`| |-' .--.   _ .--.
-          |  ___/[ \ [  ]/ /'`' | [  | / /'`\]| | / .'`\ \[ `/'`\]
-         _| |_    \ '/ / | \__/  |  | | | \__. | |,| \__. | | |
-        |_____| [\_:  /   '.__.;__][___]'.___.'\__/ '.__.' [___]
-                 \__.'
+                              _ _      _
+              _ __  _   _  __| (_) ___| |_ ___  _ __
+             | '_ \| | | |/ _` | |/ __| __/ _ \| '__|
+             | |_) | |_| | (_| | | (__| || (_) | |
+             | .__/ \__, |\__,_|_|\___|\__\___/|_|
+             |_|    |___/                         
 
                    Social Engineering Dictionary Builder
                                             Build by LandGrey
-    --------------------------[ command ]--------------------------
-    [+]help desc             [+]show option
-    [+]set option arguments  [+]rm option
-    [+]len minlen maxlen     [+]level code           [+]leet code
-    [+]run                   [+]exit/quit            [+]clear/cls
+    ----------------------------[ command ]----------------------------
+    [+]help desc             [+]exit/quit            [+]clear/cls
+    [+]show option           [+]set option arguments [+]rm option
+    [+]len minlen maxlen     [+]head prefix          [+]tail suffix
+    [+]encode type           [+]occur L d s          [+]types L d s
+    [+]regex string          [+]level code           [+]leet code
+    [+]output directory      [+]run
 
-    --------------------------[ option ]---------------------------
+    ----------------------------[ option ]----------------------------
     [+]cname                 [+]ename                [+]sname
     [+]birth                 [+]usedpwd              [+]phone
     [+]uphone                [+]hphone               [+]email
     [+]postcode              [+]nickname             [+]idcard
     [+]jobnum                [+]otherdate            [+]usedchar
-    pydictor SEDB>>
+
+pydictor SEDB>>
 ```
 
 ##### 命令:

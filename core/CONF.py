@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 
 import os
 import itertools
+from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
 from lib.parse.confparse import elementparser, confmatcher
 from lib.fun.fun import finishprinter, finishcounter, countchecker, lengthchecker, range_compatible, cool, mybuildtime
@@ -29,11 +30,23 @@ def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
 
 
 def build_conf_dic():
-    storepath = os.path.join(paths.results_path, "%s_%s%s" %
-                             (pystrs.CONF_prefix, mybuildtime(), pyoptions.filextension))
+    this_name = "%s_%s%s" % (pystrs.CONF_prefix, mybuildtime(), pyoptions.filextension)
+    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
+    storepath = os.path.join(paths.results_path, paths.results_file_name)
     with open(storepath, "a") as f:
         for item in confcore(paths.buildconf_path):
-            f.write(str(item) + pyoptions.CRLF)
+            item = filterforfun(item, head=pyoptions.head, tail=pyoptions.tail,
+                                lenght_is_filter=pyoptions.args_pick,
+                                minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                                regex_is_filter=True, regex=pyoptions.filter_regex,
+                                encode_is_filter=True, encode=pyoptions.encode,
+                                occur_is_filter=True,
+                                letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                                types_is_filter=True,
+                                letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                                )
+            if item:
+                f.write(item + pyoptions.CRLF)
     finishprinter(finishcounter(storepath), storepath)
 
 
@@ -56,50 +69,139 @@ def confcore(resource):
     if finalen == 1:
         countchecker(-1, len(listpool[0]))
         for item in itertools.product(listpool[0]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 2:
         countchecker(-1, len(listpool[0]), len(listpool[1]))
         for item in itertools.product(listpool[0], listpool[1]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 3:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 4:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 5:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3], listpool[4]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 6:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]),
                      len(listpool[5]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3], listpool[4], listpool[5]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 7:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]),
                      len(listpool[5]), len(listpool[6]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3], listpool[4], listpool[5],
                                       listpool[6]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 8:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]),
                      len(listpool[5]), len(listpool[6]), len(listpool[7]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3], listpool[4], listpool[5],
                                       listpool[6], listpool[7]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 9:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]),
                      len(listpool[5]), len(listpool[6]), len(listpool[7]), len(listpool[8]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3], listpool[4], listpool[5],
                                       listpool[6], listpool[7], listpool[8]):
-            yield "".join(item)
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )
     elif finalen == 10:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]),
                      len(listpool[5]), len(listpool[6]), len(listpool[7]), len(listpool[8]), len(listpool[9]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3], listpool[4], listpool[5],
                                       listpool[6], listpool[7], listpool[8], listpool[9]):
-            yield "".join(item)
-
+            yield filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
+                               lenght_is_filter=pyoptions.args_pick,
+                               minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                               regex_is_filter=True, regex=pyoptions.filter_regex,
+                               encode_is_filter=True, encode=pyoptions.encode,
+                               occur_is_filter=True,
+                               letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                               types_is_filter=True,
+                               letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                               )

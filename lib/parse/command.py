@@ -23,26 +23,32 @@ def parse_args():
                                                  pyoptions.CRLF,
                                      usage=cool.orange('''
 pydictor.py [options]
-           -base     [type]
-           -char     [custom_char]
-           -chunk    [chunk1] [chunk2] ...
-           -extend   [str_or_file]
-           -plug     [{plug0},{plug1},{plug2}]
-           --conf    [config_file]
+           -base        [type]
+           -char        [custom_char]
+           -chunk       [chunk1] [chunk2] ...
+           -extend      [str_or_file]
+           -plug        [{plug0},{plug1},{plug2}]
+           -handle      [handle_file_path]
+           --conf       [config_file_path]
            --sedb
-           -o        [output_path]
-           -tool     [{tool0},{tool1},{tool2},{tool3},{tool4}] [args] ...
-           --len     [minlen] [maxlen]
-           --head    [prefix_string]
-           --tail    [suffix_string]
-           --encode  [{en0},{en1},{en2},{en3},{en4},{en5},{en6},{en7}]
-           --level   [code]
-           --leet    [code]'''.format(plug0=pystrs.plug_range[0], plug1=pystrs.plug_range[1], plug2=pystrs.plug_range[2],
-                                      tool0=pystrs.tool_range[0], tool1=pystrs.tool_range[1],
-                                      tool2=pystrs.tool_range[2], tool3=pystrs.tool_range[3], tool4=pystrs.tool_range[4],
-                                      en0=pystrs.encode_range[0], en1=pystrs.encode_range[1], en2=pystrs.encode_range[2],
-                                      en3=pystrs.encode_range[3], en4=pystrs.encode_range[4], en5=pystrs.encode_range[5],
-                                      en6=pystrs.encode_range[6], en7=pystrs.encode_range[7]))
+           -o,--output  [directory]
+           -tool        [{tool0},{tool1},{tool2},{tool3},{tool4}] [args] ...
+           --len        [minlen] [maxlen]
+           --head       [prefix_string]
+           --tail       [suffix_string]
+           --encode     [{en0},{en1},{en2},{en3},{en4},{en5},{en6},{en7}]
+           --occur      [letter] [digital] [special]
+           --types      [letter] [digital] [special]
+           --regex      [regex]
+           --level      [code]
+           --leet       [code]'''.format(plug0=pystrs.plug_range[0], plug1=pystrs.plug_range[1],
+                                         plug2=pystrs.plug_range[2], tool0=pystrs.tool_range[0],
+                                         tool1=pystrs.tool_range[1], tool2=pystrs.tool_range[2],
+                                         tool3=pystrs.tool_range[3], tool4=pystrs.tool_range[4],
+                                         en0=pystrs.encode_range[0], en1=pystrs.encode_range[1],
+                                         en2=pystrs.encode_range[2], en3=pystrs.encode_range[3],
+                                         en4=pystrs.encode_range[4], en5=pystrs.encode_range[5],
+                                         en6=pystrs.encode_range[6], en7=pystrs.encode_range[7]))
 )
 
     parser.add_argument('-base', dest='base', choices=[pystrs.base_dic_type[0], pystrs.base_dic_type[1],
@@ -83,9 +89,12 @@ pydictor.py [options]
     parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
                         help=cool.yellow('Enter the Social Engineering Dictionary Builder'))
 
-    parser.add_argument('-o', '-output', dest='output', metavar='path', type=str, default=paths.results_path,
+    parser.add_argument('-o', '--output', dest='output', metavar='path', type=str, default=paths.results_path,
                         help=cool.yellow('''Set the output directory path
     default: %s''' % paths.results_path))
+
+    parser.add_argument('-handle', dest='handle', metavar='path', type=str, default=pyoptions.args_handle,
+                        help=cool.yellow('Set handle the file path'))
 
     parser.add_argument('-tool', dest='tool', metavar='arg', nargs='+', type=str, default='',
                         help=cool.yellow('''Choose from    ({0}, {1}, {2},
@@ -99,8 +108,8 @@ pydictor.py [options]
                            pystrs.save_and_view)))
 
     parser.add_argument('--len', dest='len', metavar=('minlen', 'maxlen'), nargs=2, type=int,
-                        default=(pyoptions.minlen, pyoptions.maxlen), help=cool.yellow('''[Minimun_Length]  [Maximun_Length]
-    Default: min=%s  max=%s''' % (pyoptions.minlen, pyoptions.maxlen)))
+                        default=(pyoptions.minlen, pyoptions.maxlen), help=cool.yellow('''Default: min=%s  max=%s''' %
+                                                                                       (pyoptions.minlen, pyoptions.maxlen)))
 
     parser.add_argument('--head', dest='head', metavar='prefix', type=str, default='',
                         help=cool.yellow('Add string head for the items'))
@@ -117,6 +126,20 @@ pydictor.py [options]
                                                                         pystrs.encode_range[2], pystrs.encode_range[3],
                                                                         pystrs.encode_range[4], pystrs.encode_range[5],
                                                                         pystrs.encode_range[6], pystrs.encode_range[7])))
+
+    parser.add_argument('--occur', dest='occur', metavar=('letter', 'digital', 'special'), nargs=3, type=str,
+                        default=(pyoptions.letter_occur, pyoptions.digital_occur),
+                        help=cool.yellow('''Default: letter "%s" digital "%s" special "%s"''' %
+                                         (pyoptions.letter_occur, pyoptions.digital_occur, pyoptions.special_occur)))
+
+    parser.add_argument('--types', dest='types', metavar=('letter', 'digital', 'special'), nargs=3, type=str,
+                        default=(pyoptions.letter_types, pyoptions.digital_types),
+                        help=cool.yellow('''Default: letter "%s"  digital "%s"  special "%s"''' %
+                                         (pyoptions.letter_types, pyoptions.digital_types, pyoptions.special_types)))
+
+    parser.add_argument('--regex', dest='regex', metavar='regex', nargs=1, type=str,
+                        default=pyoptions.filter_regex, help=cool.yellow('''Filter by regex, Default: (%s)''' %
+                                                                         pyoptions.filter_regex))
 
     parser.add_argument('--level', dest='level', metavar='code', default=pyoptions.level, type=int,
                         help=cool.yellow('''Use code [1-5] to filter results, default: {0}'''.format(pyoptions.level)))
