@@ -48,38 +48,17 @@ def idcard_magic(posflag):
                     for v1516 in value1516.split(" "):
                         for v1718 in value1718.split(" "):
                             if v1718 != "":
-                                item = filterforfun(v1112 + v1314 + v1516 + v1718, head=pyoptions.head, tail=pyoptions.tail,
-                                                    lenght_is_filter=pyoptions.args_pick,
-                                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                                    regex_is_filter=True, regex=pyoptions.filter_regex,
-                                                    encode_is_filter=True, encode=pyoptions.encode,
-                                                    occur_is_filter=True,
-                                                    letter_occur=pyoptions.letter_occur,
-                                                    digital_occur=pyoptions.digital_occur,
-                                                    types_is_filter=True,
-                                                    letter_types=pyoptions.letter_types,
-                                                    digital_types=pyoptions.digital_types,
-                                                    )
-                                if item:
-                                    f.write(item + pyoptions.CRLF)
+                                f.write(pyoptions.operator.get
+                                        (pyoptions.encode)(pyoptions.head + "".join(v1112 + v1314 + v1516 + v1718) +
+                                                           pyoptions.tail) + pyoptions.CRLF)
 
         elif posflag == pystrs.plug_range[0]:
                 for v1314 in value1314.split(" "):
                     for v1516 in value1516.split(" "):
                         for v1718 in value1718.split(" "):
                             if v1718 != "":
-                                item = filterforfun(v1314 + v1516 + v1718, head=pyoptions.head, tail=pyoptions.tail,
-                                                    lenght_is_filter=pyoptions.args_pick,
-                                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                                    regex_is_filter=True, regex=pyoptions.filter_regex,
-                                                    encode_is_filter=True, encode=pyoptions.encode,
-                                                    occur_is_filter=True,
-                                                    letter_occur=pyoptions.letter_occur,
-                                                    digital_occur=pyoptions.digital_occur,
-                                                    types_is_filter=True,
-                                                    letter_types=pyoptions.letter_types,
-                                                    digital_types=pyoptions.digital_types,
-                                                    )
-                                if item:
-                                    f.write(item + pyoptions.CRLF)
+                                f.write(pyoptions.operator.get
+                                        (pyoptions.encode)(pyoptions.head + "".join(v1314 + v1516 + v1718) +
+                                                           pyoptions.tail) + pyoptions.CRLF)
+
     finishprinter(finishcounter(storepath), storepath)

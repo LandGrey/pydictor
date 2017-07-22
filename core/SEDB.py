@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import os
 import cmd
 import time
+import random
 
 from core.EXTEND import extend_enter
 from lib.data.data import paths, pystrs, pyoptions
@@ -206,12 +207,12 @@ class SEDB(cmd.Cmd):
             print(cool.fuchsia("[!] usage: occur letter digital special" + pyoptions.CRLF) +
                   cool.blue("[?] exp: occur <=6 >4 >=0") + pyoptions.CRLF)
         else:
-            letter = chunk[0]
-            digital = chunk[1]
-            special = chunk[2]
-            pyoptions.letter_occur = letter
-            pyoptions.digital_occur = digital
-            pyoptions.special_occur = special
+            letter = chunk[0].strip('"').strip("'")
+            digital = chunk[1].strip('"').strip("'")
+            special = chunk[2].strip('"').strip("'")
+            pyoptions.letter_occur = letter if letter != "" else pyoptions.letter_occur
+            pyoptions.digital_occur = digital if digital != "" else pyoptions.digital_occur
+            pyoptions.special_occur = special if special != "" else pyoptions.special_occur
             print("[+] letter occur: {0} digital occur: {1} special occur: {2}".
                   format(cool.green(pyoptions.letter_occur), cool.green(pyoptions.digital_occur),
                          cool.green(pyoptions.special_occur)) + pyoptions.CRLF)
@@ -222,12 +223,12 @@ class SEDB(cmd.Cmd):
             print(cool.fuchsia("[!] usage: types letter digital special" + pyoptions.CRLF) +
                   cool.blue("[?] exp: types <=6 >4 >=0") + pyoptions.CRLF)
         else:
-            letter = chunk[0]
-            digital = chunk[1]
-            special = chunk[2]
-            pyoptions.letter_occur = letter
-            pyoptions.digital_occur = digital
-            pyoptions.special_occur = special
+            letter = chunk[0].strip('"').strip("'")
+            digital = chunk[1].strip('"').strip("'")
+            special = chunk[2].strip('"').strip("'")
+            pyoptions.letter_types = letter if letter != "" else pyoptions.letter_types
+            pyoptions.digital_types = digital if digital != "" else pyoptions.digital_types
+            pyoptions.special_types = special if special != "" else pyoptions.special_types
             print("[+] letter types: {0} digital types: {1} special types: {2}".format
                   (cool.green(pyoptions.letter_types), cool.green(pyoptions.digital_types),
                    cool.green(pyoptions.special_types)) + pyoptions.CRLF)
@@ -276,28 +277,36 @@ class SEDB(cmd.Cmd):
             print(cool.fuchsia("[!] usage: output store_path" + pyoptions.CRLF))
         else:
             try:
-                if not os.path.exists(chunk[0]):
-                    if os.path.exists(os.path.split(chunk[0])[0]):
-                        paths.results_file_name = os.path.split(chunk[0])[1]
-                        paths.results_path = os.path.split(chunk[0])[0]
-                    else:
-                        os.mkdir(chunk[0])
-                else:
+                tmpdir, tmpname = os.path.split(chunk[0])
+                if os.path.isdir(chunk[0]):
                     paths.results_path = chunk[0]
+                    paths.results_file_name = None
+                elif os.path.isfile(chunk[0]):
+                    paths.results_path = tmpdir
+                else:
+                    if '.' in tmpname:
+                        paths.results_file_name = tmpname
+                        paths.results_path = tmpdir
+                    else:
+                        os.makedirs(chunk[0])
+                        paths.results_path = chunk[0]
+                        paths.results_file_name = None
             except WindowsError:
-                print(pyoptions.CRLF + cool.red("[-] Cannot create directory: %s " % paths.results_path))
+                print(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
             finally:
-                this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension)
-                paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-                print("[+] store path: {0}".format(
-                    cool.green(os.path.join(paths.results_path, paths.results_file_name))) + pyoptions.CRLF)
+                this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension) \
+                    if paths.results_file_name == None \
+                    else paths.results_file_name
+                print("[+] store path: {0}".format(cool.green(os.path.join(paths.results_path, this_name
+                if paths.results_file_name != None
+                else ''))) + pyoptions.CRLF)
 
     def do_run(self, args):
         pystrs.startime = time.time()
         results = []
-        this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension)
-        paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-        storepath = os.path.join(paths.results_path, paths.results_file_name)
+        this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(),
+                                 pyoptions.filextension) if paths.results_file_name == None else paths.results_file_name
+        storepath = os.path.join(paths.results_path, this_name)
         # SingleRule
         for single in SingleRule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[1]],
                                  pystrs.sedb_dict[pystrs.sedb_range[2]], pystrs.sedb_dict[pystrs.sedb_range[3]],
@@ -466,9 +475,13 @@ class SEDB(cmd.Cmd):
                                     regex_is_filter=True, regex=pyoptions.filter_regex,
                                     encode_is_filter=True, encode=pyoptions.encode,
                                     occur_is_filter=True,
-                                    letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                                    letter_occur=pyoptions.letter_occur,
+                                    digital_occur=pyoptions.digital_occur,
+                                    special_occur=pyoptions.special_occur,
                                     types_is_filter=True,
-                                    letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                                    letter_types=pyoptions.letter_types,
+                                    digital_types=pyoptions.digital_types,
+                                    special_types=pyoptions.special_types,
                                     )
                 if item:
                     f.write(item + pyoptions.CRLF)

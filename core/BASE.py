@@ -65,16 +65,6 @@ def get_base_dic(objflag, need_char_dic=False):
     with open(storepath, "a") as f:
         for i in range_compatible(pyoptions.minlen, pyoptions.maxlen+1):
             for item in itertools.product(objflag, repeat=i):
-                item = filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
-                                    lenght_is_filter=pyoptions.args_pick,
-                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                    regex_is_filter=True, regex=pyoptions.filter_regex,
-                                    encode_is_filter=True, encode=pyoptions.encode,
-                                    occur_is_filter=True,
-                                    letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
-                                    types_is_filter=True,
-                                    letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
-                                    )
-                if item:
-                    f.write(item + pyoptions.CRLF)
+                f.write(pyoptions.operator.get(pyoptions.encode)(pyoptions.head + "".join(item) + pyoptions.tail) +
+                        pyoptions.CRLF)
     finishprinter(finishcounter(storepath), storepath)

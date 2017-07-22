@@ -11,6 +11,7 @@ import os
 import time
 import string
 from collections import Counter
+from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.fun import finishcounter, finishprinter, cool, mybuildtime
 
@@ -28,7 +29,22 @@ def counter_operator(original_file_path, justsave, justview, encodeflag, head, t
     if justsave:
         with open(storepath, "a") as f:
             for _ in items:
-                f.write(pyoptions.operator.get(encodeflag)(head + _[0] + tail) + pyoptions.CRLF)
+                item = filterforfun(_[0], head=pyoptions.head, tail=pyoptions.tail,
+                                    lenght_is_filter=pyoptions.args_pick,
+                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
+                                    regex_is_filter=True, regex=pyoptions.filter_regex,
+                                    encode_is_filter=True, encode=pyoptions.encode,
+                                    occur_is_filter=True,
+                                    letter_occur=pyoptions.letter_occur,
+                                    digital_occur=pyoptions.digital_occur,
+                                    special_occur=pyoptions.special_occur,
+                                    types_is_filter=True,
+                                    letter_types=pyoptions.letter_types,
+                                    digital_types=pyoptions.digital_types,
+                                    special_types=pyoptions.special_types,
+                                    )
+                if item:
+                    f.write(item + pyoptions.CRLF)
         finishprinter(finishcounter(storepath), storepath)
     elif justview:
         print(pyoptions.CRLF * 2)

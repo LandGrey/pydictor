@@ -122,7 +122,6 @@ def types_filter(item, letter_types=pyoptions.letter_types, digital_types=pyopti
         special_map = {'<': s_types < s_wanttypes, '<=': s_types <= s_wanttypes,
                        '>': s_types > s_wanttypes, '>=': s_types >= s_wanttypes,
                        '=': s_types == s_wanttypes, '==': s_types == s_wanttypes,}
-
         if letter_map[l_op] and digital_map[d_op] and special_map[s_op]:
             return item
     else:
@@ -193,8 +192,12 @@ def cutout_filter(lists, start='pos-1', end='pos--1', cutout_is_filter=False):
 def filterforfun(item,
                  head=pyoptions.head, tail=pyoptions.tail,
                  minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                 letter_occur=pyoptions.default_occurs, digital_occur=pyoptions.default_occurs,
-                 letter_types=pyoptions.default_types, digital_types=pyoptions.default_types,
+                 letter_occur=pyoptions.default_occurs,
+                 digital_occur=pyoptions.default_occurs,
+                 special_occur=pyoptions.special_occur,
+                 letter_types=pyoptions.default_types,
+                 digital_types=pyoptions.default_types,
+                 special_types=pyoptions.default_types,
                  regex=pyoptions.filter_regex, encode=pyoptions.encode,
                  lenght_is_filter=False, encode_is_filter=False,
                  occur_is_filter=False, types_is_filter=False,
@@ -202,8 +205,10 @@ def filterforfun(item,
 
     item = headtail_filter(item, head=head, tail=tail)
     item = lenght_filter(item, minlen=minlen, maxlen=maxlen, lenght_is_filter=lenght_is_filter)
-    item = occur_filter(item, letter_occur=letter_occur, digital_occur=digital_occur, occur_is_filter=occur_is_filter)
-    item = types_filter(item, letter_types=letter_types, digital_types=digital_types, types_is_filter=types_is_filter)
+    item = occur_filter(item, letter_occur=letter_occur, digital_occur=digital_occur,
+                        special_occur=special_occur, occur_is_filter=occur_is_filter)
+    item = types_filter(item, letter_types=letter_types, digital_types=digital_types,
+                        special_types=special_types, types_is_filter=types_is_filter)
     item = regex_filter(item, regex=regex, regex_is_filter=regex_is_filter)
     item = encode_filter(item, encode=encode, encode_is_filter=encode_is_filter)
     return item

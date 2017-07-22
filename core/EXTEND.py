@@ -28,7 +28,8 @@ def wordsharker(raw, leet=True):
     #
     init_word_res = []
     raw = str(raw).strip()
-
+    if not raw:
+        return []
     # level {format}
     if pyoptions.level <= 5:
         # 5 {raw}
@@ -257,36 +258,48 @@ def extend_magic(rawlist, need_passcratch=False):
                                 regex_is_filter=True, regex=pyoptions.filter_regex,
                                 encode_is_filter=True, encode=pyoptions.encode,
                                 occur_is_filter=True,
-                                letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                                letter_occur=pyoptions.letter_occur,
+                                digital_occur=pyoptions.digital_occur,
+                                special_occur=pyoptions.special_occur,
                                 types_is_filter=True,
-                                letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                                letter_types=pyoptions.letter_types,
+                                digital_types=pyoptions.digital_types,
+                                special_types=pyoptions.special_types,
                                 )
             if item:
                 f.write(item + pyoptions.CRLF)
         if pyoptions.level <= 1:
             for _ in walks_all_files(paths.syslist_path):
                 item = filterforfun("".join(_), head=pyoptions.head, tail=pyoptions.tail,
+                                    lenght_is_filter=pyoptions.args_pick,
+                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
                                     regex_is_filter=True, regex=pyoptions.filter_regex,
                                     encode_is_filter=True, encode=pyoptions.encode,
-                                    lenght_is_filter=is_pick,
-                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
                                     occur_is_filter=True,
-                                    letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                                    letter_occur=pyoptions.letter_occur,
+                                    digital_occur=pyoptions.digital_occur,
+                                    special_occur=pyoptions.special_occur,
                                     types_is_filter=True,
-                                    letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                                    letter_types=pyoptions.letter_types,
+                                    digital_types=pyoptions.digital_types,
+                                    special_types=pyoptions.special_types,
                                     )
                 if item:
                     f.write(item + pyoptions.CRLF)
         for _ in extend_enter(rawlist, leet=leet):
             item = filterforfun("".join(_), head=pyoptions.head, tail=pyoptions.tail,
+                                lenght_is_filter=pyoptions.args_pick,
+                                minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
                                 regex_is_filter=True, regex=pyoptions.filter_regex,
                                 encode_is_filter=True, encode=pyoptions.encode,
-                                lenght_is_filter=is_pick,
-                                minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
                                 occur_is_filter=True,
-                                letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                                letter_occur=pyoptions.letter_occur,
+                                digital_occur=pyoptions.digital_occur,
+                                special_occur=pyoptions.special_occur,
                                 types_is_filter=True,
-                                letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                                letter_types=pyoptions.letter_types,
+                                digital_types=pyoptions.digital_types,
+                                special_types=pyoptions.special_types,
                                 )
             if item:
                 f.write(item + pyoptions.CRLF)

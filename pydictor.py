@@ -9,18 +9,19 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 
 import os
-from lib.fun.fun import cool
-from core.SEDB import SEDB
+import random
+
 from core.BASE import get_base_dic
 from core.CHAR import get_char_dic
 from core.CHUNK import get_chunk_dic
 from core.EXTEND import get_extend_dic
-from lib.fun.handle import get_handle_dic
-from lib.data.data import paths, pystrs, pyoptions
+from core.SEDB import SEDB
+from lib.data.data import paths, pyoptions
 from lib.data.text import pydictor_art_text
+from lib.fun.fun import cool
+from lib.parse.argsparse import plug_parser, conf_parser, tool_parser
 from lib.parse.command import parse_args
 from lib.parse.tricksparse import sedb_tricks
-from lib.parse.argsparse import plug_parser, conf_parser, tool_parser
 
 
 def init():
@@ -33,7 +34,6 @@ def init():
         pyoptions.extend_leet = True
         pyoptions.passcraper_leet = True
         pyoptions.sedb_leet = True
-
     paths.results_path = os.path.abspath(args.output)
 
     pyoptions.head = args.head
@@ -43,8 +43,10 @@ def init():
     pyoptions.maxlen = args.len[1]
     pyoptions.letter_occur = args.occur[0]
     pyoptions.digital_occur = args.occur[1]
+    pyoptions.special_occur = args.occur[2]
     pyoptions.letter_types = args.types[0]
     pyoptions.digital_types = args.types[1]
+    pyoptions.special_types = args.types[2]
     pyoptions.filter_regex = args.regex
 
     pyoptions.args_base = args.base
@@ -60,11 +62,27 @@ def init():
 
     try:
         if not os.path.exists(paths.results_path):
-            if os.path.exists(os.path.split(paths.results_path)[0]):
-                paths.results_file_name = os.path.split(paths.results_path)[1]
-                paths.results_path = os.path.split(paths.results_path)[0]
+            tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
+            if os.path.exists(tmp_dirpath):
+                if '.' in tmp_filename:
+                    paths.results_file_name = tmp_filename
+                    paths.results_path = tmp_dirpath
+                else:
+                    os.makedirs(paths.results_path)
+                    paths.results_path = paths.results_path
             else:
-                os.mkdir(paths.results_path)
+                if '.' in tmp_filename and not os.path.exists(tmp_dirpath):
+                    os.makedirs(tmp_dirpath)
+                    paths.results_file_name = tmp_filename
+                    paths.results_path = tmp_dirpath
+                else:
+                    os.makedirs(paths.results_path)
+        elif os.path.isfile(paths.results_path):
+            tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
+            if not os.path.exists(tmp_dirpath):
+                os.makedirs(tmp_dirpath)
+            paths.results_file_name = ''.join(random.sample('abcefg', 4)) + '_' + tmp_filename
+            paths.results_path = tmp_dirpath
     except WindowsError:
         exit(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
 
@@ -82,8 +100,6 @@ if __name__ == '__main__':
         get_extend_dic(pyoptions.args_extend)
     elif pyoptions.args_plug:
         plug_parser()
-    elif pyoptions.args_handle:
-        get_handle_dic(pyoptions.args_handle)
     elif pyoptions.args_sedb:
         try:
             sedb_tricks()

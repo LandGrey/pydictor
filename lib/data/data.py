@@ -53,7 +53,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.0.0#dev'
+    pystrs.version = '2.0.1#dev'
 
     # file prefix strings
     pystrs.BASE_prefix = "BASE"
@@ -65,14 +65,14 @@ def init_pystrs():
     pystrs.EXTEND_prefix = "EXTEND"
     pystrs.SCFATCH_prefix = "SCRATCH"
     pystrs.PASSCRAPER_prefix = "PASSCRAPER"
-    pystrs.HANDLE_prefix = "HANDLE"
+    pystrs.HANDLER_prefix = "HANDLER"
     pystrs.UNIQIFER_prefix = "UNIQIFER"
     pystrs.COUNTER_prefix = "COUNTER"
     pystrs.COMBINER_prefix = "COMBINER"
     pystrs.UNIQBINER_prefix = "UNIQBINER"
     pystrs.prefix_range = (pystrs.BASE_prefix, pystrs.CHAR_prefix, pystrs.CHUNK_prefix, pystrs.CONF_prefix,
                            pystrs.SEDB_prefix, pystrs.IDCARD_prefix, pystrs.EXTEND_prefix, pystrs.SCFATCH_prefix,
-                           pystrs.PASSCRAPER_prefix, pystrs.HANDLE_prefix, pystrs.UNIQIFER_prefix, pystrs.COUNTER_prefix,
+                           pystrs.PASSCRAPER_prefix, pystrs.HANDLER_prefix, pystrs.UNIQIFER_prefix, pystrs.COUNTER_prefix,
                            pystrs.COMBINER_prefix,  pystrs.UNIQBINER_prefix)
 
     # build configuration file element description
@@ -96,7 +96,7 @@ def init_pystrs():
     pystrs.counter_cmd_range = (pystrs.just_save_counter, pystrs.just_view_counter, pystrs.save_and_view)
 
     # tool function string
-    pystrs.tool_range = ("shredder", "uniqifer", "counter", 'combiner', 'uniqbiner')
+    pystrs.tool_range = ("shredder", "uniqifer", "counter", 'combiner', 'uniqbiner', "handler", )
 
     # plug function string
     pystrs.plug_range = ("pid6", "pid8", "passcraper")

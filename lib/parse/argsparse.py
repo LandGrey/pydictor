@@ -12,11 +12,11 @@ import os
 import time
 
 from core.CONF import build_conf_dic
-from core.EXTEND import get_extend_dic
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.fun import cool
 from plugins.idcard import idcard_magic
 from plugins.passcraper import scraper_magic
+from tools.handler import get_handler_dic
 from tools.combiner import combiner_enter
 from tools.counter import counter_enter
 from tools.shredder import shredder_enter
@@ -61,6 +61,7 @@ def conf_parser():
 def tool_parser():
     if len(pyoptions.args_tool) >= 1:
         if pyoptions.args_tool[0] in pystrs.tool_range:
+
             # shredder
             if pyoptions.args_tool[0] == pystrs.tool_range[0]:
                 if len(pyoptions.args_tool) == 1 and os.listdir(paths.results_path):
@@ -87,6 +88,9 @@ def tool_parser():
             # uniqbiner
             elif len(pyoptions.args_tool) == 2 and pyoptions.args_tool[0] == pystrs.tool_range[4]:
                 uniqbiner_enter(pyoptions.args_tool[1])
+            # handler
+            elif len(pyoptions.args_tool) == 2 and pyoptions.args_tool[0] == pystrs.tool_range[5]:
+                get_handler_dic(pyoptions.args_tool[1])
             else:
                 exit(pyoptions.CRLF + cool.red("[-] Need other extra arguments"))
         else:

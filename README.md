@@ -1,7 +1,7 @@
 # pydictor
 [![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
-**README.md in [English](README.md)**
+**README.md [中文版](README_CN.md)**
 
 ##### pydictor —— A powerful and useful hacker dictionary builder for a brute-force attack
                           _ _      _
@@ -13,12 +13,10 @@
     
 
 ##### Email: LandGrey@qq.com
+
 -
 ## Preface：
 ```
-Q: Why pydictor was born ?
-A: Writing an excellent password-generation security tool to help a large number of penetration testing researchers.
-
 Q: Why I need to use pydictor ?
 A: 1.it always can help you
       You can use pydictor to generate a general blast wordlist, a custom wordlist based on Web content, a social engineering wordlist, and so on;
@@ -33,9 +31,6 @@ A: 1.it always can help you
    
    4.great compatibility
      whether you are using Python 2.7 version or Python 3.x version , pydictor can be run on Windows, Linux or Mac;
-
-Q: What is the goal of pydictor?
-A: A useful and better password-generator that helps plenty of penetration testers work better, enable to crack 99% passwords
 ```
 
 ## Start:
@@ -47,76 +42,103 @@ python pydictor.py
 ```
 
 ## Overview：
-#### pictures  
+
 ![extend](/screenshots/extend.png "extend")
 
 ![social engineering dictionary builder](/screenshots/sedb.png "sedb")
 
-## Functions & Usage:
-### 1. generate the base dictionary
-##### cmd: -base
-##### example 1: generating a dictionary that specifying length using pure digital,lowercase letters,or capital letters
-```
-python pydictor.py -base d --len 6 6			generate six length dictionary base on pure digital
-```
+## Quick to use:
+#### types of generate wordlist（14 types）and descriptions
 
-##### example 2: generating a dictionary that using two of digital,lowercase letters and capital letters
-```
-python pydictor.py -base dL --len 1 3
-```
+| wordlist type | number| description       |
+|: ----------- :| :----:| :---------------: |
+| base          | 1     | basic wordlist  |
+| char          | 2     | custom character wordlist |
+| chunk         | 3     | permutation and combination wordlist |
+| conf          | 4     | based on configuration file wordlist  |
+| sedb          | 5     | social engineering wordlist | 
+| idcard        | 6     | id card last 6/8 char wordlist |
+| extend        | 7     | extend wordlist based on rules|
+| scratch       | 8     | wordlist based on web pages keywords| 
+| passcraper    | 9     | wordlist against to web admin and users |
+| handle        | 10    | handle the input file generate wordlist|
+| uniqifer      | 11    | unique the input file and generate wordlist |
+| counter       | 12    | word frequency count wordlist |
+| combiner      | 13    | combine the input file generate wordlist|
+| uniqbiner     | 14    | combine and unique the input file generate wordlist|
 
-##### example 3: generating a dictionary base on digital,lowercase letters and capital letters
-```
-python pydictor.py -base dLc				default length: min=0 and max=4
-```
+#### function and scope of support wordlist number
 
-### 2. generate the dictionary base on custom character
-##### cmd: -char
-##### example 4: generate a dictionary base on custom characters
-```
-python pydictor.py -char abc123._@ --len 1 3
-```
-
-**note**:  When you need spaces and other special characters, double quotation marks surround all custom characters, Such as:"abc ABC123."
-
-
-### 3. chunk multiply dictionary
-##### cmd: -chunk
-```
-python pydictor.py -chunk abc ABC 666 . _ @		generating all  possible permutations and combinations base on 'abc'、'ABC'、'666' 、'.'、'_'、'@'
-```
-
-**note**:  When you need spaces and other special characters, double quotation marks surround all custom characters, such as:abc " " 123 asdf
+| function   | support number               | description                          |
+|: -------- :| :-------------------------- :| :---------------------------------- :|
+| len        | 1 2 3 4 5 6 7 9 10 11 12 14  | lenght scope                         |
+| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items prefix                     | 
+| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items suffix                     | 
+| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | encode the items                     |
+| occur      | 3 4 5 7 9 10 11 12 14        | filter by occur times of letter、digital、special chars |
+| types      | 3 4 5 7 9 10 11 12 14        | filter by types of letter、digital、special chars |
+| regex      | 3 4 5 7 9 10 11 12 14        | filter by regex                      |
+| level      | 5 7 9                        | set the wordlist level               |
+| leet       | 5 7 9                        | 1337 mode                            |
 
 
-### 4. generate the dictionary base on extend function
-##### cmd: -extend
+## usage examples
+
+#### 1:  generate the basic wordlsit based on digital lenght of 4
+```
+python pydictor.py -base d --len 4 4 --output D:\exits\or\not\dict.txt
+```
+
+### 2:  encode the wordlist
+```
+python pydictor.py -base c --len 1 3 --encode b64
+```
+
+#### 3: use d(digital) L(lowercase letter) c(capital letter) generating wordlist
+```
+python pydictor.py -base dLc -o /awesome/pwd
+```
+
+### 4: use customized characters generating wordlist
+```
+python pydictor.py -char "abc123._@ " --len 1 3 --tail @site
+```
+
+#### 5: generate permutation and combination wordlist
+```
+python pydictor.py -chunk abc ABC 666 . _ @ "'" --head a --tail 123 --encode md5
+```
+
+#### 6. extend wordlist based on rules
 
 1.  extend function mainly directed against web application administrator to generate password
 2.  You can put your own weak password wordlist in wordlist/Web,extend plug will auto unique them,new wordlist will contains them
 3.  You can modify funcfg/extend.conf,set prefix, suffix, prefix + suffix and middle word when extended
 4.  extend plug support leet mode,pick by level and pick by lenght function，you can learn more in the following   
 
+write the following information to '/names.txt'
 ```
-python pydictor.py -plug extend /target/word.txt --leet 0 1 2 11 21 --level 1 --len 4 15 -o /target/awesome/wordlist
+liwell
+shelly
+bianji
+webzhang
+```
+
+run command
+```
+python pydictor.py -extend /names.txt --leet 0 1 2 11 21 --level 1 --len 4 16 --occur "<=10" ">0" "<=2" -o /possbile/wordlist.lst
 ```
 
 
-### 5. special function plugins
-##### cmd: -plug
-##### example 5: using pid6 plugin generate post six length Chinese citizen id card number blasting dictionary
-```
-python pydictor.py -plug pid6
-```
+#### 7: id card last 6/8 char wordlist
 
-##### example 6: using pid8 plugin generate post eight length Chinese citizen id card number blasting dictionary
 ```
-python pydictor.py -plug pid8
+pydictor.py -plug pid6 --types ">=0" ">=4" ">=0" --encode b64
 ```
 
 **note**:   default sex ='all', it decided by lib/data/data.py default_sex, and 'm' is Male, 'f' is Female
 
-##### example 7: using passcraper plugin crawl website generating password wordlist based on plain text found and extend rules
+#### 8: using passcraper plugin crawl website generating password wordlist based on plain text found and extend rules
 
 1.  the rules of passcraper plug and extend plug are the same
 2.  passcraper plug will generate two wordlist，preffix with SCRATCH is raw wordlist by website plain text，
@@ -132,12 +154,12 @@ python pydictor.py -plug passcraper http://www.example.com
 ```
 
 
-### 6. using configuration file build dictionary
-##### cmd: --conf
-   this function contains all of "-base" and "-char" capacities，and more precise control
+#### 9. using configuration file build dictionary
+##### this function contains all of "-base" and "-char" capacities，and more precise control
+
 ```
-python pydictor.py --conf				using default file funcfg/build.conf build the dictionary
-python pydictor.py --conf /my/other/awesome.conf	using /my/other/awesome.conf build the dictionary
+python pydictor.py --conf                           using default file funcfg/build.conf build the dictionary
+python pydictor.py --conf /my/other/awesome.conf    using /my/other/awesome.conf build the dictionary
 ```
 
 **note**: parsing rules details as following，besides referred to build.conf file
@@ -169,75 +191,52 @@ supported encoding:
 ```
 
 
-### 7. handle wordlist's tools
-##### cmd: -tool
-##### example 8: safe delete tool shredder
+#### 10. handle wordlist's tools
+##### filter tool handler
+  specify the input file, and output the handled file
+```
+python pydictor.py -tool handler /wordlist/raw.txt --len 6 16 --occur "" "=6" "<0" --encode b64 -o /wordlist/ok.txt
+```
+
+##### safe delete tool shredder
 ```
 python pydictor.py -tool shredder 		delete the currently specified output path(default:results) files and all its dictionary files
 python pydictor.py -tool shredder base 		delete the files of it's prefix is "BASE" in currently specified output path
 ```
 
-prefix(case insensitive) range in 13 items: base,char,chunk,conf,sedb,idcard,extend,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
+prefix(case insensitive) range in 14 items: base,char,chunk,conf,sedb,idcard,extend,handle,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
 
-  besides，you can safe shred files or whole directory as following:
+besides，you can safe shred files or whole directory as following:
 ```
 python pydictor.py -tool shredder /data/mess
 python pydictor.py -tool shredder D:\mess\1.zip
 ```
   for improving the security delete speed, the default uses 1 times to erase and rewrite，you can modify lib/data/data.py file's file_rewrite_count and dir_rewrite_count value
 
-##### example 9: remove duplicates tool uniqifer
+##### remove duplicates tool uniqifer
 ```
 python pydictor.py -tool uniqifer /tmp/my.dic
 ```
 
-##### example 10: word frequency statistics tool counter
+##### word frequency statistics tool counter
 ```
 python pydictor.py -tool counter vs /tmp/mess.txt 100		select 100 words in /tmp/mess.txt file that appear in the most times and output to the terminal and saved to file
 ```
 
   **note**: default choose 100 items to print or save；default separator is:"\n",you can modify counter_split value in lib/data/data.py file
 
-##### example 11: merge dictionary tool combiner
+##### merge dictionary tool combiner
 ```
 python pydictor.py -tool combiner /my/messdir
 ```
 
-##### example 12: remove duplicates after merging tool uniqbiner
+##### remove duplicates after merging tool uniqbiner
 ```
 python pydictor.py -tool uniqbiner /my/messdir
 ```
 
-
-### 8. pick by length function
-##### cmd: --len
-
-1.  it can be use --len to choose length to pick，and SEDB function can set it in SEDB interface   
-
-##### example 13: only select the the password between the length 4-15   
-```
-python pydictor.py -plug extend /awesome/ext.txt --len --len 4 15
-```
-
-
-### 9. add prefix and suffix:
-##### cmd: --head,--tail
-```
-python pydictor.py -base L --len 1 4 --head a --tail 123
-```
-
-**note**:  prefix and suffix exclude from --len option,it's extra length
-
-
-### 10. encode each items
-##### cmd: --encode
-```
-python pydictor.py -chunk abc ABC 123 123456 . @ _ --encode b64
-```
-
-
-### 11. pick by level function
-##### cmd: --level
+#### 11: wordlist filter
+##### filter by level function
 
 1.  this function is currently only support extend function, passcraper plug, Social Engineering Dictionary Builder
 2.  default level is 3, the lower level, the lower possibility, the more items
@@ -248,8 +247,7 @@ python pydictor.py -extend bob adam sarah --level 5
 ```
 
 
-### 12. use leet mode
-##### cmd: --leet
+##### use leet mode
 
 1.  this function is currently only support extend, passcraper, Social Engineering Dictionary Builder
 2.  all default unable to use leet mode, when enable, you can use multiple code at one time
@@ -308,9 +306,28 @@ modify /lib/lib/data.py, extend_leet、passcraper_leet、sedb_leet arguments, ch
 modify /lib/data/data.py,leet_mode_code argument, choose default mode code;
 ```
 
+##### filter by occur times of letter、digital、special chars
 
-### 12. social engineering dictionary
-##### cmd: --sedb
+```
+--occur [scope of occur letter times] [scope of occur digital times] [scope of occur special chars times]
+```
+
+default  
+```
+--occur "<=99" "<=99" "<=99"
+```
+
+##### filter by types of letter、digital、special chars
+```
+ --types [scope of letter types] [scope of digital types] [scope of special types]
+```
+
+default
+```
+ --types ">=0" ">=0" ">=0"
+```
+
+#### 12. social engineering dictionary
 ```
 python pydictor.py --sedb
 ```
@@ -341,19 +358,27 @@ python pydictor.py --sedb
 
 pydictor SEDB>>
 ```
+
 ##### command:
 ```
 help                reload interface
 help desc           view the meaning for each items
-show                view the current settings
-clear or cls        clear screen
 exit or quit        exit the program
+clear or cls        clear screen
+show                view the current settings
 set                 set option value
 rm                  remove option value
 len                 select the length range
+head                add prefix
+tail                add suffix
+encode              encode items
+occur               set occur times of letter、digital、special chars
+types               set types of letter、digital、special chars
+regex               filter by regex
 level               select the extend level value
 leet                enable leet mode and choose code
-run                 run Social Engineering Dictionary Builder
+output              set output dictionary or file path
+run                 build wordlist
 ```
 
 note:  
