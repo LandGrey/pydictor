@@ -51,7 +51,7 @@ python pydictor.py
 #### types of generate wordlist（14 types）and descriptions
 
 | wordlist type | number| description                                         |
-|:-------------:| :---: |:--------------------------------------------------: |
+|:------------- | :---- |:--------------------------------------------------- |
 | base          | 1     | basic wordlist                                      |
 | char          | 2     | custom character wordlist                           |
 | chunk         | 3     | permutation and combination wordlist                |
@@ -70,7 +70,7 @@ python pydictor.py
 #### function and scope of support wordlist number
 
 | function   | support number               | description                                              |
-|:----------:| :--------------------------: |:-------------------------------------------------------: |
+|:---------- | :--------------------------- |:-------------------------------------------------------- |
 | len        | 1 2 3 4 5 6 7 9 10 11 12 14  | lenght scope                                             |
 | head       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items prefix                                         | 
 | tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items suffix                                         | 
@@ -312,9 +312,10 @@ modify /lib/data/data.py,leet_mode_code argument, choose default mode code;
 --occur [scope of occur letter times] [scope of occur digital times] [scope of occur special chars times]
 ```
 
-default  
+default occur times  
+
 ```
---occur "<=99" "<=99" "<=99"
+"<=99" "<=99" "<=99"
 ```
 
 ##### filter by types of letter、digital、special chars
@@ -322,9 +323,10 @@ default
  --types [scope of letter types] [scope of digital types] [scope of special types]
 ```
 
-default
+default types  
+
 ```
- --types ">=0" ">=0" ">=0"
+">=0" ">=0" ">=0"
 ```
 
 #### 12. social engineering dictionary
@@ -379,6 +381,109 @@ level               select the extend level value
 leet                enable leet mode and choose code
 output              set output dictionary or file path
 run                 build wordlist
+```
+
+if you have some information about someone   
+
+
+| information items  |        value          |
+|:------------------ | :-------------------- |
+| chinese name       | 李伟                  |
+| pinyin name        | liwei                 | 
+| simple name        | lw                    | 
+| simple name        | Lwei                  |
+| english name       | zwell                 | 
+| birthday           | 19880916              | 
+| used password      | liwei123456.          | 
+| used password      | liwei@19880916        | 
+| used password      | lw19880916_123        | 
+| used password      | abc123456             |
+| phone number       | 18852006666           |
+| used phone number  | 15500998080           | 
+| home phone         | 76500100              |
+| company phone      | 010-61599000          | 
+| email account      | 33125500@qq.com       |
+| email account      | 13561207878@163.com   |
+| email account      | weiweili@gmail.com    | 
+| email account      | wei010wei@hotmail.com | 
+| home postcode      | 663321                | 
+| now place postcode | 962210                |
+| common nickname    | zlili                 |
+| id card number     | 152726198809160571    | 
+| student id         | 20051230              | 
+| job number         | 100563                |
+| father birthday    | 152726195910042816    | 
+| mother birthday    | 15222419621012476X    | 
+| boy/girl friend brithday | 152726198709063846 |
+| friend brithday    | 152726198802083166    | 
+| pet name           | tiger                 | 
+| crazy something    | games of thrones      |
+| special meaning numbers | 176003           | 
+| special meaning chars | m0n5ter            | 
+| special meaning chars | ppdog              |
+
+
+now, use follwing command:
+
+```
+python pydictor.py --sedb
+set cname liwei
+set sname lw Lwei
+set ename zwell
+set birth 19880916
+set usedpwd liwei123456. liwei@19880916 lw19880916_123
+set phone 18852006666
+set uphone 15500998080
+set hphone 76500100 61599000 01061599000
+set email 33125500@qq.com
+set email 13561207878@163.com
+set email weiweili@gmail.com
+set email wei010wei@hotmail.com
+set postcode 663321 962210
+set nickname zlili
+set idcard 152726198809160571
+set jobnum 20051230 100563
+set otherdate 19591004 19621012
+set otherdate 19870906 19880208
+set usedchar tiger gof gamesthrones 176003 m0n5ter ppdog
+```
+
+view the configuration, and build the wordlist  
+```
+show
+run
+```
+
+if you want more items wordlist, use  
+```
+level 1
+```
+
+and, you want to filter some impossible password,   
+
+set the password lenght   
+
+```
+len 1 16
+```
+
+at least one letter and at most three special char,   
+
+```
+occur ">0" "" "<=3"
+```
+
+and at most two types of special char in one item,  
+
+```
+types "" "" "<=2"
+```
+
+finaly, specify the output path, build wordlist again  
+
+```
+output D:\awesome\dict\liwei_pass.txt
+run
 ```
 
 note:  
