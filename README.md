@@ -50,36 +50,36 @@ python pydictor.py
 ## Quick to use:
 #### types of generate wordlist（14 types）and descriptions
 
-| wordlist type | number| description       |
-|: ----------- :| :----:| :---------------: |
-| base          | 1     | basic wordlist  |
-| char          | 2     | custom character wordlist |
-| chunk         | 3     | permutation and combination wordlist |
-| conf          | 4     | based on configuration file wordlist  |
-| sedb          | 5     | social engineering wordlist | 
-| idcard        | 6     | id card last 6/8 char wordlist |
-| extend        | 7     | extend wordlist based on rules|
-| scratch       | 8     | wordlist based on web pages keywords| 
-| passcraper    | 9     | wordlist against to web admin and users |
-| handle        | 10    | handle the input file generate wordlist|
-| uniqifer      | 11    | unique the input file and generate wordlist |
-| counter       | 12    | word frequency count wordlist |
-| combiner      | 13    | combine the input file generate wordlist|
-| uniqbiner     | 14    | combine and unique the input file generate wordlist|
+| wordlist type | number| description                                         |
+|:-------------:| :---: |:--------------------------------------------------: |
+| base          | 1     | basic wordlist                                      |
+| char          | 2     | custom character wordlist                           |
+| chunk         | 3     | permutation and combination wordlist                |
+| conf          | 4     | based on configuration file wordlist                |
+| sedb          | 5     | social engineering wordlist                         | 
+| idcard        | 6     | id card last 6/8 char wordlist                      |
+| extend        | 7     | extend wordlist based on rules                      |
+| scratch       | 8     | wordlist based on web pages keywords                | 
+| passcraper    | 9     | wordlist against to web admin and users             |
+| handle        | 10    | handle the input file generate wordlist             |
+| uniqifer      | 11    | unique the input file and generate wordlist         |
+| counter       | 12    | word frequency count wordlist                       |
+| combiner      | 13    | combine the input file generate wordlist            |
+| uniqbiner     | 14    | combine and unique the input file generate wordlist |
 
 #### function and scope of support wordlist number
 
-| function   | support number               | description                          |
-|: -------- :| :-------------------------- :| :---------------------------------- :|
-| len        | 1 2 3 4 5 6 7 9 10 11 12 14  | lenght scope                         |
-| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items prefix                     | 
-| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items suffix                     | 
-| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | encode the items                     |
-| occur      | 3 4 5 7 9 10 11 12 14        | filter by occur times of letter、digital、special chars |
-| types      | 3 4 5 7 9 10 11 12 14        | filter by types of letter、digital、special chars |
-| regex      | 3 4 5 7 9 10 11 12 14        | filter by regex                      |
-| level      | 5 7 9                        | set the wordlist level               |
-| leet       | 5 7 9                        | 1337 mode                            |
+| function   | support number               | description                                              |
+|:----------:| :--------------------------: |:-------------------------------------------------------: |
+| len        | 1 2 3 4 5 6 7 9 10 11 12 14  | lenght scope                                             |
+| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items prefix                                         | 
+| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items suffix                                         | 
+| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | encode the items                                         |
+| occur      | 3 4 5 7 9 10 11 12 14        | filter by occur times of letter、digital、special chars  |
+| types      | 3 4 5 7 9 10 11 12 14        | filter by types of letter、digital、special chars        |
+| regex      | 3 4 5 7 9 10 11 12 14        | filter by regex                                          |
+| level      | 5 7 9                        | set the wordlist level                                   |
+| leet       | 5 7 9                        | 1337 mode                                                |
 
 
 ## usage examples
