@@ -64,7 +64,7 @@ python pydictor.py
 | extend        | 7     | 扩展字典          |
 | scratch       | 8     | 网页原始关键词字典| 
 | passcraper    | 9     | 网页爆破针对字典  |
-| handle        | 10    | 筛选处理字典      |
+| handler       | 10    | 筛选处理字典      |
 | uniqifer      | 11    | 去重字典          |
 | counter       | 12    | 词频统计字典      |
 | combiner      | 13    | 合并字典          |
@@ -207,7 +207,7 @@ python pydictor.py -tool shredder           删除当前指定的字典输出目
 python pydictor.py -tool shredder base      删除当前指定的字典输出目录下,以"BASE"开头的所有字典文件
 ```
 
-  支持的前缀(不区分大小写)有14种:base,char, chunk, conf,sedb,idcard,extend,handle,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
+  支持的前缀(不区分大小写)有14种:base,char, chunk, conf,sedb,idcard,extend,handler,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
 
   另外,还可以像下面这样，将传入的任意位置的一个文件或目录，整个的安全删除
 ```

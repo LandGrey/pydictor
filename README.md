@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [中文版](README_CN.md)**
 
@@ -61,7 +61,7 @@ python pydictor.py
 | extend        | 7     | extend wordlist based on rules                      |
 | scratch       | 8     | wordlist based on web pages keywords                | 
 | passcraper    | 9     | wordlist against to web admin and users             |
-| handle        | 10    | handle the input file generate wordlist             |
+| handler       | 10    | handle the input file generate wordlist             |
 | uniqifer      | 11    | unique the input file and generate wordlist         |
 | counter       | 12    | word frequency count wordlist                       |
 | combiner      | 13    | combine the input file generate wordlist            |
@@ -204,7 +204,7 @@ python pydictor.py -tool shredder 		delete the currently specified output path(d
 python pydictor.py -tool shredder base 		delete the files of it's prefix is "BASE" in currently specified output path
 ```
 
-prefix(case insensitive) range in 14 items: base,char,chunk,conf,sedb,idcard,extend,handle,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
+prefix(case insensitive) range in 14 items: base,char,chunk,conf,sedb,idcard,extend,handler,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
 
 besides，you can safe shred files or whole directory as following:
 ```
