@@ -118,7 +118,7 @@ pydictor.py [options]
                         choices=[pystrs.encode_range[0], pystrs.encode_range[1], pystrs.encode_range[2],
                                  pystrs.encode_range[3], pystrs.encode_range[4], pystrs.encode_range[5],
                                  pystrs.encode_range[6], pystrs.encode_range[7], pystrs.encode_range[8]],
-                        help=cool.yellow('''From ({e0}, {e1}, {e2}, {e3}, {e4}, {e5}, {e6}, {e7})'''
+                        help=cool.yellow('''From ({e0}, {e1}, {e2}, {e3}, {e4}, {e5}, {e6}, {e7}, {e8})'''
                                          .format(e0=pystrs.encode_range[0], e1=pystrs.encode_range[1],
                                                  e2=pystrs.encode_range[2], e3=pystrs.encode_range[3],
                                                  e4=pystrs.encode_range[4], e5=pystrs.encode_range[5],

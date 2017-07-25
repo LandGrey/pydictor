@@ -95,11 +95,13 @@ def tool_parser():
                 exit(pyoptions.CRLF + cool.red("[-] Need other extra arguments"))
         else:
             exit(pyoptions.CRLF + cool.red("[-] No tool named %s" % pyoptions.args_tool[0]) +
-                 pyoptions.CRLF + "[!] Choose tool from  ({0}, {1}, {2}, {3}, {4})".format(
+                 pyoptions.CRLF + "[!] Choose tool from  ({0}, {1}, {2}, {3}, {4}, {5})".format(
                 cool.fuchsia(pystrs.tool_range[0]),
                 cool.fuchsia(pystrs.tool_range[1]),
                 cool.fuchsia(pystrs.tool_range[2]),
                 cool.fuchsia(pystrs.tool_range[3]),
-                cool.fuchsia(pystrs.tool_range[4])))
+                cool.fuchsia(pystrs.tool_range[4]),
+                cool.fuchsia(pystrs.tool_range[5]),
+            ))
     else:
         exit(pyoptions.CRLF + cool.red("[-] Please specified tool name"))
