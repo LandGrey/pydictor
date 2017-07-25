@@ -53,7 +53,6 @@ def init():
     pyoptions.args_char = args.char
     pyoptions.args_chunk = args.chunk
     pyoptions.args_extend = args.extend
-    pyoptions.args_handle = args.handle
     pyoptions.args_plug = args.plug
     pyoptions.args_sedb = args.sedb
     pyoptions.args_conf = args.conf

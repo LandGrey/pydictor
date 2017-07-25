@@ -155,7 +155,6 @@ def init_pyoptions():
     pyoptions.args_chunk = []
     pyoptions.args_extend = []
     pyoptions.args_plug = []
-    pyoptions.args_handle = ""
     pyoptions.args_sedb = ""
     pyoptions.args_conf = ""
     pyoptions.args_tool = []
