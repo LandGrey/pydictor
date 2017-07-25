@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.2-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -20,14 +20,18 @@
 Q: 为什么要使用pydictor ?
 A: 1.生成密码它总会帮到你
       你可以用pydictor生成普通爆破字典、基于网站内容的自定义字典、社会工程学字典等等一系列高级字典；
-      你可以使用pydictor的内置工具，对字典进行安全删除、合并、去重、合并并去重、高频词筛选等操作；
+      你可以使用pydictor的内置工具，对字典进行安全删除、合并、去重、合并并去重、高频词筛选,
+      除此之外，你还可以输入自己的字典，然后使用handler工具，对字典进行各种筛选，编码或加密操作；
 
    2.可定制性强
-      你可以通过修改多个配置文件、加入自己的字典、选用leet mode 模式、长度选择等方式生成独一无二的高度定制和复杂字典，生成密码字典的好坏和你的自定义规则有很大关系；
+      你可以通过修改多个配置文件、加入自己的字典、选用leet mode 模式、长度选择、
+      各类字符数量筛选、各类字符种类数筛选、正则表达式筛选，甚至可通过修改
+      /lib/fun/encode.py中的test_encode函数，自定义加密方法等高级操作，
+      生成独一无二的高度定制和复杂字典，生成密码字典的好坏和你的自定义规则、能不能熟练使用pydictor有很大关系；
 
    3.强大灵活的配置解析功能
       无需多言,熟练运用后自己体会；
-   
+
    4.兼容性强
      不管你是使用的python 2.7版本还是python 3.4 以上版本，pydictor都可以在Windows、Linux 或者是Mac上运行；
 ```
@@ -111,7 +115,7 @@ python pydictor.py -char "abc123._@ " --len 1 3 --tail @site
 python pydictor.py -chunk abc ABC 666 . _ @ "'" --head a --tail 123 --encode md5
 ```
 
-#### 示例6: 用extend插件生成针对用户或web管理员的密码爆破字典
+#### 示例6: 用extend功能生成针对用户或web管理员的密码爆破字典
 
 1.  extend功能主要针对web应用管理员生成密码字典
 2.  将自己的弱口令字典放在 wordlist/Web 目录下, 程序会自动去重，把它们加入生成的字典中
@@ -191,7 +195,7 @@ python pydictor.py --conf /my/other/awesome.conf    使用/my/other/awesome.conf
 			   url     urlencode
 			   sha256  sha256 摘要算法
 			   sha512  sha512 摘要算法
-
+               test    修改/lib/fun/encode.py中的test_encode方法，自定义加密方式
 ```
 
 #### 示例10: 字典处理工具
@@ -491,6 +495,6 @@ run
 注:  
 1. 可以修改 funcfg/sedb_tricks.conf 文件，可以选择单词变换时加的前缀、后缀、前后缀等规则  
 2. 可以将你收集的个人弱密码字典放入 wordlist/SEDB 目录中，生成的字典中将包括它们  
-3. sedb 规则中有一小部分完全使用了extend插件规则
+3. sedb 规则中有一小部分完全使用了extend功能的规则
 
 ##### 终点即起点，到你一展身手的时候了。

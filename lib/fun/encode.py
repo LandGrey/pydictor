@@ -49,3 +49,13 @@ def sha256_encode(item):
 
 def sha512_encode(item):
     return hashlib.sha512(item.encode("utf-8")).hexdigest()
+
+
+# note: python 2 and python3 maybe return different values because of different local encoding
+# in current test_encode function, you can test '123456' will return same value and 'admin' will return differ value
+#
+def test_encode(item):
+    c = chr(ord(item[0]) + len(item))
+    for i in range(1, len(item)):
+        c += chr(ord(item[i]) + ord(item[i - 1]))
+    return quote(c)

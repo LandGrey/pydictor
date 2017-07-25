@@ -53,7 +53,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.0.1#dev'
+    pystrs.version = '2.0.2#dev'
 
     # file prefix strings
     pystrs.BASE_prefix = "BASE"
@@ -102,7 +102,7 @@ def init_pystrs():
     pystrs.plug_range = ("pid6", "pid8", "passcraper")
 
     # encode function string
-    pystrs.encode_range = ("none", "b64", "md5", "md516", "sha1", "url", "sha256", "sha512")
+    pystrs.encode_range = ("none", "b64", "md5", "md516", "sha1", "url", "sha256", "sha512", "test")
 
     pystrs.sedb_trick_prefix = "sedb_trick_prefix_strings"
     pystrs.sedb_trick_suffix = "sedb_trick_suffix_strings"
@@ -220,7 +220,8 @@ def init_pyoptions():
 
     # encode operator
     pyoptions.operator = {'none': none_encode, 'b64': base64_encode, 'md5': md5_encode, 'md516': md5_16_encode,
-                          'sha1': sha1_encode, 'url': url_encode, 'sha256': sha256_encode, 'sha512': sha512_encode}
+                          'sha1': sha1_encode, 'url': url_encode, 'sha256': sha256_encode, 'sha512': sha512_encode,
+                          'test': test_encode}
 
     # pattern for passcraper scratch website words
     pyoptions.passcraper_filter = r'(^(\d){1,4}px$)|' \

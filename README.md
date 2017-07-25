@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.2-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [中文版](README_CN.md)**
 
@@ -20,15 +20,18 @@
 Q: Why I need to use pydictor ?
 A: 1.it always can help you
       You can use pydictor to generate a general blast wordlist, a custom wordlist based on Web content, a social engineering wordlist, and so on;
-      You can use the pydictor built-in tool to safe delete, merge, unique, merge and unique,  count word frequency to fillter the wordlist, and so on;
+      You can use the pydictor built-in tool to safe delete, merge, unique, merge and unique,  count word frequency to filter the wordlist, 
+      besides, you also can specify your wordlist and use '-tool handler' to filter your wordlist;
 
    2.highly customized
-      You can generate highly customized and complex wordlist by modify multiple configuration files, add your own dictionary, using leet mode, pick by length, etc.
-      and its very relevant to generate good or bad password dictionary with your custom rules;
-   
+      You can generate highly customized and complex wordlist by modify multiple configuration files, 
+      add your own dictionary, using leet mode, filter by length、char occur times、types of different char、regex,
+      even customized own encryption function by modify /lib/fun/encode.py test_encode function.
+      its very relevant to generate good or bad password wordlist with your customized rules and skilled use of pydictor;
+
    3.powerful and flexible configuration file parsing
       nothing to say,skilled use and you will love it
-   
+
    4.great compatibility
      whether you are using Python 2.7 version or Python 3.x version , pydictor can be run on Windows, Linux or Mac;
 ```
@@ -112,9 +115,9 @@ python pydictor.py -chunk abc ABC 666 . _ @ "'" --head a --tail 123 --encode md5
 #### 6. extend wordlist based on rules
 
 1.  extend function mainly directed against web application administrator to generate password
-2.  You can put your own weak password wordlist in wordlist/Web,extend plug will auto unique them,new wordlist will contains them
+2.  You can put your own weak password wordlist in wordlist/Web,extend function will auto unique them,new wordlist will contains them
 3.  You can modify funcfg/extend.conf,set prefix, suffix, prefix + suffix and middle word when extended
-4.  extend plug support leet mode,pick by level and pick by lenght function，you can learn more in the following   
+4.  extend function support leet mode,pick by level and pick by lenght function，you can learn more in the following   
 
 write the following information to '/names.txt'
 ```
@@ -140,13 +143,13 @@ pydictor.py -plug pid6 --types ">=0" ">=4" ">=0" --encode b64
 
 #### 8: using passcraper plugin crawl website generating password wordlist based on plain text found and extend rules
 
-1.  the rules of passcraper plug and extend plug are the same
+1.  the rules of passcraper plug and extend function are the same
 2.  passcraper plug will generate two wordlist，preffix with SCRATCH is raw wordlist by website plain text，
     and if you feel that there are a lot of unrelated words in the SCRATCH wordlist, 
-    you can remove them, and then use the extend plugin to specify the new file to generate dictionary again.
+    you can remove them, and then use the extend function to specify the new file to generate dictionary again.
 3.  you can modify the funcfg/passcraper_blacklist.conf file，add or delete useless words that need to be filtered out，
     and also can modify lib/data/data.py file passcraper_filter argument，change the filter regular expressions
-4.  with same extend plugin，you can put your weak password in /wordlist/Web，new wordlist will contains them
+4.  with same extend function，you can put your weak password in /wordlist/Web，new wordlist will contains them
 
 ```
 python pydictor.py -plug passcraper				using default file scraper.sites as multi-input file
@@ -489,6 +492,6 @@ run
 note:  
 1. you can modify funcfg/sedb_tricks.conf file，change the word transform prefix, suffix and prefix+suffix rules
 2. you can put your own individual weak password wordlist in wordlist/SEDB, 
-3. SEDB some little rules contains extend plugin function
+3. SEDB some little rules contains extend function
 
 ##### Destination is just a point of departure，It's your show time.

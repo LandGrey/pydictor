@@ -17,8 +17,11 @@ from lib.fun.fun import finishprinter, finishcounter, mybuildtime, cool
 def get_handler_dic(path):
     if not os.path.isfile(path):
         exit(cool.red("[-] File don't exits" + pyoptions.CRLF))
-    storepath = os.path.join(paths.results_path, "%s_%s%s"
-                             % (pystrs.HANDLER_prefix, mybuildtime(), pyoptions.filextension))
+
+    this_name = "%s_%s%s" % (pystrs.HANDLER_prefix, mybuildtime(), pyoptions.filextension)
+    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
+    storepath = os.path.join(paths.results_path, paths.results_file_name)
+
     handles = []
     with open(path, 'r') as f:
         for item in f.readlines():

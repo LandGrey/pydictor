@@ -27,28 +27,28 @@ pydictor.py [options]
            -char        [custom_char]
            -chunk       [chunk1] [chunk2] ...
            -extend      [str_or_file]
-           -plug        [{plug0},{plug1},{plug2}]
+           -plug        [{p0},{p1},{p2}]
            --conf       [config_file_path]
            --sedb
            -o,--output  [directory]
-           -tool        [{tool5},{tool0},{tool1},{tool2},{tool3},{tool4}] [args] ...
+           -tool        [{t5},{t0},{t1},{t2},{t3},{t4}] [args] ...
            --len        [minlen] [maxlen]
            --head       [prefix_string]
            --tail       [suffix_string]
-           --encode     [{en0},{en1},{en2},{en3},{en4},{en5},{en6},{en7}]
+           --encode     [{e0},{e1},{e2},{e3},{e4},{e5},{e6},{e7}]
            --occur      [letter] [digital] [special]
            --types      [letter] [digital] [special]
            --regex      [regex]
            --level      [code]
-           --leet       [code]'''.format(plug0=pystrs.plug_range[0], plug1=pystrs.plug_range[1],
-                                         plug2=pystrs.plug_range[2], tool0=pystrs.tool_range[0],
-                                         tool1=pystrs.tool_range[1], tool2=pystrs.tool_range[2],
-                                         tool3=pystrs.tool_range[3], tool4=pystrs.tool_range[4],
-                                         tool5=pystrs.tool_range[5],
-                                         en0=pystrs.encode_range[0], en1=pystrs.encode_range[1],
-                                         en2=pystrs.encode_range[2], en3=pystrs.encode_range[3],
-                                         en4=pystrs.encode_range[4], en5=pystrs.encode_range[5],
-                                         en6=pystrs.encode_range[6], en7=pystrs.encode_range[7]))
+           --leet       [code]'''.format(p0=pystrs.plug_range[0], p1=pystrs.plug_range[1],
+                                         p2=pystrs.plug_range[2], t0=pystrs.tool_range[0],
+                                         t1=pystrs.tool_range[1], t2=pystrs.tool_range[2],
+                                         t3=pystrs.tool_range[3], t4=pystrs.tool_range[4],
+                                         t5=pystrs.tool_range[5],
+                                         e0=pystrs.encode_range[0], e1=pystrs.encode_range[1],
+                                         e2=pystrs.encode_range[2], e3=pystrs.encode_range[3],
+                                         e4=pystrs.encode_range[4], e5=pystrs.encode_range[5],
+                                         e6=pystrs.encode_range[6], e7=pystrs.encode_range[7]))
 )
 
     parser.add_argument('-base', dest='base', choices=[pystrs.base_dic_type[0], pystrs.base_dic_type[1],
@@ -105,8 +105,8 @@ pydictor.py [options]
                            pystrs.save_and_view)))
 
     parser.add_argument('--len', dest='len', metavar=('minlen', 'maxlen'), nargs=2, type=int,
-                        default=(pyoptions.minlen, pyoptions.maxlen), help=cool.yellow('''Default: min=%s  max=%s''' %
-                                                                                       (pyoptions.minlen, pyoptions.maxlen)))
+                        default=(pyoptions.minlen, pyoptions.maxlen),
+                        help=cool.yellow('''Default: min=%s  max=%s''' % (pyoptions.minlen, pyoptions.maxlen)))
 
     parser.add_argument('--head', dest='head', metavar='prefix', type=str, default='',
                         help=cool.yellow('Add string head for the items'))
@@ -117,12 +117,13 @@ pydictor.py [options]
     parser.add_argument('--encode', dest='encode', metavar='encode', default='none',
                         choices=[pystrs.encode_range[0], pystrs.encode_range[1], pystrs.encode_range[2],
                                  pystrs.encode_range[3], pystrs.encode_range[4], pystrs.encode_range[5],
-                                 pystrs.encode_range[6], pystrs.encode_range[7]],
-                        help=cool.yellow
-                        ('''From (%s, %s, %s, %s, %s, %s, %s, %s)''' % (pystrs.encode_range[0], pystrs.encode_range[1],
-                                                                        pystrs.encode_range[2], pystrs.encode_range[3],
-                                                                        pystrs.encode_range[4], pystrs.encode_range[5],
-                                                                        pystrs.encode_range[6], pystrs.encode_range[7])))
+                                 pystrs.encode_range[6], pystrs.encode_range[7], pystrs.encode_range[8]],
+                        help=cool.yellow('''From ({e0}, {e1}, {e2}, {e3}, {e4}, {e5}, {e6}, {e7})'''
+                                         .format(e0=pystrs.encode_range[0], e1=pystrs.encode_range[1],
+                                                 e2=pystrs.encode_range[2], e3=pystrs.encode_range[3],
+                                                 e4=pystrs.encode_range[4], e5=pystrs.encode_range[5],
+                                                 e6=pystrs.encode_range[6], e7=pystrs.encode_range[7],
+                                                 e8=pystrs.encode_range[8], )))
 
     parser.add_argument('--occur', dest='occur', metavar=('letter', 'digital', 'special'), nargs=3, type=str,
                         default=(pyoptions.letter_occur, pyoptions.digital_occur, pyoptions.special_occur),
