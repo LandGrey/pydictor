@@ -11,17 +11,14 @@ from __future__ import unicode_literals
 import os
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.filter import filterforfun
-from lib.fun.fun import finishprinter, finishcounter, mybuildtime, cool
+from lib.fun.fun import finishprinter, finishcounter, mybuildtime, cool, finalsavepath
 
 
 def get_handler_dic(path):
     if not os.path.isfile(path):
         exit(cool.red("[-] File don't exits" + pyoptions.CRLF))
-
-    this_name = "%s_%s%s" % (pystrs.HANDLER_prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    storepath = os.path.join(paths.results_path, paths.results_file_name)
-
+    storepath = finalsavepath(paths.results_path, pystrs.HANDLER_prefix, mybuildtime(), pyoptions.filextension,
+                              paths.results_file_name)
     handles = []
     with open(path, 'r') as f:
         for item in f.readlines():

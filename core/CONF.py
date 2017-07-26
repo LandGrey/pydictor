@@ -8,12 +8,12 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
-import os
 import itertools
 from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
 from lib.parse.confparse import elementparser, confmatcher
-from lib.fun.fun import finishprinter, finishcounter, countchecker, lengthchecker, range_compatible, cool, mybuildtime
+from lib.fun.fun import finishprinter, finishcounter, countchecker, lengthchecker, range_compatible, cool, mybuildtime,\
+    finalsavepath
 
 
 def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
@@ -30,9 +30,7 @@ def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
 
 
 def build_conf_dic():
-    this_name = "%s_%s%s" % (pystrs.CONF_prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    storepath = os.path.join(paths.results_path, paths.results_file_name)
+    storepath = finalsavepath(paths.results_path, pystrs.CONF_prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
     with open(storepath, "a") as f:
         for item in confcore(paths.buildconf_path):
             item = filterforfun(item, head=pyoptions.head, tail=pyoptions.tail,

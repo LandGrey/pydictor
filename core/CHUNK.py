@@ -8,18 +8,15 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
-import os
 import itertools
 from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import finishprinter, finishcounter, countchecker, mybuildtime
+from lib.fun.fun import finishprinter, finishcounter, countchecker, mybuildtime, finalsavepath
 
 
 def get_chunk_dic(objflag):
     countchecker(len(objflag))
-    this_name = "%s_%s_%s" % (pystrs.CHUNK_prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    storepath = os.path.join(paths.results_path, paths.results_file_name)
+    storepath = finalsavepath(paths.results_path, pystrs.CHUNK_prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
     with open(storepath, "a") as f:
         for item in itertools.permutations(objflag, len(objflag)):
             item = filterforfun(item, head=pyoptions.head, tail=pyoptions.tail,

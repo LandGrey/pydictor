@@ -175,3 +175,10 @@ def finishprinter(count, storepath):
           "[+] Store in   :{2} {1}"
           "[+] Cost       :{3} seconds".format(cool.orange(count), pyoptions.CRLF, cool.orange(storepath),
                                                cool.orange(str(time.time() - pystrs.startime)[:6])))
+
+
+def finalsavepath(directory, prefix, timestamp, ext, customname):
+    filename = "%s_%s%s" % (prefix.lower(), timestamp, ext)
+    filename = filename if not customname else customname
+    storepath = os.path.join(directory, filename)
+    return storepath

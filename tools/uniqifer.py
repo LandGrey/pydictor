@@ -8,21 +8,18 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
-import os
 from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import cool, finishcounter, finishprinter, unique, mybuildtime
+from lib.fun.fun import cool, finishcounter, finishprinter, unique, mybuildtime, finalsavepath
 
 
 def uniqifer_enter(original_file_path, from_combiner=False):
-    prefix = pystrs.UNIQIFER_prefix
+    dict_prefix = pystrs.UNIQIFER_prefix
     if from_combiner:
-        prefix = pystrs.UNIQBINER_prefix
-    this_name = "%s_%s%s" % (prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    storepath = os.path.join(paths.results_path, paths.results_file_name)
-
-    with open(original_file_path) as o_f:
+        dict_prefix = pystrs.UNIQBINER_prefix
+    storepath = finalsavepath(paths.results_path, dict_prefix, mybuildtime(), pyoptions.filextension,
+                              paths.results_file_name)
+    with open(storepath) as o_f:
         with open(storepath, "a") as s_f:
             for item in unique(o_f.readlines()):
                 item = filterforfun(item.strip(), head=pyoptions.head, tail=pyoptions.tail,

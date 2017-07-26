@@ -13,7 +13,7 @@ import mimetypes
 import traceback
 from tools.uniqifer import uniqifer_enter
 from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import finishcounter, finishprinter, cool, mybuildtime
+from lib.fun.fun import finishcounter, finishprinter, cool, mybuildtime, finalsavepath
 
 
 def combiner_enter(directory=os.path.abspath(sys.argv[0]), need_uniqifer=False):
@@ -21,14 +21,8 @@ def combiner_enter(directory=os.path.abspath(sys.argv[0]), need_uniqifer=False):
         exit(pyoptions.CRLF + cool.red("[-] path: {} don't exists".format(directory)))
     filepaths = []
     combine_list = []
-    this_name = "%s_%s%s" % (pystrs.COMBINER_prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    if not need_uniqifer:
-        tmpath = paths.results_file_name
-    else:
-        tmpath = this_name
-    storepath = os.path.join(paths.results_path, tmpath)
-
+    storepath = finalsavepath(paths.results_path, pystrs.COMBINER_prefix, mybuildtime(), pyoptions.filextension,
+                              paths.results_file_name)
     for rootpath, subdirsname, filenames in os.walk(directory):
         filepaths.extend([os.path.abspath(os.path.join(rootpath, _)) for _ in filenames])
     if len(filepaths) > 0:

@@ -11,14 +11,13 @@ from __future__ import unicode_literals
 import os
 import cmd
 import time
-import random
 
 from core.EXTEND import extend_enter
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.osjudger import is_Windows, is_Linux, is_Mac
 from lib.fun.filter import filterforfun
 from lib.data.text import help_dict, helpmsg, pydictor_art_text
-from lib.fun.fun import cool, unique, finishprinter, finishcounter, walks_all_files, lengthchecker, mybuildtime
+from lib.fun.fun import cool, unique, finishprinter, finishcounter, walks_all_files, mybuildtime, finalsavepath
 from rules.EB import EB
 from rules.Mailrule import Mailrule
 from rules.NB import NB
@@ -277,20 +276,19 @@ class SEDB(cmd.Cmd):
             print(cool.fuchsia("[!] usage: output store_path" + pyoptions.CRLF))
         else:
             try:
-                tmpdir, tmpname = os.path.split(chunk[0])
-                if os.path.isdir(chunk[0]):
-                    paths.results_path = chunk[0]
-                    paths.results_file_name = None
-                elif os.path.isfile(chunk[0]):
-                    paths.results_path = tmpdir
-                else:
-                    if '.' in tmpname:
-                        paths.results_file_name = tmpname
-                        paths.results_path = tmpdir
+                if not os.path.isdir(chunk[0]):
+                    tmp_dirpath, tmp_filename = os.path.split(chunk[0])
+                    if '.' in tmp_filename:
+                        if not os.path.isdir(tmp_dirpath):
+                            os.makedirs(tmp_dirpath)
+                        paths.results_path = tmp_dirpath
+                        paths.results_file_name = tmp_filename
                     else:
-                        os.makedirs(chunk[0])
+                        if not os.path.isdir(chunk[0]):
+                            os.makedirs(chunk[0])
                         paths.results_path = chunk[0]
-                        paths.results_file_name = None
+                else:
+                    paths.results_path = chunk[0]
             except WindowsError:
                 print(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
             finally:
@@ -304,9 +302,9 @@ class SEDB(cmd.Cmd):
     def do_run(self, args):
         pystrs.startime = time.time()
         results = []
-        this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(),
-                                 pyoptions.filextension) if paths.results_file_name == None else paths.results_file_name
-        storepath = os.path.join(paths.results_path, this_name)
+        storepath = finalsavepath(paths.results_path, pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension,
+                                  paths.results_file_name)
+        paths.results_file_name = None
         # SingleRule
         for single in SingleRule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[1]],
                                  pystrs.sedb_dict[pystrs.sedb_range[2]], pystrs.sedb_dict[pystrs.sedb_range[3]],

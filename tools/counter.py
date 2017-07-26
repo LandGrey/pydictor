@@ -13,17 +13,15 @@ import string
 from collections import Counter
 from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import finishcounter, finishprinter, cool, mybuildtime
+from lib.fun.fun import finishcounter, finishprinter, cool, mybuildtime, finalsavepath
 
 
 def counter_operator(original_file_path, justsave, justview, encodeflag, head, tail, vs_count=pyoptions.default_vs_items):
     items = Counter(open(original_file_path, 'r').read().replace(string.punctuation, "").
                     split(pyoptions.counter_split)).most_common(vs_count)
     items_length = len(items)
-    this_name = "%s_%s%s" % (pystrs.COUNTER_prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    storepath = os.path.join(paths.results_path, paths.results_file_name)
-
+    storepath = finalsavepath(paths.results_path, pystrs.COUNTER_prefix, mybuildtime(), pyoptions.filextension,
+                              paths.results_file_name)
     if vs_count > pyoptions.vs_counter_switcher:
         exit(pyoptions.CRLF + cool.fuchsia("[!] view items should Leq {0}".format(pyoptions.vs_counter_switcher)))
     elif items_length < vs_count:

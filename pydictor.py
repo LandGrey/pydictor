@@ -60,28 +60,22 @@ def init():
     pyoptions.level = args.level
 
     try:
-        if not os.path.exists(paths.results_path):
+        if os.path.isfile(paths.results_path):
             tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
-            if os.path.exists(tmp_dirpath):
-                if '.' in tmp_filename:
-                    paths.results_file_name = tmp_filename
-                    paths.results_path = tmp_dirpath
-                else:
-                    os.makedirs(paths.results_path)
-                    paths.results_path = paths.results_path
-            else:
-                if '.' in tmp_filename and not os.path.exists(tmp_dirpath):
-                    os.makedirs(tmp_dirpath)
-                    paths.results_file_name = tmp_filename
-                    paths.results_path = tmp_dirpath
-                else:
-                    os.makedirs(paths.results_path)
-        elif os.path.isfile(paths.results_path):
-            tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
-            if not os.path.exists(tmp_dirpath):
+            if not os.path.isdir(tmp_dirpath):
                 os.makedirs(tmp_dirpath)
-            paths.results_file_name = ''.join(random.sample('abcefg', 4)) + '_' + tmp_filename
             paths.results_path = tmp_dirpath
+            paths.results_file_name = ''.join(random.sample('pydictor', 4)) + '_' + tmp_filename
+        elif not os.path.isdir(paths.results_path):
+            tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
+            if '.' in tmp_filename:
+                if not os.path.isdir(tmp_dirpath):
+                    os.makedirs(tmp_dirpath)
+                paths.results_path = tmp_dirpath
+                paths.results_file_name = tmp_filename
+            else:
+                if not os.path.isdir(paths.results_path):
+                    os.makedirs(paths.results_path)
     except WindowsError:
         exit(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
 

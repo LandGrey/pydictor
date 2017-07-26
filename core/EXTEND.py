@@ -16,7 +16,7 @@ from lib.fun.osjudger import py_ver_egt_3
 from lib.fun.leetmode import leet_mode_magic
 from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import cool, finishprinter, finishcounter, walks_all_files, mybuildtime, unique, charanger
+from lib.fun.fun import cool, finishprinter, finishcounter, walks_all_files, mybuildtime, unique, charanger, finalsavepath
 if not py_ver_egt_3():
     import ConfigParser
 else:
@@ -244,13 +244,8 @@ def extend_magic(rawlist, need_passcratch=False):
             for line in rawlist:
                 f.write(str(line) + pyoptions.CRLF)
 
-    this_name = "%s_%s%s" % (prefix, mybuildtime(), pyoptions.filextension)
-    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
-    finalstorepath = os.path.join(paths.results_path, paths.results_file_name)
-    with open(finalstorepath, "a") as f:
-        is_pick = False
-        if pyoptions.args_pick:
-            is_pick = True
+    storepath = finalsavepath(paths.results_path, prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
+    with open(storepath, "a") as f:
         for _ in walks_all_files(paths.weblist_path):
             item = filterforfun("".join(_), head=pyoptions.head, tail=pyoptions.tail,
                                 lenght_is_filter=pyoptions.args_pick,
@@ -304,4 +299,4 @@ def extend_magic(rawlist, need_passcratch=False):
             if item:
                 f.write(item + pyoptions.CRLF)
 
-    finishprinter(finishcounter(finalstorepath), finalstorepath)
+    finishprinter(finishcounter(storepath), storepath)

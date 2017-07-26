@@ -8,15 +8,14 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 from __future__ import unicode_literals
 
-import os
-from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import finishprinter, finishcounter, range_compatible, mybuildtime
+from lib.fun.fun import finishprinter, finishcounter, range_compatible, mybuildtime, finalsavepath
 
 
 def idcard_magic(posflag):
-    storepath = os.path.join(paths.results_path, "%s_%s_%s%s" %
-                             (pystrs.IDCARD_prefix, str(posflag)[-1:], mybuildtime(), pyoptions.filextension))
+    storepath = finalsavepath(paths.results_path, pystrs.IDCARD_prefix, mybuildtime(), pyoptions.filextension,
+                              paths.results_file_name)
+
     posrule = lambda _: str(_) if _ >= 10 else "0" + str(_)
     # month
     value1112 = " ".join(posrule(x) for x in range_compatible(1, 13))
