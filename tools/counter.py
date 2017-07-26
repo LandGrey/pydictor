@@ -20,7 +20,10 @@ def counter_operator(original_file_path, justsave, justview, encodeflag, head, t
     items = Counter(open(original_file_path, 'r').read().replace(string.punctuation, "").
                     split(pyoptions.counter_split)).most_common(vs_count)
     items_length = len(items)
-    storepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.COUNTER_prefix, mybuildtime(), pyoptions.filextension))
+    this_name = "%s_%s%s" % (pystrs.COUNTER_prefix, mybuildtime(), pyoptions.filextension)
+    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
+    storepath = os.path.join(paths.results_path, paths.results_file_name)
+
     if vs_count > pyoptions.vs_counter_switcher:
         exit(pyoptions.CRLF + cool.fuchsia("[!] view items should Leq {0}".format(pyoptions.vs_counter_switcher)))
     elif items_length < vs_count:

@@ -21,8 +21,14 @@ def combiner_enter(directory=os.path.abspath(sys.argv[0]), need_uniqifer=False):
         exit(pyoptions.CRLF + cool.red("[-] path: {} don't exists".format(directory)))
     filepaths = []
     combine_list = []
-    storepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.COMBINER_prefix, mybuildtime(),
-                                                              pyoptions.filextension))
+    this_name = "%s_%s%s" % (pystrs.COMBINER_prefix, mybuildtime(), pyoptions.filextension)
+    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
+    if not need_uniqifer:
+        tmpath = paths.results_file_name
+    else:
+        tmpath = this_name
+    storepath = os.path.join(paths.results_path, tmpath)
+
     for rootpath, subdirsname, filenames in os.walk(directory):
         filepaths.extend([os.path.abspath(os.path.join(rootpath, _)) for _ in filenames])
     if len(filepaths) > 0:

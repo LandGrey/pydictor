@@ -20,35 +20,59 @@ except:
 
 
 def none_encode(item):
-    return (item.encode('utf-8')).decode()
+    try:
+        return (item.encode('utf-8')).decode()
+    except:
+        return ''
 
 
 def base64_encode(item):
-    return (b64encode(item.encode('utf-8'))).decode()
+    try:
+        return (b64encode(item.encode('utf-8'))).decode()
+    except:
+        return ''
 
 
 def md5_encode(item):
-    return (hashlib.md5(item.encode("utf-8"))).hexdigest()
+    try:
+        return (hashlib.md5(item.encode("utf-8"))).hexdigest()
+    except:
+        return ''
 
 
 def md5_16_encode(item):
-    return hashlib.md5(item.encode("utf-8")).hexdigest()[8:-8]
+    try:
+        return hashlib.md5(item.encode("utf-8")).hexdigest()[8:-8]
+    except:
+        return ''
 
 
 def sha1_encode(item):
-    return hashlib.sha1(item.encode("utf-8")).hexdigest()
+    try:
+        return hashlib.sha1(item.encode("utf-8")).hexdigest()
+    except:
+        return ''
 
 
 def url_encode(item):
-    return quote(item.encode("utf-8"))
+    try:
+        return quote(item.encode("utf-8"))
+    except:
+        return ''
 
 
 def sha256_encode(item):
-    return (hashlib.sha256(item.encode("utf-8"))).hexdigest()
+    try:
+        return (hashlib.sha256(item.encode("utf-8"))).hexdigest()
+    except:
+        return ''
 
 
 def sha512_encode(item):
-    return hashlib.sha512(item.encode("utf-8")).hexdigest()
+    try:
+        return hashlib.sha512(item.encode("utf-8")).hexdigest()
+    except:
+        return ''
 
 
 # note: python 2 and python3 maybe return different values because of different local encoding

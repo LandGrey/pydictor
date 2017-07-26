@@ -18,11 +18,14 @@ def uniqifer_enter(original_file_path, from_combiner=False):
     prefix = pystrs.UNIQIFER_prefix
     if from_combiner:
         prefix = pystrs.UNIQBINER_prefix
-    storepath = os.path.join(paths.results_path, "%s_%s%s" % (prefix, mybuildtime(), pyoptions.filextension))
+    this_name = "%s_%s%s" % (prefix, mybuildtime(), pyoptions.filextension)
+    paths.results_file_name = this_name if not paths.results_file_name else paths.results_file_name
+    storepath = os.path.join(paths.results_path, paths.results_file_name)
+
     with open(original_file_path) as o_f:
         with open(storepath, "a") as s_f:
-            for _ in unique(o_f.readlines()):
-                item = filterforfun(_, head=pyoptions.head, tail=pyoptions.tail,
+            for item in unique(o_f.readlines()):
+                item = filterforfun(item.strip(), head=pyoptions.head, tail=pyoptions.tail,
                                     lenght_is_filter=pyoptions.args_pick,
                                     minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
                                     regex_is_filter=True, regex=pyoptions.filter_regex,
