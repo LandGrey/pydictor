@@ -19,7 +19,7 @@ def uniqifer_enter(original_file_path, from_combiner=False):
         dict_prefix = pystrs.UNIQBINER_prefix
     storepath = finalsavepath(paths.results_path, dict_prefix, mybuildtime(), pyoptions.filextension,
                               paths.results_file_name)
-    with open(storepath) as o_f:
+    with open(original_file_path) as o_f:
         with open(storepath, "a") as s_f:
             for item in unique(o_f.readlines()):
                 item = filterforfun(item.strip(), head=pyoptions.head, tail=pyoptions.tail,
