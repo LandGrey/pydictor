@@ -22,7 +22,7 @@ def combiner_enter(directory=os.path.abspath(sys.argv[0]), need_uniqifer=False):
     filepaths = []
     combine_list = []
     storepath = finalsavepath(paths.results_path, pystrs.COMBINER_prefix, mybuildtime(), pyoptions.filextension,
-                              paths.results_file_name)
+                              paths.results_file_name if not need_uniqifer else None)
     for rootpath, subdirsname, filenames in os.walk(directory):
         filepaths.extend([os.path.abspath(os.path.join(rootpath, _)) for _ in filenames])
     if len(filepaths) > 0:

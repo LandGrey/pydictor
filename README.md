@@ -72,7 +72,7 @@ python pydictor.py
 
 #### function and scope of support wordlist number
 
-| function   | support number               | description                                              |
+| function   | number (wordlist)            | description                                              |
 |:---------- | :--------------------------- |:-------------------------------------------------------- |
 | len        | 1 2 3 4 5 6 7 9 10 11 12 14  | lenght scope                                             |
 | head       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items prefix                                         | 
@@ -89,12 +89,12 @@ python pydictor.py
 
 #### 1:  generate the basic wordlsit based on digital lenght of 4
 ```
-python pydictor.py -base d --len 4 4 --output D:\exits\or\not\dict.txt
+python pydictor.py -base d --len 4 4 --output D:\exists\or\not\dict.txt
 ```
 
 ### 2:  encode the wordlist
 ```
-python pydictor.py -base c --len 1 3 --encode b64
+python pydictor.py -base L --len 1 3 --encode b64
 ```
 
 #### 3: use d(digital) L(lowercase letter) c(capital letter) generating wordlist
@@ -191,6 +191,7 @@ supported encoding:
 			   url     urlencode
 			   sha256  sha256 digest algorithm
 			   sha512  sha512 digest algorithm
+               test    interface for customized encode function
 ```
 
 

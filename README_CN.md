@@ -76,12 +76,12 @@ python pydictor.py
 
 #### 字典类型与功能适用范围对照表  
 
-| 功能       | 适用范围(编号)               | 说明                                 |
+| 功能       | 适用范围(字典类型编号)       | 说明                                 |
 |:---------- | :--------------------------- |:------------------------------------ |
 | len        | 1 2 3 4 5 6 7 9 10 11 12 14  | 定义长度范围                         |
-| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | 添加字典条目前缀                     | 
-| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | 添加字典条目后缀                     | 
-| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | 对字典条目进行编码                   |
+| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | 添加前缀                             |
+| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | 添加后缀                             |
+| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | 编码或自定义加密方法                 |
 | occur      | 3 4 5 7 9 10 11 12 14        | 字母、数字、特殊字符出现次数范围筛选 |
 | types      | 3 4 5 7 9 10 11 12 14        | 字母、数字、特殊字符各种类数范围筛选 |
 | regex      | 3 4 5 7 9 10 11 12 14        | 正则筛选                             |
@@ -90,14 +90,14 @@ python pydictor.py
 
 
 ## 使用实例
-#### 1: 生成4位纯数字爆破字典, 并保存到'D:\exits\or\not\dict.txt'文件中
+#### 1: 生成4位纯数字爆破字典, 并保存到'D:\exists\or\not\dict.txt'文件中
 ```
-python pydictor.py -base d --len 4 4 --output D:\exits\or\not\dict.txt
+python pydictor.py -base d --len 4 4 --output D:\exists\or\not\dict.txt
 ```
 
-#### 2: 生成1-3位小写字母——名字首字母拼音缩写爆破字典, 并用base64编码
+#### 2: 生成1-3位小写字母—名字首字母拼音缩写爆破字典, 并用base64编码
 ```
-python pydictor.py -base c --len 1 3 --encode b64
+python pydictor.py -base L --len 1 3 --encode b64
 ```
 
 #### 示例3: 生成包含数字、小写与大写字母的1-4位(默认)爆破字典,保存到'/awesome/pwd' 目录
@@ -195,7 +195,7 @@ python pydictor.py --conf /my/other/awesome.conf    使用/my/other/awesome.conf
 			   url     urlencode
 			   sha256  sha256 摘要算法
 			   sha512  sha512 摘要算法
-               test    修改/lib/fun/encode.py中的test_encode方法，自定义加密方式
+			   test    修改/lib/fun/encode.py中的test_encode方法，自定义加密方式
 ```
 
 #### 示例10: 字典处理工具
@@ -334,7 +334,7 @@ s = 5
 ">=0" ">=0" ">=0"
 ```
 
-#### 示例12: 字典筛选社会工程学字典
+#### 示例12: 社会工程学字典
 
 ```
                                   _ _      _

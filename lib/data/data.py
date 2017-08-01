@@ -141,7 +141,7 @@ def init_pyoptions():
     pyoptions.dir_rewrite_count = 1
 
     # counter tool max count
-    pyoptions.vs_counter_switcher = 10000
+    pyoptions.vs_counter_switcher = 100000
 
     # counter tool split word
     pyoptions.counter_split = "\n"
