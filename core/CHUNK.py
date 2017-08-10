@@ -18,8 +18,8 @@ def get_chunk_dic(objflag):
     countchecker(len(objflag))
     storepath = finalsavepath(paths.results_path, pystrs.CHUNK_prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
     with open(storepath, "a") as f:
-        for item in itertools.permutations(objflag, len(objflag)):
-            item = filterforfun(item, head=pyoptions.head, tail=pyoptions.tail,
+        for item in itertools.permutations(objflag):
+            item = filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
                                 lenght_is_filter=pyoptions.args_pick,
                                 minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
                                 regex_is_filter=True, regex=pyoptions.filter_regex,
