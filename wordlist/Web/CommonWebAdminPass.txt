@@ -3,6 +3,8 @@
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 # Common Web Site Administrators Password list
 # """
+0
+1
 0000
 1111
 1234
@@ -16,6 +18,7 @@ Admin
 QWERT
 admin
 qwert
+azerty
 000000
 111111
 112233
@@ -23,6 +26,7 @@ qwert
 123123
 123321
 123456
+123abc
 123qwe
 1q2w3e
 520520
@@ -50,6 +54,9 @@ qweasd
 qwerty
 shadow
 system
+sysadm
+supadm
+manage
 webadm
 woaini
 zxc123
@@ -129,6 +136,7 @@ qwer1234
 qwerasdf
 rootROOT
 rootroot
+sysadmin
 testTEST
 testtest
 webadmin
@@ -196,6 +204,7 @@ q1w2e3r4t5
 qwerasdzxc
 qwert12345
 qwertyuiop
+superadmin
 woaini1314
 zxcvbnm123
 1qa2ws3ed4rf

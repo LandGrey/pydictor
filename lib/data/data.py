@@ -53,7 +53,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.0.3#dev'
+    pystrs.version = '2.0.4#dev'
 
     # file prefix strings
     pystrs.BASE_prefix = "BASE"
