@@ -11,12 +11,13 @@ from __future__ import unicode_literals
 
 import os
 import re
-
+import ssl
 from core.EXTEND import get_extend_dic
-from lib.data.data import paths, pyoptions
-from lib.fun.fun import unique, cool, walk_pure_file
 from lib.fun.osjudger import py_ver_egt_3
+from lib.data.data import paths, pystrs, pyoptions
+from lib.fun.fun import unique, cool, walk_pure_file, mybuildtime, finishcounter, finishprinter
 
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # in python3: urllib + urilib2 -> urllib, and
 # urllib2.urlopen() -> urllib.request.urlopen(), urllib2.Request() -> urllib.request.Request()
@@ -25,7 +26,8 @@ try:
         from urllib.request import urlopen
     else:
         from urllib2 import urlopen
-except ImportError:
+except ImportError as e:
+    print(e.message)
     exit(cool.red('[-] can not import urllib or urllib2 module:') + pyoptions.CRLF)
 
 passcratch_white_list = walk_pure_file(paths.scraperwhitelist_path)
@@ -61,7 +63,6 @@ def stripHTMLTags(html):
 
 
 def scratchword(siteList):
-    scrabbler = "scrabbler"
     resluts = []
     # Create an empty list for generation logic.
     y_arr = []
@@ -94,7 +95,7 @@ def scratchword(siteList):
                             or ((y[0] == '2') and (y[1] == '3')) \
                             or ((y[0] == '3') and (y[1] == 'F')) or ((y[0] == '3') and (y[1] == 'D')):
                         y = y[2:]
-                    if len(y) <= 8 and True if y.lower() not in passcratch_white_list else False:
+                    if len(y) <= 8 and True if y.lower() not in passcratch_white_list and len(y) >= 5 else False:
                         y_arr.append(y)
                     elif 9 <= len(y) <= 25 and True if y.lower() not in passcratch_white_list else False:
                         y_arr.append(y)
@@ -120,7 +121,7 @@ def checkurl(urlike):
         exit(cool.red("[-] Incorrect url/uri: {0}".format(cool.red(urlike.strip()))))
 
 
-def scraper_magic(target=paths.scrapersites_path):
+def scraper_magic(target=paths.scrapersites_path, only_scratch=False):
     sites = []
     if os.path.isfile(target):
         with open(target, 'r') as f:
@@ -131,4 +132,19 @@ def scraper_magic(target=paths.scrapersites_path):
                     sites.append(checkurl(_))
     else:
         sites.append(checkurl(target))
-    get_extend_dic(scratchword(sites), need_passcratch=True)
+
+    rawlist = scratchword(sites)
+    if only_scratch:
+        storepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.SCFATCH_prefix, mybuildtime(),
+                                                                  pyoptions.filextension))
+        with open(storepath, "a") as f:
+            for line in rawlist:
+                f.write(str(line) + pyoptions.CRLF)
+        finishprinter(finishcounter(storepath), storepath)
+    else:
+        storepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.SCFATCH_prefix, mybuildtime(),
+                                                                  pyoptions.filextension))
+        with open(storepath, "a") as f:
+            for line in rawlist:
+                f.write(str(line) + pyoptions.CRLF)
+        get_extend_dic(rawlist, need_extendscratch=True)

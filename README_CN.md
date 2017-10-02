@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.4-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.5-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -55,7 +55,7 @@ python pydictor.py
 
 ## 快速上手:
 
-#### 可以生成的字典类型（14种）及其说明
+#### 可以生成的字典类型（15种）及其说明
 
 |     类型      |  编号 |      说明         |
 |:------------- | :---- |:----------------- |
@@ -64,7 +64,7 @@ python pydictor.py
 | chunk         | 3     | 排列组合字典      |
 | conf          | 4     | 配置文件生成字典  |
 | sedb          | 5     | 社会工程学字典    | 
-| idcard        | 6     | 身份证后6/8位字典 |
+| idcard        | 6     | 身份证后4/6/8位字典 |
 | extend        | 7     | 扩展字典          |
 | scratch       | 8     | 网页原始关键词字典| 
 | passcraper    | 9     | 网页爆破针对字典  |
@@ -73,20 +73,21 @@ python pydictor.py
 | counter       | 12    | 词频统计字典      |
 | combiner      | 13    | 合并字典          |
 | uniqbiner     | 14    | 先合并后去重字典  |
+| birthday      | 15    | 生日范围字典 |
 
 #### 字典类型与功能适用范围对照表  
 
-| 功能       | 适用范围(字典类型编号)       | 说明                                 |
-|:---------- | :--------------------------- |:------------------------------------ |
-| len        | 1 2 3 4 5 6 7 9 10 11 12 14  | 定义长度范围                         |
-| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | 添加前缀                             |
-| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | 添加后缀                             |
-| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | 编码或自定义加密方法                 |
-| occur      | 3 4 5 7 9 10 11 12 14        | 字母、数字、特殊字符出现次数范围筛选 |
-| types      | 3 4 5 7 9 10 11 12 14        | 字母、数字、特殊字符各种类数范围筛选 |
-| regex      | 3 4 5 7 9 10 11 12 14        | 正则筛选                             |
-| level      | 5 7 9                        | 字典级别筛选                         |
-| leet       | 5 7 9                        | 1337 模式                            |
+| 功能       | 适用范围(字典类型编号)             | 说明                                 |
+|:---------- | :------------------------------ |:------------------------------------ |
+| len        | 1 2 3 4 5 6 7 9 10 11 12 14 15  | 定义长度范围                         |
+| head       | 1 2 3 4 5 6 7 9 10 11 12 14 15  | 添加前缀                             |
+| tail       | 1 2 3 4 5 6 7 9 10 11 12 14 15  | 添加后缀                             |
+| encode     | 1 2 3 4 5 6 7 9 10 11 12 14 15  | 编码或自定义加密方法                 |
+| occur      | 3 4 5 7 9 10 11 12 14           | 字母、数字、特殊字符出现次数范围筛选 |
+| types      | 3 4 5 7 9 10 11 12 14           | 字母、数字、特殊字符各种类数范围筛选 |
+| regex      | 3 4 5 7 9 10 11 12 14           | 正则筛选                             |
+| level      | 5 7 9                           | 字典级别筛选                         |
+| leet       | 5 7 9                           | 1337 模式                            |
 
 
 ## 使用实例
@@ -138,7 +139,7 @@ webzhang
 python pydictor.py -extend /names.txt --leet 0 1 2 11 21 --level 1 --len 4 16 --occur "<=10" ">0" "<=2" -o /possbile/wordlist.lst
 ```
 
-#### 示例7: 身份证后6/8位生成插件
+#### 示例7: 身份证后4/6/8位生成插件
 ##### 使用pid6插件生成中国公民身份证后6位爆破字典, 并规定至少要出现4种不同的数字，并用base64编码
 ```
 pydictor.py -plug pid6 --types ">=0" ">=4" ">=0" --encode b64
@@ -146,10 +147,18 @@ pydictor.py -plug pid6 --types ">=0" ">=4" ">=0" --encode b64
 
 **注**:  默认的性别为全体'all'，它由 lib/data/data.py文件default_sex参数指定，'m'指男性,'f'指女性
 
+
+#### 示例7-2: 生日范围字典生成插件
+```
+pydictor.py -plug birthday 19750101 20001231 --len 6 8
+```
+
+
 #### 示例8: 使用passcraper插件爬行网站指定页面并基于获得的文本词组生成密码字典
 
 1.  passcraper 规则和extend完全一致
 2.  passcraper 插件会生成两个字典，SCRATCH开头的是从网站内容获得的原始词组列表，如果感觉SCRATCH字典中有许多无关词，可以自己去除后，重新使用extend功能指定文件生成字典
+3.  或直接使用scratch插件,只从网站内容中获得原始词列表,人工拣选后,再使用extend功能生成扩展字典
 3.  你可以修改 funcfg/passcraper_blacklist.conf 文件，选择需要过滤掉的无用单词，也可以修改lib/data/data.py 中的passcraper_filter，更改过滤正则表达式
 4.  和extend一样，你可以将自己的弱密码字典放在 /wordlist/Web 目录下，生成的字典会包含它们
 
@@ -163,11 +172,15 @@ python pydictor.py -plug passcraper http://www.example.com
 1.  此功能可以完成"-base"和"-char"的所有功能，并在此基础上有更精细化的字典控制力；
 2.  extend.conf 文件支持此功能，具体参考funcfg/extend.conf文件；
 3.  可以生成固定模式的字典,比如 lisa【两位到四位数字】@【qq.com, 163.com, some.net 中的一个】，在配置文件中写入  
-    'lisa[0-9]{2,4}<none>@[qq.com,163.com,some.net]{1,1}<none>' ，然后指定运行即可
+    ```
+    lisa[0-9]{2,4}<none>@[qq.com,163.com,some.net]{1,1}<none>
+    ```
+    然后指定路径运行即可
 
 ```
-python pydictor.py --conf --encode b64			    使用默认位置的funcfg/build.conf 配置文件建立字典,并用base64编码
-python pydictor.py --conf /my/other/awesome.conf    使用/my/other/awesome.conf文件建立字典
+pydictor.py --conf "[1-9]{6,6}<none>" --output six.txt      生成6位纯数字字典
+python pydictor.py --conf --encode b64			            使用默认位置的funcfg/build.conf 配置文件建立字典,并用base64编码
+python pydictor.py --conf /my/other/awesome.conf            使用/my/other/awesome.conf文件建立字典
 ```
 
 **注**: 具体解析规则如下，另可参考build.conf文件示例；
@@ -211,7 +224,7 @@ python pydictor.py -tool shredder           删除当前指定的字典输出目
 python pydictor.py -tool shredder base      删除当前指定的字典输出目录下,以"BASE"开头的所有字典文件
 ```
 
-  支持的前缀(不区分大小写)有14种:base,char, chunk, conf,sedb,idcard,extend,handler,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
+  支持的前缀(不区分大小写)有15种:base,char, chunk, conf,sedb,idcard,extend,handler,uniqifer,counter,combiner,uniqbiner,scratch,passcraper,birthday
 
   另外,还可以像下面这样，将传入的任意位置的一个文件或目录，整个的安全删除
 ```

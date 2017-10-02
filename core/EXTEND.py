@@ -217,7 +217,7 @@ def extend_enter(rawlist, leet=True):
     return unique(res)
 
 
-def get_extend_dic(target, need_passcratch=False):
+def get_extend_dic(target, need_extendscratch=False):
     rawlist = []
     for t in target:
         if os.path.isfile(t):
@@ -226,23 +226,18 @@ def get_extend_dic(target, need_passcratch=False):
                     rawlist.append(line.strip())
         else:
             rawlist.append(t)
-    extend_magic(rawlist, need_passcratch=need_passcratch)
+    extend_magic(rawlist, need_extendscratch=need_extendscratch)
 
 
-def extend_magic(rawlist, need_passcratch=False):
+def extend_magic(rawlist, need_extendscratch=False):
     prefix = pystrs.EXTEND_prefix
     if rawlist == []:
         exit(pyoptions.CRLF + cool.red("[-] raw extend resource cannot be empty"))
 
     leet = pyoptions.extend_leet
-    if need_passcratch:
+    if need_extendscratch:
         prefix = pystrs.PASSCRAPER_prefix
         leet = pyoptions.passcraper_leet
-        rawstorepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.SCFATCH_prefix, mybuildtime(),
-                                                                     pyoptions.filextension))
-        with open(rawstorepath, "a") as f:
-            for line in rawlist:
-                f.write(str(line) + pyoptions.CRLF)
 
     storepath = finalsavepath(paths.results_path, prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
     with open(storepath, "a") as f:

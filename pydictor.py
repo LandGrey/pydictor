@@ -34,7 +34,8 @@ def init():
         pyoptions.extend_leet = True
         pyoptions.passcraper_leet = True
         pyoptions.sedb_leet = True
-    paths.results_path = os.path.abspath(args.output)
+    paths.results_path = os.path.abspath(args.output) \
+        if '\\' in args.output or '/' in args.output else os.path.join(paths.results_path, args.output)
 
     pyoptions.head = args.head
     pyoptions.tail = args.tail

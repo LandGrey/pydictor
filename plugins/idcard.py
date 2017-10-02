@@ -39,9 +39,23 @@ def idcard_magic(posflag):
         for _ in rand.split(" "):
             for _p in post18:
                 value1718 += _ + _p + " "
-
+    # for loop more faster
     with open(storepath, "a") as f:
-        if posflag == pystrs.plug_range[1]:
+        if posflag == pystrs.plug_range[0]:
+                for v1516 in value1516.split(" "):
+                    for v1718 in value1718.split(" "):
+                        if v1718 != "":
+                            f.write(pyoptions.operator.get(pyoptions.encode)
+                                    (pyoptions.head + "".join(v1516 + v1718) + pyoptions.tail) + pyoptions.CRLF)
+        elif posflag == pystrs.plug_range[1]:
+                for v1314 in value1314.split(" "):
+                    for v1516 in value1516.split(" "):
+                        for v1718 in value1718.split(" "):
+                            if v1718 != "":
+                                f.write(pyoptions.operator.get
+                                        (pyoptions.encode)(pyoptions.head + "".join(v1314 + v1516 + v1718) +
+                                                           pyoptions.tail) + pyoptions.CRLF)
+        elif posflag == pystrs.plug_range[2]:
             for v1112 in value1112.split(" "):
                 for v1314 in value1314.split(" "):
                     for v1516 in value1516.split(" "):
@@ -49,15 +63,6 @@ def idcard_magic(posflag):
                             if v1718 != "":
                                 f.write(pyoptions.operator.get
                                         (pyoptions.encode)(pyoptions.head + "".join(v1112 + v1314 + v1516 + v1718) +
-                                                           pyoptions.tail) + pyoptions.CRLF)
-
-        elif posflag == pystrs.plug_range[0]:
-                for v1314 in value1314.split(" "):
-                    for v1516 in value1516.split(" "):
-                        for v1718 in value1718.split(" "):
-                            if v1718 != "":
-                                f.write(pyoptions.operator.get
-                                        (pyoptions.encode)(pyoptions.head + "".join(v1314 + v1516 + v1718) +
                                                            pyoptions.tail) + pyoptions.CRLF)
 
     finishprinter(finishcounter(storepath), storepath)

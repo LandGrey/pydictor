@@ -27,11 +27,11 @@ pydictor.py [options]
            -char        [custom_char]
            -chunk       [chunk1] [chunk2] ...
            -extend      [str_or_file]
-           -plug        [{p0},{p1},{p2}]
-           --conf       [config_file_path]
+           -plug        [{p0},{p1},{p2},{p3},{p4},{p5}]
+           --conf       [expression_or_file]
            --sedb
            -o,--output  [directory]
-           -tool        [{t5},{t0},{t1},{t2},{t3},{t4}] [args] ...
+           -tool        [{t5},{t0},{t1},{t2},{t3},{t4}]
            --len        [minlen] [maxlen]
            --head       [prefix_string]
            --tail       [suffix_string]
@@ -41,7 +41,9 @@ pydictor.py [options]
            --regex      [regex]
            --level      [code]
            --leet       [code]'''.format(p0=pystrs.plug_range[0], p1=pystrs.plug_range[1],
-                                         p2=pystrs.plug_range[2], t0=pystrs.tool_range[0],
+                                         p2=pystrs.plug_range[2], p3=pystrs.plug_range[3],
+                                         p4=pystrs.plug_range[4], p5=pystrs.plug_range[5],
+                                         t0=pystrs.tool_range[0],
                                          t1=pystrs.tool_range[1], t2=pystrs.tool_range[2],
                                          t3=pystrs.tool_range[3], t4=pystrs.tool_range[4],
                                          t5=pystrs.tool_range[5],
@@ -77,10 +79,15 @@ pydictor.py [options]
                         help=cool.yellow('Extend the string list or file'))
 
     parser.add_argument('-plug', dest='plug', metavar='arg', nargs='+', type=str, default='',
-                        help=cool.yellow('''Choose from    ({0}, {1}, {2}, {3})
-    {0:10} [idcard_last_6_digit]   default sex:{3}
-    {1:10} [idcard_last_8_digit]   default sex:{3}
-    {2:10} [url_or_file_path]'''.format(pystrs.plug_range[0], pystrs.plug_range[1], pystrs.plug_range[2], pystrs.default_sex)))
+                        help=cool.yellow('''Choose from    ({1}, {2}, {3}, {4}, {5}, {6})
+    {1:10} [idcard_last_4_digit]
+    {2:10} [idcard_last_6_digit]   default sex:{0}
+    {3:10} [idcard_last_8_digit]   default sex:{0}
+    {4:10} [url_or_file_path]
+    {5:10} [url_or_file_path]
+    {6:10} [YYYYMMDD] [YYYYMMDD]'''
+    .format(pystrs.default_sex, pystrs.plug_range[0], pystrs.plug_range[1], pystrs.plug_range[2], pystrs.plug_range[3],
+            pystrs.plug_range[4], pystrs.plug_range[5],)))
 
     parser.add_argument('--conf', dest='conf', nargs='?', metavar='file_path', default='default', const='const',
                         help=cool.yellow('''Use the configuration file build the dictionary

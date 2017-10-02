@@ -29,10 +29,10 @@ def get_conf_dic(minlength, maxlength, objflag, encodeflag, head, tail):
     return diclist
 
 
-def build_conf_dic():
-    storepath = finalsavepath(paths.results_path, pystrs.CONF_prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
+def build_conf_dic(source="", file_prefix=pystrs.CONF_prefix):
+    storepath = finalsavepath(paths.results_path, file_prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
     with open(storepath, "a") as f:
-        for item in confcore(paths.buildconf_path):
+        for item in confcore(source):
             item = filterforfun(item, head=pyoptions.head, tail=pyoptions.tail,
                                 lenght_is_filter=pyoptions.args_pick,
                                 minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
@@ -59,10 +59,8 @@ def confcore(resource):
     except IndexError:
         confdicts = {}
         exit(cool.red("[-] parse element error, please check your parsing element"))
-
     finalen = len(confdicts[pystrs.conf_head])
     listpool = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
     for x in range(0, finalen):
         lengthchecker(confdicts[pystrs.conf_minlen][x], confdicts[pystrs.conf_maxlen][x])
         listpool[x] = get_conf_dic(int(confdicts[pystrs.conf_minlen][x]), int(confdicts[pystrs.conf_maxlen][x]),
@@ -83,6 +81,7 @@ def confcore(resource):
     elif finalen == 4:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]))
         for item in itertools.product(listpool[0], listpool[1], listpool[2], listpool[3]):
+            # print("".join(item) + '\n')
             yield "".join(item)
     elif finalen == 5:
         countchecker(-1, len(listpool[0]), len(listpool[1]), len(listpool[2]), len(listpool[3]), len(listpool[4]))

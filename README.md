@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.4-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7|3.4](https://img.shields.io/badge/python-2.7|3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.0.5-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [中文版](README_CN.md)**
 
@@ -51,7 +51,7 @@ python pydictor.py
 ![social engineering dictionary builder](/screenshots/sedb.png "sedb")
 
 ## Quick to use:
-#### types of generate wordlist（14 types）and descriptions
+#### types of generate wordlist（15 types）and descriptions
 
 | wordlist type | number| description                                         |
 |:------------- | :---- |:--------------------------------------------------- |
@@ -60,7 +60,7 @@ python pydictor.py
 | chunk         | 3     | permutation and combination wordlist                |
 | conf          | 4     | based on configuration file wordlist                |
 | sedb          | 5     | social engineering wordlist                         | 
-| idcard        | 6     | id card last 6/8 char wordlist                      |
+| idcard        | 6     | id card last 4/6/8 char wordlist                    |
 | extend        | 7     | extend wordlist based on rules                      |
 | scratch       | 8     | wordlist based on web pages keywords                | 
 | passcraper    | 9     | wordlist against to web admin and users             |
@@ -69,20 +69,21 @@ python pydictor.py
 | counter       | 12    | word frequency count wordlist                       |
 | combiner      | 13    | combine the input file generate wordlist            |
 | uniqbiner     | 14    | combine and unique the input file generate wordlist |
+| birthday      | 15    | birthday keyword wordlist in specify datetime scope |
 
 #### function and scope of support wordlist number
 
-| function   | number (wordlist)            | description                                              |
-|:---------- | :--------------------------- |:-------------------------------------------------------- |
-| len        | 1 2 3 4 5 6 7 9 10 11 12 14  | lenght scope                                             |
-| head       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items prefix                                         | 
-| tail       | 1 2 3 4 5 6 7 9 10 11 12 14  | add items suffix                                         | 
-| encode     | 1 2 3 4 5 6 7 9 10 11 12 14  | encode the items                                         |
-| occur      | 3 4 5 7 9 10 11 12 14        | filter by occur times of letter、digital、special chars  |
-| types      | 3 4 5 7 9 10 11 12 14        | filter by types of letter、digital、special chars        |
-| regex      | 3 4 5 7 9 10 11 12 14        | filter by regex                                          |
-| level      | 5 7 9                        | set the wordlist level                                   |
-| leet       | 5 7 9                        | 1337 mode                                                |
+| function   | number (wordlist)               | description                                              |
+|:---------- | :------------------------------ |:-------------------------------------------------------- |
+| len        | 1 2 3 4 5 6 7 9 10 11 12 14 15  | lenght scope                                             |
+| head       | 1 2 3 4 5 6 7 9 10 11 12 14 15  | add items prefix                                         | 
+| tail       | 1 2 3 4 5 6 7 9 10 11 12 14 15  | add items suffix                                         | 
+| encode     | 1 2 3 4 5 6 7 9 10 11 12 14 15  | encode the items                                         |
+| occur      | 3 4 5 7 9 10 11 12 14           | filter by occur times of letter、digital、special chars  |
+| types      | 3 4 5 7 9 10 11 12 14           | filter by types of letter、digital、special chars        |
+| regex      | 3 4 5 7 9 10 11 12 14           | filter by regex                                          |
+| level      | 5 7 9                           | set the wordlist level                                   |
+| leet       | 5 7 9                           | 1337 mode                                                |
 
 
 ## usage examples
@@ -133,7 +134,7 @@ python pydictor.py -extend /names.txt --leet 0 1 2 11 21 --level 1 --len 4 16 --
 ```
 
 
-#### 7: id card last 6/8 char wordlist
+#### 7: id card last 4/6/8 char wordlist
 
 ```
 pydictor.py -plug pid6 --types ">=0" ">=4" ">=0" --encode b64
@@ -141,15 +142,23 @@ pydictor.py -plug pid6 --types ">=0" ">=4" ">=0" --encode b64
 
 **note**:   default sex ='all', it decided by lib/data/data.py default_sex, and 'm' is Male, 'f' is Female
 
+
+#### 7-2: birthday range wordlist
+```
+pydictor.py -plug birthday 19750101 20001231 --len 6 8
+```
+
+
 #### 8: using passcraper plugin crawl website generating password wordlist based on plain text found and extend rules
 
 1.  the rules of passcraper plug and extend function are the same
 2.  passcraper plug will generate two wordlist，preffix with SCRATCH is raw wordlist by website plain text，
     and if you feel that there are a lot of unrelated words in the SCRATCH wordlist, 
     you can remove them, and then use the extend function to specify the new file to generate dictionary again.
-3.  you can modify the funcfg/passcraper_blacklist.conf file，add or delete useless words that need to be filtered out，
+3.  or directed using scratch plug,then remove some useless words and use the extend function to generate dictionary again.
+4.  you can modify the funcfg/passcraper_blacklist.conf file，add or delete useless words that need to be filtered out，
     and also can modify lib/data/data.py file passcraper_filter argument，change the filter regular expressions
-4.  with same extend function，you can put your weak password in /wordlist/Web，new wordlist will contains them
+5.  with same extend function，you can put your weak password in /wordlist/Web，new wordlist will contains them
 
 ```
 python pydictor.py -plug passcraper				using default file scraper.sites as multi-input file
@@ -161,8 +170,9 @@ python pydictor.py -plug passcraper http://www.example.com
 ##### this function contains all of "-base" and "-char" capacities，and more precise control
 
 ```
-python pydictor.py --conf                           using default file funcfg/build.conf build the dictionary
-python pydictor.py --conf /my/other/awesome.conf    using /my/other/awesome.conf build the dictionary
+pydictor.py --conf "[1-9]{6,6}<none>" --output six.txt     build wordlist
+python pydictor.py --conf                                   using default file funcfg/build.conf build the dictionary
+python pydictor.py --conf /my/other/awesome.conf            using /my/other/awesome.conf build the dictionary
 ```
 
 **note**: parsing rules details as following，besides referred to build.conf file
@@ -208,7 +218,7 @@ python pydictor.py -tool shredder 		delete the currently specified output path(d
 python pydictor.py -tool shredder base 		delete the files of it's prefix is "BASE" in currently specified output path
 ```
 
-prefix(case insensitive) range in 14 items: base,char,chunk,conf,sedb,idcard,extend,handler,uniqifer,counter,combiner,uniqbiner,scratch,passcraper
+prefix(case insensitive) range in 15 items: base,char,chunk,conf,sedb,idcard,extend,handler,uniqifer,counter,combiner,uniqbiner,scratch,passcraper,birthday
 
 besides，you can safe shred files or whole directory as following:
 ```

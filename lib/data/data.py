@@ -53,7 +53,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.0.4#dev'
+    pystrs.version = '2.0.5#dev'
 
     # file prefix strings
     pystrs.BASE_prefix = "BASE"
@@ -62,6 +62,7 @@ def init_pystrs():
     pystrs.CONF_prefix = "CONF"
     pystrs.SEDB_prefix = "SEDB"
     pystrs.IDCARD_prefix = "IDCARD"
+    pystrs.BIRTHDAY_prefix = "BIRTHDAY"
     pystrs.EXTEND_prefix = "EXTEND"
     pystrs.SCFATCH_prefix = "SCRATCH"
     pystrs.PASSCRAPER_prefix = "PASSCRAPER"
@@ -70,10 +71,11 @@ def init_pystrs():
     pystrs.COUNTER_prefix = "COUNTER"
     pystrs.COMBINER_prefix = "COMBINER"
     pystrs.UNIQBINER_prefix = "UNIQBINER"
-    pystrs.prefix_range = (pystrs.BASE_prefix, pystrs.CHAR_prefix, pystrs.CHUNK_prefix, pystrs.CONF_prefix,
-                           pystrs.SEDB_prefix, pystrs.IDCARD_prefix, pystrs.EXTEND_prefix, pystrs.SCFATCH_prefix,
-                           pystrs.PASSCRAPER_prefix, pystrs.HANDLER_prefix, pystrs.UNIQIFER_prefix, pystrs.COUNTER_prefix,
-                           pystrs.COMBINER_prefix,  pystrs.UNIQBINER_prefix)
+    pystrs.prefix_range = (pystrs.BASE_prefix, pystrs.CHAR_prefix, pystrs.CHUNK_prefix,
+                           pystrs.CONF_prefix, pystrs.SEDB_prefix, pystrs.IDCARD_prefix,
+                           pystrs.BIRTHDAY_prefix, pystrs.EXTEND_prefix, pystrs.SCFATCH_prefix,
+                           pystrs.PASSCRAPER_prefix, pystrs.HANDLER_prefix, pystrs.UNIQIFER_prefix,
+                           pystrs.COUNTER_prefix, pystrs.COMBINER_prefix,  pystrs.UNIQBINER_prefix)
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -99,7 +101,7 @@ def init_pystrs():
     pystrs.tool_range = ("shredder", "uniqifer", "counter", 'combiner', 'uniqbiner', "handler", )
 
     # plug function string
-    pystrs.plug_range = ("pid6", "pid8", "passcraper")
+    pystrs.plug_range = ("pid4", "pid6", "pid8", "scratch", "passcraper", "birthday")
 
     # encode function string
     pystrs.encode_range = ("none", "b64", "md5", "md516", "sha1", "url", "sha256", "sha512", "test")

@@ -17,7 +17,7 @@ from lib.data.data import pystrs, pyoptions
 def confmatcher(resource):
     configures = []
     if not os.path.isfile(resource):
-        matches = re.findall(pyoptions.confpattern, resource)
+        matches = re.findall(pyoptions.confpattern, resource.strip())
         for match in matches:
             for m in match:
                 configures.append(m.strip())
