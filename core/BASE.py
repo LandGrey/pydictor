@@ -10,15 +10,15 @@ from __future__ import unicode_literals
 
 import string
 import itertools
-from lib.data.data import paths, pystrs,  pyoptions
-from lib.fun.fun import finishprinter, finishcounter, countchecker, range_compatible, mybuildtime, finalsavepath
+from lib.data.data import pystrs,  pyoptions
+from lib.fun.fun import finishprinter, countchecker, range_compatible, finalsavepath, fun_name
 
 
 # get the dictionary list
-def getchars(type, need_char=False):
+def getchars(type):
     flag = str(type)
     chars = []
-    if type in pystrs.base_dic_type and not need_char:
+    if type in pystrs.base_dic_type:
         if flag == pystrs.base_dic_type[0]:
             chars = string.digits
         elif flag == pystrs.base_dic_type[1]:
@@ -34,20 +34,17 @@ def getchars(type, need_char=False):
         elif flag == pystrs.base_dic_type[6]:
             chars = string.printable[:62]
         return chars
-    elif need_char:
-        return type
 
 
-def get_base_dic(objflag, need_char_dic=False):
-    objflag = getchars(objflag, need_char=need_char_dic)
+def get_base_dic(objflag):
+    storepath = finalsavepath(fun_name())
+
+    objflag = getchars(objflag)
     countchecker(len(objflag), pyoptions.minlen, pyoptions.maxlen)
-    dict_prefix = pystrs.BASE_prefix
-    if need_char_dic:
-        dict_prefix = pystrs.CHAR_prefix
-    storepath = finalsavepath(paths.results_path, dict_prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
     with open(storepath, "a") as f:
         for i in range_compatible(pyoptions.minlen, pyoptions.maxlen+1):
             for item in itertools.product(objflag, repeat=i):
                 f.write(pyoptions.operator.get(pyoptions.encode)(pyoptions.head + "".join(item) + pyoptions.tail) +
                         pyoptions.CRLF)
-    finishprinter(finishcounter(storepath), storepath)
+
+    finishprinter(storepath)

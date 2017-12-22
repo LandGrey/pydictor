@@ -12,15 +12,30 @@ import os
 import re
 import itertools
 from core.CONF import confcore
-from lib.fun.osjudger import py_ver_egt_3
+from lib.fun.decorator import magic
+from lib.data.data import paths, pyoptions
 from lib.fun.leetmode import leet_mode_magic
-from lib.fun.filter import filterforfun
-from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import cool, finishprinter, finishcounter, walks_all_files, mybuildtime, unique, charanger, finalsavepath
-if not py_ver_egt_3():
+from lib.fun.fun import cool, walks_all_files, unique, charanger
+try:
     import ConfigParser
-else:
+except:
     import configparser as ConfigParser
+
+
+def extend_magic(rawlist):
+    if rawlist == []:
+        exit(pyoptions.CRLF + cool.red("[-] raw extend resource cannot be empty"))
+    leet = pyoptions.extend_leet
+
+    @magic
+    def extend():
+        for _ in walks_all_files(paths.weblist_path):
+            yield "".join(_)
+        if pyoptions.level <= 1:
+            for _ in walks_all_files(paths.syslist_path):
+                yield "".join(_)
+        for _ in extend_enter(rawlist, leet=leet):
+            yield "".join(_)
 
 
 def wordsharker(raw, leet=True):
@@ -217,7 +232,7 @@ def extend_enter(rawlist, leet=True):
     return unique(res)
 
 
-def get_extend_dic(target, need_extendscratch=False):
+def get_extend_dic(target):
     rawlist = []
     for t in target:
         if os.path.isfile(t):
@@ -226,72 +241,4 @@ def get_extend_dic(target, need_extendscratch=False):
                     rawlist.append(line.strip())
         else:
             rawlist.append(t)
-    extend_magic(rawlist, need_extendscratch=need_extendscratch)
-
-
-def extend_magic(rawlist, need_extendscratch=False):
-    prefix = pystrs.EXTEND_prefix
-    if rawlist == []:
-        exit(pyoptions.CRLF + cool.red("[-] raw extend resource cannot be empty"))
-
-    leet = pyoptions.extend_leet
-    if need_extendscratch:
-        prefix = pystrs.PASSCRAPER_prefix
-        leet = pyoptions.passcraper_leet
-
-    storepath = finalsavepath(paths.results_path, prefix, mybuildtime(), pyoptions.filextension, paths.results_file_name)
-    with open(storepath, "a") as f:
-        for _ in walks_all_files(paths.weblist_path):
-            item = filterforfun("".join(_), head=pyoptions.head, tail=pyoptions.tail,
-                                lenght_is_filter=pyoptions.args_pick,
-                                minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                regex_is_filter=True, regex=pyoptions.filter_regex,
-                                encode_is_filter=True, encode=pyoptions.encode,
-                                occur_is_filter=True,
-                                letter_occur=pyoptions.letter_occur,
-                                digital_occur=pyoptions.digital_occur,
-                                special_occur=pyoptions.special_occur,
-                                types_is_filter=True,
-                                letter_types=pyoptions.letter_types,
-                                digital_types=pyoptions.digital_types,
-                                special_types=pyoptions.special_types,
-                                )
-            if item:
-                f.write(item + pyoptions.CRLF)
-        if pyoptions.level <= 1:
-            for _ in walks_all_files(paths.syslist_path):
-                item = filterforfun("".join(_), head=pyoptions.head, tail=pyoptions.tail,
-                                    lenght_is_filter=pyoptions.args_pick,
-                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                    regex_is_filter=True, regex=pyoptions.filter_regex,
-                                    encode_is_filter=True, encode=pyoptions.encode,
-                                    occur_is_filter=True,
-                                    letter_occur=pyoptions.letter_occur,
-                                    digital_occur=pyoptions.digital_occur,
-                                    special_occur=pyoptions.special_occur,
-                                    types_is_filter=True,
-                                    letter_types=pyoptions.letter_types,
-                                    digital_types=pyoptions.digital_types,
-                                    special_types=pyoptions.special_types,
-                                    )
-                if item:
-                    f.write(item + pyoptions.CRLF)
-        for _ in extend_enter(rawlist, leet=leet):
-            item = filterforfun("".join(_), head=pyoptions.head, tail=pyoptions.tail,
-                                lenght_is_filter=pyoptions.args_pick,
-                                minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                regex_is_filter=True, regex=pyoptions.filter_regex,
-                                encode_is_filter=True, encode=pyoptions.encode,
-                                occur_is_filter=True,
-                                letter_occur=pyoptions.letter_occur,
-                                digital_occur=pyoptions.digital_occur,
-                                special_occur=pyoptions.special_occur,
-                                types_is_filter=True,
-                                letter_types=pyoptions.letter_types,
-                                digital_types=pyoptions.digital_types,
-                                special_types=pyoptions.special_types,
-                                )
-            if item:
-                f.write(item + pyoptions.CRLF)
-
-    finishprinter(finishcounter(storepath), storepath)
+    extend_magic(rawlist)

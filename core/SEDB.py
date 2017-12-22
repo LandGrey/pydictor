@@ -13,19 +13,20 @@ import cmd
 import time
 
 from core.EXTEND import extend_enter
+from lib.fun.decorator import magic
+from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.osjudger import is_Windows, is_Linux, is_Mac
-from lib.fun.filter import filterforfun
 from lib.data.text import help_dict, helpmsg, pydictor_art_text
-from lib.fun.fun import cool, unique, finishprinter, finishcounter, walks_all_files, mybuildtime, finalsavepath
+from lib.fun.fun import cool, unique, finishprinter, walks_all_files, mybuildtime, finalsavepath, fun_name
 from rules.EB import EB
-from rules.Mailrule import Mailrule
 from rules.NB import NB
-from rules.NNrule import NNrule
 from rules.SB import SB
 from rules.SDrule import SDrule
 from rules.SNrule import SNrule
 from rules.SSrule import SSrule
+from rules.NNrule import NNrule
+from rules.Mailrule import Mailrule
 from rules.SingleRule import SingleRule
 
 
@@ -293,17 +294,15 @@ class SEDB(cmd.Cmd):
                 print(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
             finally:
                 this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension) \
-                    if paths.results_file_name == None \
-                    else paths.results_file_name
+                    if paths.results_file_name == None else paths.results_file_name
                 print("[+] store path: {0}".format(cool.green(os.path.join(paths.results_path, this_name
-                if paths.results_file_name != None
-                else ''))) + pyoptions.CRLF)
+                if paths.results_file_name != None else ''))) + pyoptions.CRLF)
 
     def do_run(self, args):
+        storepath = finalsavepath(fun_name())
+
         pystrs.startime = time.time()
         results = []
-        storepath = finalsavepath(paths.results_path, pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension,
-                                  paths.results_file_name)
         paths.results_file_name = None
         # SingleRule
         for single in SingleRule(pystrs.sedb_dict[pystrs.sedb_range[0]], pystrs.sedb_dict[pystrs.sedb_range[1]],
@@ -465,23 +464,8 @@ class SEDB(cmd.Cmd):
         # Using extend_enter plug
         for extendstr in extend_enter(readylist, leet=pyoptions.sedb_leet):
             results.append(extendstr)
-        with open(storepath, "a") as f:
-            for ur in unique(results):
-                item = filterforfun("".join(ur), head=pyoptions.head, tail=pyoptions.tail,
-                                    lenght_is_filter=pyoptions.args_pick,
-                                    minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                    regex_is_filter=True, regex=pyoptions.filter_regex,
-                                    encode_is_filter=True, encode=pyoptions.encode,
-                                    occur_is_filter=True,
-                                    letter_occur=pyoptions.letter_occur,
-                                    digital_occur=pyoptions.digital_occur,
-                                    special_occur=pyoptions.special_occur,
-                                    types_is_filter=True,
-                                    letter_types=pyoptions.letter_types,
-                                    digital_types=pyoptions.digital_types,
-                                    special_types=pyoptions.special_types,
-                                    )
-                if item:
-                    f.write(item + pyoptions.CRLF)
 
-        finishprinter(finishcounter(storepath), storepath)
+        @magic
+        def sedb():
+            for ur in results:
+                yield "".join(ur)

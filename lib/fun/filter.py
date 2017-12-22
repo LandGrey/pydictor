@@ -8,8 +8,8 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 import re
 import string
-from collections import Counter
 from lib.fun.fun import cool
+from collections import Counter
 from lib.data.data import pyoptions
 
 

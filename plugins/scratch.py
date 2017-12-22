@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 # Referred: https://github.com/cheetz/brutescrape
-#
+# author: LandGrey
 """
 Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -12,10 +12,10 @@ from __future__ import unicode_literals
 import os
 import re
 import ssl
-from core.EXTEND import get_extend_dic
+from lib.fun.decorator import magic
 from lib.fun.osjudger import py_ver_egt_3
-from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.fun import unique, cool, walk_pure_file, mybuildtime, finishcounter, finishprinter
+from lib.data.data import paths, pyoptions
+from lib.fun.fun import unique, cool, walk_pure_file
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -30,7 +30,7 @@ except ImportError as e:
     print(e.message)
     exit(cool.red('[-] can not import urllib or urllib2 module:') + pyoptions.CRLF)
 
-passcratch_white_list = walk_pure_file(paths.scraperwhitelist_path)
+passcratch_black_list = walk_pure_file(paths.scratch_blacklist)
 
 
 def stripHTMLTags(html):
@@ -95,18 +95,18 @@ def scratchword(siteList):
                             or ((y[0] == '2') and (y[1] == '3')) \
                             or ((y[0] == '3') and (y[1] == 'F')) or ((y[0] == '3') and (y[1] == 'D')):
                         y = y[2:]
-                    if len(y) <= 8 and True if y.lower() not in passcratch_white_list and len(y) >= 5 else False:
+                    if len(y) <= 8 and True if y.lower() not in passcratch_black_list and len(y) >= 5 else False:
                         y_arr.append(y)
-                    elif 9 <= len(y) <= 25 and True if y.lower() not in passcratch_white_list else False:
+                    elif 9 <= len(y) <= 25 and True if y.lower() not in passcratch_black_list else False:
                         y_arr.append(y)
         except Exception:
-            exit(cool.red("[-] Process abort, please check url and try use 'extend' plug instead") + pyoptions.CRLF)
+            exit(cool.red("[-] Process abort, please check url and try use 'extend' function instead") + pyoptions.CRLF)
 
     for yy in unique(y_arr):
         if yy.strip().isdigit():
             pass
         else:
-            if not re.findall(pyoptions.passcraper_filter, yy.strip(), flags=re.I):
+            if not re.findall(pyoptions.scratch_filter, yy.strip(), flags=re.I):
                 resluts.append(yy.strip())
     return unique(resluts)
 
@@ -121,7 +121,17 @@ def checkurl(urlike):
         exit(cool.red("[-] Incorrect url/uri: {0}".format(cool.red(urlike.strip()))))
 
 
-def scraper_magic(target=paths.scrapersites_path, only_scratch=False):
+def scratch_magic(*args):
+    """[url_or_file]"""
+    args = list(args[0])
+
+    if len(args) == 1:
+        target = paths.scrapersites_path
+    elif len(args) == 2:
+        target = args[1]
+    else:
+        exit(pyoptions.CRLF + cool.fuchsia("[!] Usage: {} {}".format(args[0], pyoptions.plugins_info.get(args[0]))))
+
     sites = []
     if os.path.isfile(target):
         with open(target, 'r') as f:
@@ -132,19 +142,8 @@ def scraper_magic(target=paths.scrapersites_path, only_scratch=False):
                     sites.append(checkurl(_))
     else:
         sites.append(checkurl(target))
-
     rawlist = scratchword(sites)
-    if only_scratch:
-        storepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.SCFATCH_prefix, mybuildtime(),
-                                                                  pyoptions.filextension))
-        with open(storepath, "a") as f:
-            for line in rawlist:
-                f.write(str(line) + pyoptions.CRLF)
-        finishprinter(finishcounter(storepath), storepath)
-    else:
-        storepath = os.path.join(paths.results_path, "%s_%s%s" % (pystrs.SCFATCH_prefix, mybuildtime(),
-                                                                  pyoptions.filextension))
-        with open(storepath, "a") as f:
-            for line in rawlist:
-                f.write(str(line) + pyoptions.CRLF)
-        get_extend_dic(rawlist, need_extendscratch=True)
+
+    @magic
+    def scratch():
+        return rawlist

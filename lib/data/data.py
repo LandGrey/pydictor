@@ -11,10 +11,10 @@ from __future__ import unicode_literals
 import os
 import sys
 import time
-from lib.fun.encode import *
-from lib.fun.osjudger import py_ver_egt_3
 from collections import OrderedDict
+from lib.fun import encode as pyencode
 from lib.data.datatype import AttribDict
+from lib.fun.osjudger import py_ver_egt_3
 
 
 def init_paths():
@@ -28,6 +28,9 @@ def init_paths():
     paths.root_path = root_path
     paths.results_path = os.path.abspath(os.path.join(paths.root_path, "results"))
     paths.results_file_name = None
+    paths.core_path = os.path.abspath(os.path.join(paths.root_path, "core"))
+    paths.tools_path = os.path.abspath(os.path.join(paths.root_path, "tools"))
+    paths.plugins_path = os.path.abspath(os.path.join(paths.root_path, "plugins"))
 
     # wordlist path
     paths.wordlist_path = os.path.join(paths.root_path, "wordlist")
@@ -44,8 +47,8 @@ def init_paths():
     paths.buildconf_path = os.path.join(paths.funcfg_path, "build.conf")
     paths.extendconf_path = os.path.join(paths.funcfg_path, "extend.conf")
     paths.leetmode_path = os.path.join(paths.funcfg_path, "leet_mode.conf")
-    paths.scrapersites_path = os.path.join(paths.funcfg_path, 'passcraper.sites')
-    paths.scraperwhitelist_path = os.path.join(paths.funcfg_path, "passcraper_blacklist.conf")
+    paths.scrapersites_path = os.path.join(paths.funcfg_path, 'scratch.sites')
+    paths.scratch_blacklist = os.path.join(paths.funcfg_path, "scratch_blacklist.conf")
     paths.sedbtrick_path = os.path.join(paths.funcfg_path, "sedb_tricks.conf")
 
 
@@ -53,29 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.0.5#dev'
-
-    # file prefix strings
-    pystrs.BASE_prefix = "BASE"
-    pystrs.CHAR_prefix = "CHAR"
-    pystrs.CHUNK_prefix = "CHUNK"
-    pystrs.CONF_prefix = "CONF"
-    pystrs.SEDB_prefix = "SEDB"
-    pystrs.IDCARD_prefix = "IDCARD"
-    pystrs.BIRTHDAY_prefix = "BIRTHDAY"
-    pystrs.EXTEND_prefix = "EXTEND"
-    pystrs.SCFATCH_prefix = "SCRATCH"
-    pystrs.PASSCRAPER_prefix = "PASSCRAPER"
-    pystrs.HANDLER_prefix = "HANDLER"
-    pystrs.UNIQIFER_prefix = "UNIQIFER"
-    pystrs.COUNTER_prefix = "COUNTER"
-    pystrs.COMBINER_prefix = "COMBINER"
-    pystrs.UNIQBINER_prefix = "UNIQBINER"
-    pystrs.prefix_range = (pystrs.BASE_prefix, pystrs.CHAR_prefix, pystrs.CHUNK_prefix,
-                           pystrs.CONF_prefix, pystrs.SEDB_prefix, pystrs.IDCARD_prefix,
-                           pystrs.BIRTHDAY_prefix, pystrs.EXTEND_prefix, pystrs.SCFATCH_prefix,
-                           pystrs.PASSCRAPER_prefix, pystrs.HANDLER_prefix, pystrs.UNIQIFER_prefix,
-                           pystrs.COUNTER_prefix, pystrs.COMBINER_prefix,  pystrs.UNIQBINER_prefix)
+    pystrs.version = '2.1.0#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -96,15 +77,6 @@ def init_pystrs():
     pystrs.just_save_counter = "s"
     pystrs.save_and_view = "vs"
     pystrs.counter_cmd_range = (pystrs.just_save_counter, pystrs.just_view_counter, pystrs.save_and_view)
-
-    # tool function string
-    pystrs.tool_range = ("shredder", "uniqifer", "counter", 'combiner', 'uniqbiner', "handler", )
-
-    # plug function string
-    pystrs.plug_range = ("pid4", "pid6", "pid8", "scratch", "passcraper", "birthday")
-
-    # encode function string
-    pystrs.encode_range = ("none", "b64", "md5", "md516", "sha1", "url", "sha256", "sha512", "test")
 
     pystrs.sedb_trick_prefix = "sedb_trick_prefix_strings"
     pystrs.sedb_trick_suffix = "sedb_trick_suffix_strings"
@@ -184,7 +156,7 @@ def init_pyoptions():
 
     # leet mode
     pyoptions.extend_leet = False
-    pyoptions.passcraper_leet = False
+    pyoptions.scratch_leet = False
     pyoptions.sedb_leet = False
     pyoptions.leetmode_code = []
 
@@ -220,23 +192,88 @@ def init_pyoptions():
                          '%(%': '(', '%)%': ')',
                          '%<%': '<', '%>%': '>'}
 
+    # core function string range
+    pyoptions.core_range = [core[:-3].lower() for core in os.listdir(paths.core_path)
+                            if core.endswith('.py') and not core.startswith('__')]
+
+    # encode ending string format
+    pyoptions.encode_ending = "_encode"
+
     # encode operator
-    pyoptions.operator = {'none': none_encode, 'b64': base64_encode, 'md5': md5_encode, 'md516': md5_16_encode,
-                          'sha1': sha1_encode, 'url': url_encode, 'sha256': sha256_encode, 'sha512': sha512_encode,
-                          'test': test_encode}
+    pyoptions.operator = {}
+    for encode_name in dir(pyencode):
+        if encode_name.endswith(pyoptions.encode_ending):
+            pyoptions.operator[encode_name[:-len(pyoptions.encode_ending)].lower()] = getattr(pyencode, encode_name)
 
-    # pattern for passcraper scratch website words
-    pyoptions.passcraper_filter = r'(^(\d){1,4}px$)|' \
-                                  r'(^[0-9,a-z,A-Z]{18,}$)|' \
-                                  r'(^(\d){2,4}x(\d){2,4}$)|' \
-                                  r'(^[0-9,a-f,A-F]{5,8}$)|' \
-                                  r'(^(u|U|\\u|\\U|U\+)[0-9,a-f,A-F]{4}$)|' \
-                                  r'(^(0x|u0026|u003e|252C94|u003c|auto|252C94)[a-z,A-Z]{1,16}$)|' \
-                                  r'(^on(fo|dra|mouse|load|play|seek)[a-z]{0,5}$)|' \
-                                  r'(^(img|div|svg|vfl|span|font|form|case|label|index|level|image)(\d){1,4}$)|' \
-                                  r'(^[a-z,A-Z]{2,6}(id|bar|ico|div|pic|img|box|url|uri|span|menu|image|title|color' \
-                                  r'|class|images|icon)$)'
+    # encode function string range
+    pyoptions.encode_range = [key for key in pyoptions.operator.keys()]
 
+    # encode info description
+    pyoptions.encode_info = {}
+    for encode_name in pyoptions.operator.keys():
+        pyoptions.encode_info[encode_name] = getattr(pyoptions.operator.get(encode_name), "__doc__")
+    pyoptions.encode_desc = "".join([str(key).ljust(10) + pyoptions.encode_info[key] + pyoptions.CRLF
+                                     for key in sorted(pyoptions.encode_info.keys())])
+
+    # tools_operator ending string format
+    pyoptions.tool_ending = "_magic"
+
+    # tool function string range
+    pyoptions.tool_range = [tool[:-3].lower() for tool in os.listdir(paths.tools_path)
+                            if tool.endswith('.py') and not tool.startswith('__')]
+
+    # tools operator
+    pyoptions.tools_operator = {}
+    sys.path.append(paths.tools_path)
+    for tool_name in pyoptions.tool_range:
+        for tool_enter in dir(__import__(str(tool_name), globals(), locals(), [str(tool_name) + pyoptions.tool_ending], )):
+            if tool_enter.endswith(pyoptions.tool_ending):
+                pyoptions.tools_operator[tool_enter[:-len(pyoptions.tool_ending)].lower()] = \
+                    getattr(__import__(tool_name), tool_enter)
+
+    # tools info description
+    pyoptions.tools_info = {}
+    for tool_name in pyoptions.tools_operator.keys():
+        pyoptions.tools_info[tool_name] = getattr(pyoptions.tools_operator.get(tool_name), "__doc__")
+    pyoptions.tools_desc = "".join([str(key).ljust(10) + pyoptions.tools_info[key] + pyoptions.CRLF
+                                    for key in sorted(pyoptions.tools_info.keys())])
+
+    # plug ending string format
+    pyoptions.plug_ending = "_magic"
+
+    # plug function string range
+    pyoptions.plug_range = [plug[:-3].lower() for plug in os.listdir(paths.plugins_path)
+                            if plug.endswith('.py') and not plug.startswith('__')]
+    # plugins operator
+    pyoptions.plugins_operator = {}
+    sys.path.append(paths.plugins_path)
+    for plug_name in pyoptions.plug_range:
+        for plug_magic in dir(__import__(str(plug_name), globals(), locals(), [str(plug_name) + pyoptions.plug_ending], )):
+            if plug_magic.endswith(pyoptions.plug_ending):
+                pyoptions.plugins_operator[plug_magic[:-len(pyoptions.plug_ending)].lower()] = \
+                    getattr(__import__(plug_name), plug_magic)
+
+    # plugins info description
+    pyoptions.plugins_info = {}
+    for plug_name in pyoptions.plugins_operator.keys():
+        pyoptions.plugins_info[plug_name] = getattr(pyoptions.plugins_operator.get(plug_name), "__doc__")
+    pyoptions.plugins_desc = "".join([str(key).ljust(10) + str(pyoptions.plugins_info[key]) + pyoptions.CRLF
+                                     for key in sorted(pyoptions.plugins_info.keys())])
+
+    # prefix range
+    pyoptions.prefix_range = pyoptions.core_range + pyoptions.plug_range + pyoptions.tool_range
+
+    # pattern for scratch scratch website words
+    pyoptions.scratch_filter = r'(^(\d){1,4}px$)|' \
+                               r'(^[0-9,a-z,A-Z]{18,}$)|' \
+                               r'(^(\d){2,4}x(\d){2,4}$)|' \
+                               r'(^[0-9,a-f,A-F]{5,8}$)|' \
+                               r'(^(u|U|\\u|\\U|U\+)[0-9,a-f,A-F]{4}$)|' \
+                               r'(^(0x|u0026|u003e|252C94|u003c|auto|252C94)[a-z,A-Z]{1,16}$)|' \
+                               r'(^on(fo|dra|mouse|load|play|seek)[a-z]{0,5}$)|' \
+                               r'(^(img|div|svg|vfl|span|font|form|case|label|index|level|image)(\d){1,4}$)|' \
+                               r'(^[a-z,A-Z]{2,6}(id|bar|ico|div|pic|img|box|url|uri|span|menu|image|title|color' \
+                               r'|class|images|icon)$)'
 
 # pydictor paths
 paths = AttribDict()

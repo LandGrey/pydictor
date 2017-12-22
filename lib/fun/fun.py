@@ -11,10 +11,12 @@ from __future__ import unicode_literals
 import os
 import time
 import string
+import locale
+import traceback
 from functools import reduce
 from lib.fun.color import Colored
 from lib.fun.osjudger import py_ver_egt_3
-from lib.data.data import pystrs,  pyoptions
+from lib.data.data import pystrs,  paths, pyoptions
 
 cool = Colored()
 
@@ -44,7 +46,11 @@ def rreplace(self, old, new, *max):
 def charanger(confstr):
     ranges = []
     for i in range(len(confstr.split(pyoptions.chars_split))):
-        if pyoptions.char_range_split in confstr.split(pyoptions.chars_split)[i] and \
+        if os.path.isfile(confstr.split(pyoptions.chars_split)[i]):
+            with open(confstr.split(pyoptions.chars_split)[i], 'r') as f:
+                for line in f.readlines():
+                    ranges.append(line.strip())
+        elif pyoptions.char_range_split in confstr.split(pyoptions.chars_split)[i] and \
                         len(confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)) == 2:
             start = confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[0]
             end = confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[1]
@@ -157,8 +163,21 @@ def countchecker(charslength, *args):
             exit(exit_msg)
 
 
+def fun_name(isfun=False):
+    stack = traceback.extract_stack()
+    script_path, code_line, func_name, text = stack[-2]
+    script_name = os.path.split(script_path)[1][:-3]
+    if isfun:
+        return func_name
+    else:
+        return script_name
+
+
+def is_en():
+    return "en" in locale.getdefaultlocale()[0].lower()
+
+
 def mybuildtime():
-    # build time string
     return str(time.strftime("%H%M%S", time.localtime(time.time())))
 
 
@@ -170,14 +189,19 @@ def finishcounter(storepath):
     return line_count
 
 
-def finishprinter(count, storepath):
+def finishprinter(storepath):
+    count = finishcounter(storepath)
     print("[+] A total of :{0:} lines{1}"
           "[+] Store in   :{2} {1}"
           "[+] Cost       :{3} seconds".format(cool.orange(count), pyoptions.CRLF, cool.orange(storepath),
                                                cool.orange(str(time.time() - pystrs.startime)[:6])))
 
 
-def finalsavepath(directory, prefix, timestamp, ext, customname):
+def finalsavepath(prefix):
+    directory = paths.results_path
+    timestamp = mybuildtime()
+    ext = pyoptions.filextension
+    customname = paths.results_file_name
     filename = "%s_%s%s" % (prefix.lower(), timestamp, ext)
     filename = filename if not customname else customname
     storepath = os.path.join(directory, filename)

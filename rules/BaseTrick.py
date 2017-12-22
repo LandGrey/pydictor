@@ -117,18 +117,19 @@ def mailshaper(mail):
 
 
 # date format: yyyyMMdd
-def dateshaper(date):
+def dateshaper(date, en=True):
     shapes = []
     shapes.append(date)
-    shapes.append(date[4:] + date[:4])
     shapes.append(date[2:])
-    shapes.append(date[4:] + date[2:4])
     shapes.append(date[:4])
     shapes.append(date[4:])
-    shapes.append(date[:4] + date[4:].replace('0', ''))
     shapes.append(date[4:].replace('0', ''))
+    shapes.append(date[:4] + date[4:].replace('0', ''))
     shapes.append(date[2:4] + date[4:].replace('0', ''))
-    shapes.append(date[4:].replace('0', '') + date[2:4])
+    if en:
+        shapes.append(date[4:] + date[:4])
+        shapes.append(date[4:] + date[2:4])
+        shapes.append(date[4:].replace('0', '') + date[2:4])
     return shapes
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-#
+# author: LandGrey
 """
 Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -9,37 +9,24 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 
 import os
-from lib.data.data import paths, pystrs, pyoptions
-from lib.fun.filter import filterforfun
-from lib.fun.fun import finishprinter, finishcounter, mybuildtime, cool, finalsavepath
+from lib.fun.fun import cool
+from lib.fun.decorator import magic
+from lib.data.data import pyoptions
 
 
-def get_handler_dic(path):
+def handler_magic(*args):
+    """[file]"""
+    args = list(args[0])
+
+    if len(args) >= 2:
+        path = args[1]
+    else:
+        exit(pyoptions.CRLF + cool.fuchsia("[!] Usage: {} {}".format(args[0], pyoptions.tools_info.get(args[0]))))
     if not os.path.isfile(path):
         exit(cool.red("[-] File don't exits" + pyoptions.CRLF))
-    storepath = finalsavepath(paths.results_path, pystrs.HANDLER_prefix, mybuildtime(), pyoptions.filextension,
-                              paths.results_file_name)
-    handles = []
-    with open(path, 'r') as f:
-        for item in f.readlines():
-            handles.append(item.strip())
 
-    with open(storepath, 'a') as save:
-        for item in handles:
-            item = filterforfun("".join(item), head=pyoptions.head, tail=pyoptions.tail,
-                                lenght_is_filter=pyoptions.args_pick,
-                                minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                                regex_is_filter=True, regex=pyoptions.filter_regex,
-                                encode_is_filter=True, encode=pyoptions.encode,
-                                occur_is_filter=True,
-                                letter_occur=pyoptions.letter_occur,
-                                digital_occur=pyoptions.digital_occur,
-                                special_occur=pyoptions.special_occur,
-                                types_is_filter=True,
-                                letter_types=pyoptions.letter_types,
-                                digital_types=pyoptions.digital_types,
-                                special_types=pyoptions.special_types,
-                                )
-            if item:
-                save.write(item + pyoptions.CRLF)
-    finishprinter(finishcounter(storepath), storepath)
+    @magic
+    def handler():
+        with open(path, 'r') as f:
+            for item in f.readlines():
+                yield item.strip()

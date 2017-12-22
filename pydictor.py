@@ -48,8 +48,7 @@ def init():
     pyoptions.letter_types = args.types[0]
     pyoptions.digital_types = args.types[1]
     pyoptions.special_types = args.types[2]
-    pyoptions.filter_regex = args.regex
-
+    pyoptions.filter_regex = args.regex[0]
     pyoptions.args_base = args.base
     pyoptions.args_char = args.char
     pyoptions.args_chunk = args.chunk

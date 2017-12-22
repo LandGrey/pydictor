@@ -9,62 +9,22 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 
 import os
-import time
-
-from core.CONF import build_conf_dic
 from lib.fun.fun import cool
-
-from tools.counter import counter_enter
-from plugins.idcard import idcard_magic
-from tools.handler import get_handler_dic
-from tools.combiner import combiner_enter
-from tools.uniqifer import uniqifer_enter
-from tools.shredder import shredder_enter
-from tools.uniqbiner import uniqbiner_enter
-from plugins.birthday import birthday_magic
-from plugins.passcraper import scraper_magic
-from lib.data.data import paths, pystrs, pyoptions
+from core.CONF import build_conf_dic
+from lib.data.data import paths, pyoptions
 
 
 def plug_parser():
-    if pyoptions.args_plug[0] not in pystrs.plug_range:
-        exit("[!] Choose plug from ({0}, {1}, {2}, {3}, {4}, {5})".format
-             (cool.fuchsia(pystrs.plug_range[0]), cool.fuchsia(pystrs.plug_range[1]),
-              cool.fuchsia(pystrs.plug_range[2]), cool.fuchsia(pystrs.plug_range[3]),
-              cool.fuchsia(pystrs.plug_range[4]), cool.fuchsia(pystrs.plug_range[5]), ))
+    if pyoptions.args_plug[0] not in pyoptions.plug_range:
+        exit("[!] Choose plugin from ({0})".format(cool.fuchsia(",".join(pyoptions.plug_range))))
     else:
-        # id card plugin
-        if len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[0]:
-            idcard_magic(pystrs.plug_range[0])
-        elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[1]:
-            idcard_magic(pystrs.plug_range[1])
-        elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[2]:
-            idcard_magic(pystrs.plug_range[2])
-        # scratch plugin
-        elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[3] and \
-                os.path.isfile(paths.scrapersites_path):
-            scraper_magic(only_scratch=True)
-        elif len(pyoptions.args_plug) == 2 and pyoptions.args_plug[0] == pystrs.plug_range[3]:
-            scraper_magic(pyoptions.args_plug[1], only_scratch=True)
-        # passcraper plugin
-        elif len(pyoptions.args_plug) == 1 and pyoptions.args_plug[0] == pystrs.plug_range[4] and \
-                os.path.isfile(paths.scrapersites_path):
-            scraper_magic()
-        elif len(pyoptions.args_plug) == 2 and pyoptions.args_plug[0] == pystrs.plug_range[4]:
-            scraper_magic(pyoptions.args_plug[1])
-        # birthday
-        elif len(pyoptions.args_plug) == 3 and pyoptions.args_plug[0] == pystrs.plug_range[5]:
-            birthday_magic(pyoptions.args_plug[1], pyoptions.args_plug[2])
-        elif len(pyoptions.args_plug) == 1:
-            exit(pyoptions.CRLF + "[-] Plug %s need other arguments" % cool.red(pyoptions.args_plug[0]))
-        else:
-            exit(pyoptions.CRLF + cool.red("[-] Argument option error"))
+        pyoptions.plugins_operator.get(pyoptions.args_plug[0])(pyoptions.args_plug)
 
 
 def conf_parser():
     if pyoptions.args_conf == 'const':
         if os.path.isfile(paths.buildconf_path):
-            build_conf_dic()
+            build_conf_dic(source=paths.buildconf_path)
     else:
         paths.buildconf_path = pyoptions.args_conf
         build_conf_dic(source=paths.buildconf_path)
@@ -72,47 +32,9 @@ def conf_parser():
 
 def tool_parser():
     if len(pyoptions.args_tool) >= 1:
-        if pyoptions.args_tool[0] in pystrs.tool_range:
-            # shredder
-            if pyoptions.args_tool[0] == pystrs.tool_range[0]:
-                if len(pyoptions.args_tool) == 1 and os.listdir(paths.results_path):
-                    shredder_enter(paths.results_path)
-                elif len(pyoptions.args_tool) == 1:
-                    exit(pyoptions.CRLF + cool.orange("[+] %s has been clean" % paths.results_path))
-                elif len(pyoptions.args_tool) == 2:
-                    shredder_enter(pyoptions.args_tool[1])
-                else:
-                    exit(pyoptions.CRLF + cool.red("[-] %s arguments wrong" % pystrs.tool_range[0]))
-                print("[+] Cost    :{} seconds".format(cool.orange(str(time.time() - pystrs.startime)[:6])))
-            # uniqifer
-            elif len(pyoptions.args_tool) == 2 and pyoptions.args_tool[0] == pystrs.tool_range[1]:
-                if os.path.isfile(pyoptions.args_tool[1]):
-                    uniqifer_enter(pyoptions.args_tool[1])
-                else:
-                    exit(pyoptions.CRLF + "[-] Please specify the exists file for %s" % cool.red(pystrs.tool_range[1]))
-            # counter
-            elif len(pyoptions.args_tool) >= 2 and pyoptions.args_tool[0] == pystrs.tool_range[2]:
-                counter_enter(pyoptions.encode, pyoptions.head, pyoptions.tail, pyoptions.args_tool)
-            # combiner
-            elif len(pyoptions.args_tool) == 2 and pyoptions.args_tool[0] == pystrs.tool_range[3]:
-                combiner_enter(pyoptions.args_tool[1])
-            # uniqbiner
-            elif len(pyoptions.args_tool) == 2 and pyoptions.args_tool[0] == pystrs.tool_range[4]:
-                uniqbiner_enter(pyoptions.args_tool[1])
-            # handler
-            elif len(pyoptions.args_tool) == 2 and pyoptions.args_tool[0] == pystrs.tool_range[5]:
-                get_handler_dic(pyoptions.args_tool[1])
-            else:
-                exit(pyoptions.CRLF + cool.red("[-] Need other extra arguments"))
+        if pyoptions.args_tool[0] in pyoptions.tool_range:
+            pyoptions.tools_operator.get(pyoptions.args_tool[0])(pyoptions.args_tool)
         else:
-            exit(pyoptions.CRLF + cool.red("[-] No tool named %s" % pyoptions.args_tool[0]) +
-                 pyoptions.CRLF + "[!] Choose tool from  ({0}, {1}, {2}, {3}, {4}, {5})".format(
-                cool.fuchsia(pystrs.tool_range[0]),
-                cool.fuchsia(pystrs.tool_range[1]),
-                cool.fuchsia(pystrs.tool_range[2]),
-                cool.fuchsia(pystrs.tool_range[3]),
-                cool.fuchsia(pystrs.tool_range[4]),
-                cool.fuchsia(pystrs.tool_range[5]),
-            ))
+            exit(pyoptions.CRLF + "[!] Choose tool from ({})".format(cool.fuchsia(" ".join(pyoptions.tool_range))))
     else:
         exit(pyoptions.CRLF + cool.red("[-] Please specified tool name"))

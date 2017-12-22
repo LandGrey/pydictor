@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-#
+# author: LandGrey
 """
 Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -110,19 +110,28 @@ def shreder_file(filepath, rewritecounts=pyoptions.file_rewrite_count):
     print("[+] Shredded %s Completely!" % cool.orange(filepath))
 
 
-def shredder_enter(*args):
+def shredder_magic(*args):
+    """[file_or_dir]"""
+    args = list(args[0])
+
+    if len(args) == 1:
+        _ = paths.results_path
+    elif len(args) >= 2:
+        _ = args[1]
+    else:
+        exit(pyoptions.CRLF + cool.fuchsia("[!] Usage: {} {}".format(args[0], pyoptions.tools_info.get(args[0]))))
+
     fnum = 0
-    _ = "".join(args)
     if _ and os.path.isdir(_):
         shreder_dir(_)
     elif _ and os.path.isfile(_):
         shreder_file(_)
-    elif _ and _.upper() in pystrs.prefix_range:
+    elif _ and _.lower() in pyoptions.prefix_range:
         for filename in os.listdir(paths.results_path):
-            if _.upper() in str(filename[0:10]).upper():
+            if _.lower() in str(filename[0:10]).lower():
                 fnum += 1
                 shreder_file(os.path.join(paths.results_path, filename))
         if fnum == 0:
             exit(pyoptions.CRLF + cool.orange("[+] prefix %s files has been clean" % _.upper()))
     else:
-        exit(pyoptions.CRLF + cool.red("[-] invalid shredder path_or_dir arguments"))
+        exit(pyoptions.CRLF + cool.fuchsia("[!] Usage: {} {}".format(args[0], pyoptions.tools_info.get(args[0]))))
