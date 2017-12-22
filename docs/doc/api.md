@@ -81,8 +81,8 @@ use it like:
 from lib.data.data import paths
 from lib.fun.fun import walks_all_files
 
-    @magic
-    def name():
+@magic
+def name():
     for _ in walks_all_files(paths.weblist_path):
         yield "".join(_)
 ```
