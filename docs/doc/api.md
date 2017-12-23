@@ -63,7 +63,7 @@ for r in results:
     yield r
 ```
 if you want to add your own weak password wordlist in final word list,
-there some folders you can put your wordlist (defined in /lib/data/data.py variable)
+there some folders you can put your wordlist (defined in /lib/data/data.py script)
 
 |  path              | variable             |                 
 | :----------------  | :------------------- |
@@ -129,28 +129,27 @@ def ftp_magic(*args):
         for keyword in args:
             for tail in tails:
                 yield keyword + tail
-
 ```
 
-#### call ftp plugin, with command "python pydictor -plug ftp \[keyword1\] \[keyword2\] ..."
+#### call ftp plugin, with command "python pydictor.py -plug ftp \[keyword1\] \[keyword2\] ..."
 #
 
 ### *tool*
-same as plugin api, besides
+same as plugin api, except
 
 ```
 place script in "/tools/" folder
 ```
 
-#### call tool with command "python pydictor -tool name \[some_args\]"
+#### call tool with command "python pydictor.py -tool name \[some_args\]"
 #
 
 ### *encode*
 just write your function in "/lib/fun/encode.py" script, and
 
 ```
-1. function name end with "_encode", like "def name_encode(item)" (must)
-2. function "name_magic(*args)" next line must be function usage tips and wrap with """ (must)
+1. function name end with "_encode", like "def name_encode(item)"
+2. function "name_encode(item)" next line must be function usage tips and wrap with """
 3. return item after your encode
 ```
 
@@ -158,7 +157,6 @@ just write your function in "/lib/fun/encode.py" script, and
 
 ```
 from base64 import b64encode
-
 
 def b64_encode(item):
     """base64 encode"""
@@ -168,4 +166,4 @@ def b64_encode(item):
         return ''
 ```
 
-#### call encode with command "python pydictor --encode name"
+#### call encode function with command "python pydictor.py --encode name"
