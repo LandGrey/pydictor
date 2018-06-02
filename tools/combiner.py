@@ -38,7 +38,8 @@ def combiner_magic(*args):
         with open(storepath, "a") as f:
             for onefile in combine_list:
                 with open(onefile, 'r') as tf:
-                    f.write(tf.read())
+                    for line in tf.readlines():
+                        f.write(line.strip() + pyoptions.CRLF)
 
         finishprinter(storepath)
 

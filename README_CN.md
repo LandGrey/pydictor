@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -70,34 +70,36 @@ python pydictor.py
 #
 
 #### *使用pydictor有个窍门: 时刻清楚你想要什么样子的字典.*
-#### *如果使用、开发插件有疑问或者有共同开发的意愿、好的项目开发建议,可以加Q群讨论:689798705.*
+
+
 
 #### pydictor可以生成的所有字典的类型及其说明
 
-|   归属  |    类别   | 标识符| 描述                      | 支持功能代号  |
-| :----: | :-------: | :--: | :----------------------- | :---------- |
-|  core  |   base    |  C1  | 基础字典                  | F1 F2 F3 F4 |
-|  core  |   char    |  C2  | 自定义字符集字典           | F1 F2 F3 F4 |
-|  core  |   chunk   |  C3  | 排列组合字典              | ALL         |
-|  core  |   conf    |  C4  | 配置语法生成字典           | ALL         |
-|  core  |  extend   |  C5  | 规则扩展字典              | ALL         |
-|  core  |   sedb    |  C6  | 社会工程学字典            | ALL         |
-|  tool  | combiner  |  T1  | 字典合并工具              |             |
-|  tool  | comparer  |  T2  | 字典比较相减工具          | ALL         |
-|  tool  |  counter  |  T3  | 词频统计工具              | ALL         |
-|  tool  |  handler  |  T4  | 筛选处理原有字典工具       | ALL         |
-|  tool  | uniqbiner |  T5  | 先合并后去重工具          | ALL         |
-|  tool  | uniqifer  |  T6  | 字典去重工具              | ALL         |
-| plugin | birthday  |  P1  | 生日日期字典插件          | ALL          |
-| plugin |    ftp    |  P2  | 关键词生成ftp密码字典插件  | ALL         |
-| plugin |   pid4    |  P3  | 身份证后四位字典插件       | ALL         |
-| plugin |   pid6    |  P4  | 身份证后六位字典插件       | ALL         |
-| plugin |   pid8    |  P5  | 身份证后八位字典插件       | ALL         |
-| plugin |  scratch  |  P6  | 网页原始关键词字典插件     | ALL          |
+|   归属   |    类别     | 标识符  | 描述             | 支持功能代号      |
+| :----: | :-------: | :--: | :------------- | :---------- |
+|  core  |   base    |  C1  | 基础字典           | F1 F2 F3 F4 |
+|  core  |   char    |  C2  | 自定义字符集字典       | F1 F2 F3 F4 |
+|  core  |   chunk   |  C3  | 排列组合字典         | ALL         |
+|  core  |   conf    |  C4  | 配置语法生成字典       | ALL         |
+|  core  |  extend   |  C5  | 规则扩展字典         | ALL         |
+|  core  |   sedb    |  C6  | 社会工程学字典        | ALL         |
+|  tool  | combiner  |  T1  | 字典合并工具         |             |
+|  tool  | comparer  |  T2  | 字典比较相减工具       | ALL         |
+|  tool  |  counter  |  T3  | 词频统计工具         | ALL         |
+|  tool  |  handler  |  T4  | 筛选处理原有字典工具     | ALL         |
+|  tool  | uniqbiner |  T5  | 先合并后去重工具       | ALL         |
+|  tool  | uniqifer  |  T6  | 字典去重工具         | ALL         |
+|  tool  | hybrider  |  T7  | 多字典文件组合工具      | F1 F2 F3 F4 |
+| plugin | birthday  |  P1  | 生日日期字典插件       | ALL         |
+| plugin |    ftp    |  P2  | 关键词生成ftp密码字典插件 | ALL         |
+| plugin |   pid4    |  P3  | 身份证后四位字典插件     | ALL         |
+| plugin |   pid6    |  P4  | 身份证后六位字典插件     | ALL         |
+| plugin |   pid8    |  P5  | 身份证后八位字典插件     | ALL         |
+| plugin |  scratch  |  P6  | 网页原始关键词字典插件    | ALL         |
 
 #### 字典操作功能及说明对照表  
 
-| 功能   | 功能代号 | 说明             |
+| 功能     | 功能代号 | 说明                 |
 | :----- | :--: | :----------------- |
 | len    |  F1  | 定义长度范围             |
 | head   |  F2  | 添加前缀               |
@@ -112,23 +114,23 @@ python pydictor.py
 
 #### 支持的编码或加密方式
 
-|  方式   | 描述                |
-| :----: | :------------------ |
-|  none  | 默认方式, 不进行任何编码       |
-|  b16   | base16 编码           |
-|  b32   | base32 编码           |
-|  b64   | base64 编码           |
-|  des   | des 算法, 需要根据情况修改代码  |
-| execjs | 执行本地或远程js函数, 需要根据情况修改代码  |
-|  hmac  | hmac 算法, 需要根据情况修改代码 |
-|  md5   | md5 算法输出32位         |
-| md516  | md5 算法输出16位         |
-|  rsa   | rsa 算法 需要根据情况修改代码   |
-|  sha1  | sha-1 算法            |
-| sha256 | sha-256 算法          |
-| sha512 | sha-512 算法          |
-|  url   | url 编码              |
-|  test  | 一个自定义编码方法的示例        |
+|   方式   | 描述                      |
+| :----: | :---------------------- |
+|  none  | 默认方式, 不进行任何编码           |
+|  b16   | base16 编码               |
+|  b32   | base32 编码               |
+|  b64   | base64 编码               |
+|  des   | des 算法, 需要根据情况修改代码      |
+| execjs | 执行本地或远程js函数, 需要根据情况修改代码 |
+|  hmac  | hmac 算法, 需要根据情况修改代码     |
+|  md5   | md5 算法输出32位             |
+| md516  | md5 算法输出16位             |
+|  rsa   | rsa 算法 需要根据情况修改代码       |
+|  sha1  | sha-1 算法                |
+| sha256 | sha-256 算法              |
+| sha512 | sha-512 算法              |
+|  url   | url 编码                  |
+|  test  | 一个自定义编码方法的示例            |
 
 
 #### occur 功能

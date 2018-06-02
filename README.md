@@ -1,5 +1,6 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [中文版](README_CN.md)**
 
@@ -83,12 +84,13 @@ python pydictor.py
 |  tool  |  handler  |     T4     | handle the input file tool               | ALL                |
 |  tool  | uniqbiner |     T5     | combine and unique the directory files tool | ALL                |
 |  tool  | uniqifer  |     T6     | unique the input file tool               | ALL                |
-| plugin | birthday  |     P1     | birthday keyword wordlist in specify datetime scope | ALL       |
+|  tool  | hybrider  |     T7     | hybrid couples word list tool            | F1 F2 F3 F4        |
+| plugin | birthday  |     P1     | birthday keyword wordlist in specify datetime scope | ALL                |
 | plugin |    ftp    |     P2     | against keyword generate ftp password wordlist | ALL                |
-| plugin |   pid4    |     P3     | id card last 4 char wordlist             | ALL           |
-| plugin |   pid6    |     P4     | id card last 6 char wordlist             | ALL           |
-| plugin |   pid8    |     P5     | id card last 8 char wordlist             | ALL           |
-| plugin |  scratch  |     P6     | wordlist based on web pages keywords     | ALL                   |
+| plugin |   pid4    |     P3     | id card last 4 char wordlist             | ALL                |
+| plugin |   pid6    |     P4     | id card last 6 char wordlist             | ALL                |
+| plugin |   pid8    |     P5     | id card last 8 char wordlist             | ALL                |
+| plugin |  scratch  |     P6     | wordlist based on web pages keywords     | ALL                |
 
 
 #### function code
