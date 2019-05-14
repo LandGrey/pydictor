@@ -38,11 +38,9 @@ def combiner_magic(*args):
         with open(storepath, "a") as f:
             for onefile in combine_list:
                 with open(onefile, 'r') as tf:
-                    for line in tf.readlines():
-                        f.write(line.strip() + pyoptions.CRLF)
-
+                    f.write(tf.read())
         finishprinter(storepath)
 
     except Exception as ex:
         print(pyoptions.CRLF + cool.red("[-] Combine file failed, Looking: "))
-        exit(pyoptions.CRLF + traceback.print_exc())
+        traceback.print_exc()

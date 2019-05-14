@@ -1,6 +1,6 @@
 # pydictor
 
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.2-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [中文版](README_CN.md)**
 
@@ -27,7 +27,7 @@ A: 1.it always can help you
    2.highly customized
       You can generate highly customized and complex wordlist by modify multiple configuration files, 
       add your own dictionary, using leet mode, filter by length、char occur times、types of different char、regex,
-      even customized own encode functions by modifying /lib/fun/encode.py, add your own plugin script in /plugins/ folder,
+      even add customized encode scripts in /lib/encode/ folder, add your own plugin script in /plugins/ folder,
       add your own tool script in /tools/ folder.
 
    3.powerful and flexible configuration file parsing
@@ -144,7 +144,7 @@ python pydictor.py
 #### regex function
 `Usage  : --regex [regex]`
 
-`Example: --types "^z.*?g$"`
+`Example: --regex "^z.*?g$"`
 
 
 #### level function

@@ -17,7 +17,16 @@ from lib.fun.osjudger import py_ver_egt_3
 from lib.data.data import paths, pyoptions
 from lib.fun.fun import unique, cool, walk_pure_file
 
-ssl._create_default_https_context = ssl._create_unverified_context
+try:
+    # ssl._create_unverified_context is present in Python 2.7.9 and later
+    ssl._create_default_https_context = ssl._create_unverified_context
+except:
+    try:
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+    except:
+        pass
 
 # in python3: urllib + urilib2 -> urllib, and
 # urllib2.urlopen() -> urllib.request.urlopen(), urllib2.Request() -> urllib.request.Request()

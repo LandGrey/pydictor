@@ -12,7 +12,6 @@ import os
 import sys
 import time
 from collections import OrderedDict
-from lib.fun import encode as pyencode
 from lib.data.datatype import AttribDict
 from lib.fun.osjudger import py_ver_egt_3
 
@@ -31,6 +30,7 @@ def init_paths():
     paths.core_path = os.path.abspath(os.path.join(paths.root_path, "core"))
     paths.tools_path = os.path.abspath(os.path.join(paths.root_path, "tools"))
     paths.plugins_path = os.path.abspath(os.path.join(paths.root_path, "plugins"))
+    paths.encode_function_path = os.path.abspath(os.path.join(paths.root_path, "lib", "encode"))
 
     # wordlist path
     paths.wordlist_path = os.path.join(paths.root_path, "wordlist")
@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.1#dev'
+    pystrs.version = '2.1.2#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -201,9 +201,10 @@ def init_pyoptions():
 
     # encode operator
     pyoptions.operator = {}
-    for encode_name in dir(pyencode):
+    for encode_file_name in os.listdir(paths.encode_function_path):
+        encode_name = encode_file_name.split(".")[0]
         if encode_name.endswith(pyoptions.encode_ending):
-            pyoptions.operator[encode_name[:-len(pyoptions.encode_ending)].lower()] = getattr(pyencode, encode_name)
+            pyoptions.operator[encode_name[:-len(pyoptions.encode_ending)].lower()] = getattr(__import__('lib.encode.' + encode_name, fromlist=True), encode_name)
 
     # encode function string range
     pyoptions.encode_range = [key for key in pyoptions.operator.keys()]

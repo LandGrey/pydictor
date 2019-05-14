@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.2-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -25,8 +25,8 @@ A: 1.生成密码它总会帮到你
 
    2.可定制性强
       你可以通过修改多个配置文件、加入自己的字典、选用leet mode 模式、长度选择、
-      各类字符数量筛选、各类字符种类数筛选、正则表达式筛选，甚至可通过修改
-      /lib/fun/encode.py文件，自定义加密方法等高级操作；按照API编写标准，在/plugins/文件夹下添加自己的插件脚本，
+      各类字符数量筛选、各类字符种类数筛选、正则表达式筛选，甚至可通过在
+      /lib/encode/ 目录下增加自己的脚本，完成自定义加密方法等高级操作；按照API编写标准，在/plugins/文件夹下添加自己的插件脚本，
       在/tools/目录下添加自己的工具脚本等。
       生成独一无二的高度定制、高效率和复杂字典，生成密码字典的好坏和你的自定义规则、能不能熟练使用pydictor有很大关系；
 
@@ -148,7 +148,7 @@ python pydictor.py
 #### regex 功能
 `用法  : --regex [正则表达式]`
 
-`示例: --types "^z.*?g$"`
+`示例: --regex "^z.*?g$"`
 
 
 #### level 功能
