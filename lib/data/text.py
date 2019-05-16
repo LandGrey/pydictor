@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -31,8 +31,8 @@ helpmsg = \
     [+]show option           [+]set option arguments [+]rm option
     [+]len minlen maxlen     [+]head prefix          [+]tail suffix
     [+]encode type           [+]occur L d s          [+]types L d s
-    [+]regex string          [+]level code           [+]leet code
-    [+]output directory      [+]run
+    [+]repeat L d s          [+]regex string         [+]level code
+    [+]leet code             [+]output directory     [+]run
 
     ----------------------------[ {3} ]----------------------------
     [+]{4}                 [+]{5}                [+]{6}

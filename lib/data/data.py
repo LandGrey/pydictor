@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.2#dev'
+    pystrs.version = '2.1.3#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -141,15 +141,27 @@ def init_pyoptions():
     pyoptions.encode = "none"
     pyoptions.minlen = 0
     pyoptions.maxlen = 4
-    pyoptions.default_occurs = "<=99"
-    pyoptions.letter_occur = pyoptions.default_occurs
-    pyoptions.digital_occur = pyoptions.default_occurs
-    pyoptions.special_occur = pyoptions.default_occurs
+
+    pyoptions.default_occur = "<=99"
+    pyoptions.occur_is_filter = False
+    pyoptions.letter_occur = pyoptions.default_occur
+    pyoptions.digital_occur = pyoptions.default_occur
+    pyoptions.special_occur = pyoptions.default_occur
+
     pyoptions.default_types = ">=0"
+    pyoptions.types_is_filter = False
     pyoptions.letter_types = pyoptions.default_types
     pyoptions.digital_types = pyoptions.default_types
     pyoptions.special_types = pyoptions.default_types
+
+    pyoptions.default_repeat = ">=0"
+    pyoptions.repeat_is_filter = False
+    pyoptions.letter_repeat = pyoptions.default_repeat
+    pyoptions.digital_repeat = pyoptions.default_repeat
+    pyoptions.special_repeat = pyoptions.default_repeat
+
     pyoptions.filter_regex = ".*?"
+    pyoptions.regex_is_filter = False
 
     # the lower the more items
     pyoptions.level = 3

@@ -2,7 +2,7 @@
 # coding:utf-8
 # A powerful and useful hacker dictionary builder for a brute-force attack
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -42,13 +42,29 @@ def init():
     pyoptions.encode = args.encode
     pyoptions.minlen = args.len[0]
     pyoptions.maxlen = args.len[1]
+
     pyoptions.letter_occur = args.occur[0]
     pyoptions.digital_occur = args.occur[1]
     pyoptions.special_occur = args.occur[2]
+    if pyoptions.default_occur * 3 != pyoptions.letter_occur + pyoptions.digital_occur + pyoptions.special_occur:
+        pyoptions.occur_is_filter = True
+
     pyoptions.letter_types = args.types[0]
     pyoptions.digital_types = args.types[1]
     pyoptions.special_types = args.types[2]
-    pyoptions.filter_regex = args.regex[0]
+    if pyoptions.default_types * 3 != pyoptions.letter_types + pyoptions.digital_types + pyoptions.special_types:
+        pyoptions.types_is_filter = True
+
+    pyoptions.letter_repeat = args.repeat[0]
+    pyoptions.digital_repeat = args.repeat[1]
+    pyoptions.special_repeat = args.repeat[2]
+    if pyoptions.default_repeat * 3 != pyoptions.letter_repeat + pyoptions.digital_repeat + pyoptions.special_repeat:
+        pyoptions.repeat_is_filter = True
+
+    if pyoptions.filter_regex != args.regex:
+        pyoptions.regex_is_filter = True
+    pyoptions.filter_regex = args.regex
+
     pyoptions.args_base = args.base
     pyoptions.args_char = args.char
     pyoptions.args_chunk = args.chunk

@@ -1,6 +1,6 @@
 # pydictor
 
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.2-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.3-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [中文版](README_CN.md)**
 
@@ -48,7 +48,7 @@ A: 1.it always can help you
 ```
 git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git
 cd pydictor/
-chmod 755 pydictor.py
+chmod +x pydictor.py
 python pydictor.py
 ```
 
@@ -106,7 +106,7 @@ python pydictor.py
 | regex    |  F7  | filter by regex                          |
 | level    |  F8  | set the word list rule level             |
 | leet     |  F9  | enable 1337 mode                         |
-
+| repeat   |  F10 | filter by consecutive repeat times of letter、digital、special chars |
 
 #### encode function supported encodings and encryptions
 
@@ -138,7 +138,13 @@ python pydictor.py
 #### types function
 `Usage  : --types [letters_types_range] [digital_types_range] [special_types_range]`
 
-`Example: --types "<=8" "<=4" "=0"`
+`Example: --types "<=8" "<=4" "==0"`
+
+
+#### repeat function
+`Usage  : --repeat [letters_repeat_times] [digital_repeat_times] [special_repeat_times]`
+
+`Example: --repeat "<=3" ">=3" "==0"`
 
 
 #### regex function

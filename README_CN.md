@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.2-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.3-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -48,7 +48,7 @@ A: 1.生成密码它总会帮到你
 ```
 git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git
 cd pydictor/
-chmod 755 pydictor.py
+chmod +x pydictor.py
 python pydictor.py
 ```
 
@@ -110,7 +110,7 @@ python pydictor.py
 | regex  |  F7  | 正则筛选               |
 | level  |  F8  | 字典级别筛选             |
 | leet   |  F9  | 1337 模式            |
-
+| repeat |  F10 | 字母、数字、特殊字符连续出现次数范围筛选 |
 
 #### 支持的编码或加密方式
 
@@ -143,6 +143,12 @@ python pydictor.py
 `用法  : --types [字母种类的范围] [数字种类的范围] [特殊字符种类的范围]`
 
 `示例: --types "<=8" "<=4" "=0"`
+
+
+#### repeat 功能
+`用法  : --repeat [字母连续出现次数范围] [数字连续出现次数范围] [特殊字符连续出现次数范围]`
+
+`示例: --repeat "<=3" ">=3" "==0"`
 
 
 #### regex 功能

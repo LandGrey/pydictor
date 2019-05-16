@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -14,11 +14,10 @@ import time
 
 from core.EXTEND import extend_enter
 from lib.fun.decorator import magic
-from lib.fun.filter import filterforfun
 from lib.data.data import paths, pystrs, pyoptions
 from lib.fun.osjudger import is_Windows, is_Linux, is_Mac
 from lib.data.text import help_dict, helpmsg, pydictor_art_text
-from lib.fun.fun import cool, unique, finishprinter, walks_all_files, mybuildtime, finalsavepath, fun_name
+from lib.fun.fun import cool, walks_all_files, mybuildtime, finalsavepath, fun_name
 from rules.EB import EB
 from rules.NB import NB
 from rules.SB import SB
@@ -131,6 +130,10 @@ class SEDB(cmd.Cmd):
                               (pyoptions.letter_types, pyoptions.digital_types, pyoptions.special_types,
                                description="types")))
 
+            print(cool.orange("{description:11}: letter: [ {0:5}] digital: [ {1:5}] special: [ {2:5} ]".format
+                              (pyoptions.letter_repeat, pyoptions.digital_repeat, pyoptions.special_repeat,
+                               description="repeat")))
+
             print(cool.orange("{description:11}: [{0}]".format(pyoptions.level, description="level")))
 
             if pyoptions.sedb_leet:
@@ -207,6 +210,7 @@ class SEDB(cmd.Cmd):
             print(cool.fuchsia("[!] usage: occur letter digital special" + pyoptions.CRLF) +
                   cool.blue("[?] exp: occur <=6 >4 >=0") + pyoptions.CRLF)
         else:
+            pyoptions.occur_is_filter = True
             letter = chunk[0].strip('"').strip("'")
             digital = chunk[1].strip('"').strip("'")
             special = chunk[2].strip('"').strip("'")
@@ -223,6 +227,7 @@ class SEDB(cmd.Cmd):
             print(cool.fuchsia("[!] usage: types letter digital special" + pyoptions.CRLF) +
                   cool.blue("[?] exp: types <=6 >4 >=0") + pyoptions.CRLF)
         else:
+            pyoptions.types_is_filter = True
             letter = chunk[0].strip('"').strip("'")
             digital = chunk[1].strip('"').strip("'")
             special = chunk[2].strip('"').strip("'")
@@ -233,11 +238,29 @@ class SEDB(cmd.Cmd):
                   (cool.green(pyoptions.letter_types), cool.green(pyoptions.digital_types),
                    cool.green(pyoptions.special_types)) + pyoptions.CRLF)
 
+    def do_repeat(self, key):
+        chunk = key.split(' ')
+        if len(chunk) != 3:
+            print(cool.fuchsia("[!] usage: repeat letter digital special" + pyoptions.CRLF) +
+                  cool.blue("[?] exp: repeat <=6 >4 >=0") + pyoptions.CRLF)
+        else:
+            pyoptions.repeat_is_filter = True
+            letter = chunk[0].strip('"').strip("'")
+            digital = chunk[1].strip('"').strip("'")
+            special = chunk[2].strip('"').strip("'")
+            pyoptions.letter_repeat = letter if letter != "" else pyoptions.letter_repeat
+            pyoptions.digital_repeat = digital if digital != "" else pyoptions.digital_repeat
+            pyoptions.special_repeat = special if special != "" else pyoptions.special_repeat
+            print("[+] letter repeat: {0} digital types: {1} special types: {2}".format
+                  (cool.green(pyoptions.letter_repeat), cool.green(pyoptions.digital_repeat),
+                   cool.green(pyoptions.special_repeat)) + pyoptions.CRLF)
+
     def do_regex(self, key):
         chunk = key.split(' ')
         if len(chunk) != 1:
             print(cool.fuchsia("[!] usage: regex filter-string" + pyoptions.CRLF))
         else:
+            pyoptions.regex_is_filter = True
             pyoptions.filter_regex = chunk[0]
             print("[+] regex: {0}".format(cool.green(pyoptions.filter_regex)) + pyoptions.CRLF)
 
@@ -293,14 +316,12 @@ class SEDB(cmd.Cmd):
             except WindowsError:
                 print(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
             finally:
-                this_name = '%s_%s%s' % (pystrs.SEDB_prefix, mybuildtime(), pyoptions.filextension) \
+                this_name = 'SEDB_%s%s' % (mybuildtime(), pyoptions.filextension) \
                     if paths.results_file_name == None else paths.results_file_name
                 print("[+] store path: {0}".format(cool.green(os.path.join(paths.results_path, this_name
                 if paths.results_file_name != None else ''))) + pyoptions.CRLF)
 
     def do_run(self, args):
-        storepath = finalsavepath(fun_name())
-
         pystrs.startime = time.time()
         results = []
         paths.results_file_name = None

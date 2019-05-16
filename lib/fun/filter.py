@@ -2,13 +2,14 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
 import re
 import string
 from lib.fun.fun import cool
+from itertools import groupby
 from collections import Counter
 from lib.data.data import pyoptions
 
@@ -28,11 +29,8 @@ def headtail_filter(item, head='', tail=''):
         return item
 
 
-def encode_filter(item, encode='none', encode_is_filter=False):
-    if item and encode_is_filter:
-        return pyoptions.operator.get(encode)(item)
-    else:
-        return item
+def encode_filter(item, encode='none'):
+    return pyoptions.operator.get(encode)(item)
 
 
 def occur_filter(item, letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
@@ -121,7 +119,53 @@ def types_filter(item, letter_types=pyoptions.letter_types, digital_types=pyopti
                        '=': d_types == d_wanttypes, '==': d_types == d_wanttypes, }
         special_map = {'<': s_types < s_wanttypes, '<=': s_types <= s_wanttypes,
                        '>': s_types > s_wanttypes, '>=': s_types >= s_wanttypes,
-                       '=': s_types == s_wanttypes, '==': s_types == s_wanttypes,}
+                       '=': s_types == s_wanttypes, '==': s_types == s_wanttypes, }
+        if letter_map[l_op] and digital_map[d_op] and special_map[s_op]:
+            return item
+    else:
+        return item
+
+
+def repeat_filter(item, letter_repeat=pyoptions.letter_repeat, digital_repeat=pyoptions.digital_repeat,
+                  special_repeat=pyoptions.special_repeat, repeat_is_filter=False):
+    if item and repeat_is_filter:
+        l_repeat = d_repeat = s_repeat = 0
+        l_op = d_op = s_op = '>='
+        l_wantrepeat = d_wantrepeat = s_wantrepeat = 0
+        pattern = '((<|>|=)=?)(\d*)$'
+        letter_match = re.match(pattern, letter_repeat)
+        digital_match = re.match(pattern, digital_repeat)
+        special_match = re.match(pattern, special_repeat)
+        if letter_match and letter_match.group():
+            l_op = letter_match.group(1)
+            l_wantrepeat = int(letter_match.group(len(letter_match.groups())))
+        if digital_match and digital_match.group():
+            d_op = digital_match.group(1)
+            d_wantrepeat = int(digital_match.group(len(digital_match.groups())))
+        if special_match and special_match.group():
+            s_op = special_match.group(1)
+            s_wantrepeat = int(special_match.group(len(special_match.groups())))
+        groups = groupby(item)
+        repeat_dict = [{label: sum(1 for _ in group)} for label, group in groups]
+        for r in repeat_dict:
+            key = r.keys()[0]
+            value = r.values()[0]
+            if key in string.ascii_letters:
+                l_repeat = max(l_repeat, value)
+            elif key in string.digits:
+                d_repeat = max(d_repeat, value)
+            elif key in string.printable[62:-5]:
+                s_repeat = max(s_repeat, value)
+
+        letter_map = {'<': l_repeat < l_wantrepeat, '<=': l_repeat <= l_wantrepeat,
+                      '>': l_repeat > l_wantrepeat, '>=': l_repeat >= l_wantrepeat,
+                      '=': l_repeat == l_wantrepeat, '==': l_repeat == l_wantrepeat, }
+        digital_map = {'<': d_repeat < d_wantrepeat, '<=': d_repeat <= d_wantrepeat,
+                       '>': d_repeat > d_wantrepeat, '>=': d_repeat >= d_wantrepeat,
+                       '=': d_repeat == d_wantrepeat, '==': d_repeat == d_wantrepeat, }
+        special_map = {'<': s_repeat < s_wantrepeat, '<=': s_repeat <= s_wantrepeat,
+                       '>': s_repeat > s_wantrepeat, '>=': s_repeat >= s_wantrepeat,
+                       '=': s_repeat == s_wantrepeat, '==': s_repeat == s_wantrepeat, }
         if letter_map[l_op] and digital_map[d_op] and special_map[s_op]:
             return item
     else:
@@ -189,26 +233,15 @@ def cutout_filter(lists, start='pos-1', end='pos--1', cutout_is_filter=False):
             return _
 
 
-def filterforfun(item,
-                 head=pyoptions.head, tail=pyoptions.tail,
-                 minlen=pyoptions.minlen, maxlen=pyoptions.maxlen,
-                 letter_occur=pyoptions.default_occurs,
-                 digital_occur=pyoptions.default_occurs,
-                 special_occur=pyoptions.special_occur,
-                 letter_types=pyoptions.default_types,
-                 digital_types=pyoptions.default_types,
-                 special_types=pyoptions.default_types,
-                 regex=pyoptions.filter_regex, encode=pyoptions.encode,
-                 lenght_is_filter=False, encode_is_filter=False,
-                 occur_is_filter=False, types_is_filter=False,
-                 regex_is_filter=False, ):
-
-    item = headtail_filter(item, head=head, tail=tail)
-    item = lenght_filter(item, minlen=minlen, maxlen=maxlen, lenght_is_filter=lenght_is_filter)
-    item = occur_filter(item, letter_occur=letter_occur, digital_occur=digital_occur,
-                        special_occur=special_occur, occur_is_filter=occur_is_filter)
-    item = types_filter(item, letter_types=letter_types, digital_types=digital_types,
-                        special_types=special_types, types_is_filter=types_is_filter)
-    item = regex_filter(item, regex=regex, regex_is_filter=regex_is_filter)
-    item = encode_filter(item, encode=encode, encode_is_filter=encode_is_filter)
+def filterforfun(item):
+    item = headtail_filter(item, head=pyoptions.head, tail=pyoptions.tail)
+    item = lenght_filter(item, minlen=pyoptions.minlen, maxlen=pyoptions.maxlen, lenght_is_filter=pyoptions.args_pick)
+    item = occur_filter(item, letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
+                        special_occur=pyoptions.special_occur, occur_is_filter=pyoptions.occur_is_filter)
+    item = types_filter(item, letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
+                        special_types=pyoptions.special_types, types_is_filter=pyoptions.types_is_filter)
+    item = repeat_filter(item, letter_repeat=pyoptions.letter_repeat, digital_repeat=pyoptions.digital_repeat,
+                         special_repeat=pyoptions.special_repeat, repeat_is_filter=pyoptions.repeat_is_filter)
+    item = regex_filter(item, regex=pyoptions.filter_regex, regex_is_filter=pyoptions.regex_is_filter)
+    item = encode_filter(item, encode=pyoptions.encode)
     return item

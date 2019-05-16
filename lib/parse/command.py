@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -38,6 +38,7 @@ pydictor.py [options]
            --encode     [{encode}]
            --occur      [letter] [digital] [special]
            --types      [letter] [digital] [special]
+           --repeat     [letter] [digital] [special]
            --regex      [regex]
            --level      [code]
            --leet       [code]'''.format(plugin=",".join(pyoptions.plug_range), encode=",".join(pyoptions.encode_range),
@@ -107,6 +108,11 @@ pydictor.py [options]
                         default=(pyoptions.letter_types, pyoptions.digital_types, pyoptions.special_types),
                         help=cool.yellow('''Default: letter "%s"  digital "%s"  special "%s"''' %
                                          (pyoptions.letter_types, pyoptions.digital_types, pyoptions.special_types)))
+
+    parser.add_argument('--repeat', dest='repeat', metavar=('letter', 'digital', 'special'), nargs=3, type=str,
+                        default=(pyoptions.letter_repeat, pyoptions.digital_repeat, pyoptions.special_repeat),
+                        help=cool.yellow('''Default: letter "%s"  digital "%s"  special "%s"''' %
+                                         (pyoptions.letter_repeat, pyoptions.digital_repeat, pyoptions.special_repeat)))
 
     parser.add_argument('--regex', dest='regex', metavar='regex', nargs=1, type=str,
                         default=pyoptions.filter_regex, help=cool.yellow('''Filter by regex, Default: (%s)''' %
