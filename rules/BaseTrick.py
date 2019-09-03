@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -48,60 +48,68 @@ def tailjoins(firstlist, secondlist, tail):
 
 def numjoinum(num1, num2):
     yield num1 + num2
-    yield num1.replace('0', '') + num2
-    yield num1 + num2.replace('0', '')
-    yield num1.replace('0', '') + num2.replace('0', '')
+    if pyoptions.level <= 1:
+        yield num1.replace('0', '') + num2
+        yield num1 + num2.replace('0', '')
+        yield num1.replace('0', '') + num2.replace('0', '')
     for mid in pyoptions.sedb_trick_mid:
         yield num1 + mid + num2
-        yield num1.replace('0', '') + mid + num2
-        yield num1 + mid + num2.replace('0', '')
-        yield num1.replace('0', '') + mid + num2.replace('0', '')
         yield num2 + mid + num1
-        yield num2.replace('0', '') + mid + num1
-        yield num2 + mid + num1.replace('0', '')
-        yield num2.replace('0', '') + mid + num1.replace('0', '')
+        if pyoptions.level <= 1:
+            yield num1.replace('0', '') + mid + num2
+            yield num1 + mid + num2.replace('0', '')
+            yield num1.replace('0', '') + mid + num2.replace('0', '')
+            yield num2.replace('0', '') + mid + num1
+            yield num2 + mid + num1.replace('0', '')
+            yield num2.replace('0', '') + mid + num1.replace('0', '')
 
     for suf in pyoptions.sedb_trick_suf:
         yield num1 + num2 + suf
-        yield num1.replace('0', '') + num2 + suf
-        yield num1 + num2.replace('0', '') + suf
-        yield num1.replace('0', '') + num2.replace('0', '') + suf
         yield num2 + num1 + suf
-        yield num2.replace('0', '') + num1 + suf
-        yield num2 + num1.replace('0', '') + suf
-        yield num2.replace('0', '') + num1.replace('0', '') + suf
+        if pyoptions.level <= 1:
+            yield num1.replace('0', '') + num2 + suf
+            yield num1 + num2.replace('0', '') + suf
+            yield num1.replace('0', '') + num2.replace('0', '') + suf
+            yield num2.replace('0', '') + num1 + suf
+            yield num2 + num1.replace('0', '') + suf
+            yield num2.replace('0', '') + num1.replace('0', '') + suf
 
     for pre in pyoptions.sedb_trick_pre:
         yield pre + num1 + num2
-        yield pre + num1.replace('0', '') + num2
-        yield pre + num1 + num2.replace('0', '')
-        yield pre + num1.replace('0', '') + num2.replace('0', '')
         yield pre + num2 + num1
-        yield pre + num2.replace('0', '') + num1
-        yield pre + num2 + num1.replace('0', '')
-        yield pre + num2.replace('0', '') + num1.replace('0', '')
+        if pyoptions.level <= 1:
+            yield pre + num1.replace('0', '') + num2
+            yield pre + num1 + num2.replace('0', '')
+            yield pre + num1.replace('0', '') + num2.replace('0', '')
+            yield pre + num2.replace('0', '') + num1
+            yield pre + num2 + num1.replace('0', '')
+            yield pre + num2.replace('0', '') + num1.replace('0', '')
 
 
 def strnumjoin(str1, num1):
     yield str1 + num1
-    yield str1 + num1.replace('0', '')
+    if pyoptions.level <= 1:
+        yield str1 + num1.replace('0', '')
     for mid in pyoptions.sedb_trick_mid:
         yield num1 + mid + str1
-        yield num1.replace('0', '') + mid + str1
         yield str1 + mid + num1
-        yield str1 + mid + num1.replace('0', '')
+        if pyoptions.level <= 1:
+            yield num1.replace('0', '') + mid + str1
+            yield str1 + mid + num1.replace('0', '')
 
     for suf in pyoptions.sedb_trick_suf:
         yield num1 + str1 + suf
-        yield num1.replace('0', '') + str1 + suf
         yield str1 + num1 + suf
-        yield str1 + num1.replace('0', '') + suf
+        if pyoptions.level <= 1:
+            yield num1.replace('0', '') + str1 + suf
+            yield str1 + num1.replace('0', '') + suf
 
     for pre in pyoptions.sedb_trick_pre:
         yield pre + num1 + str1
-        yield pre + num1.replace('0', '') + str1
         yield pre + str1 + num1
-        yield pre + str1 + num1.replace('0', '')
+        if pyoptions.level <= 1:
+            yield pre + num1.replace('0', '') + str1
+            yield pre + str1 + num1.replace('0', '')
 
 
 def mailshaper(mail):
@@ -116,20 +124,56 @@ def mailshaper(mail):
     return shapes
 
 
-# date format: yyyyMMdd
-def dateshaper(date, en=True):
+# ymd format: yyyyMMdd      dmy format: ddMMyyyy
+def dateshaper(date):
     shapes = []
+
+    # 20150806 or 06082015
     shapes.append(date)
-    shapes.append(date[2:])
-    shapes.append(date[:4])
-    shapes.append(date[4:])
-    shapes.append(date[4:].replace('0', ''))
-    shapes.append(date[:4] + date[4:].replace('0', ''))
-    shapes.append(date[2:4] + date[4:].replace('0', ''))
-    if en:
-        shapes.append(date[4:] + date[:4])
-        shapes.append(date[4:] + date[2:4])
-        shapes.append(date[4:].replace('0', '') + date[2:4])
+    if pyoptions.ymd_format:
+        # 150806
+        shapes.append(date[2:8])
+        # 201586
+        shapes.append(date[0:4] + date[4].replace("0", "") + date[5:6] + date[6].replace("0", "") + date[7:8])
+        if pyoptions.level <= 1:
+            # 15086
+            shapes.append(date[2:6] + date[6].replace("0", "") + date[7:8])
+            # 15806
+            shapes.append(date[2:4] + date[4].replace("0", "") + date[5:8])
+            # 2015086
+            shapes.append(date[0:6] + date[6].replace("0", "") + date[7:8])
+            # 2015806
+            shapes.append(date[0:4] + date[4].replace("0", "") + date[5:8])
+            # 086
+            shapes.append(date[4:6] + date[6].replace("0", "") + date[7:8])
+        if pyoptions.level <= 2:
+            # 806
+            shapes.append(date[4].replace("0", "") + date[5:8])
+            # 86
+            shapes.append(date[4].replace("0", "") + date[5:6] + date[6].replace("0", "") + date[7:8])
+        if pyoptions.level <= 3:
+            # 2015
+            shapes.append(date[0:4])
+            # 0806
+            shapes.append(date[4:8])
+            # 1586
+            shapes.append(date[2:4] + date[4].replace("0", "") + date[5:6] + date[6].replace("0", "") + date[7:8])
+    else:
+        # 20150806
+        shapes.append(date[4:8] + date[2:4] + date[0:2])
+        # 060815
+        shapes.append(date[0:4] + date[6:8])
+        # 682015
+        shapes.append(date[0].replace("0", "") + date[1] + date[2].replace("0", "") + date[3:8])
+        if pyoptions.level <= 3:
+            # 0608
+            shapes.append(date[0:4])
+            # 2015
+            shapes.append(date[4:8])
+            # 6815
+            shapes.append(date[0].replace("0", "") + date[1] + date[2].replace("0", "") + date[3] + date[6:8])
+            # 20150608
+            shapes.append(date[4:8] + date[0:4])
     return shapes
 
 

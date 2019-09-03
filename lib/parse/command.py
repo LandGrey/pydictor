@@ -41,7 +41,8 @@ pydictor.py [options]
            --repeat     [letter] [digital] [special]
            --regex      [regex]
            --level      [code]
-           --leet       [code]'''.format(plugin=",".join(pyoptions.plug_range), encode=",".join(pyoptions.encode_range),
+           --leet       [code]
+           --dmy'''.format(plugin=",".join(pyoptions.plug_range), encode=",".join(pyoptions.encode_range),
                                          tool=",".join(pyoptions.tool_range))))
 
     parser.add_argument('-base', dest='base', choices=[pystrs.base_dic_type[0], pystrs.base_dic_type[1],
@@ -123,6 +124,9 @@ pydictor.py [options]
 
     parser.add_argument('--leet', dest='leet', metavar='code', nargs='+', type=int, default=pyoptions.leetmode_code,
                         help=cool.yellow('Choose leet mode code (0, 1, 2, 11-19, 21-29)'))
+
+    parser.add_argument('--dmy', dest='dmy', default='',  action="store_true",
+                        help=cool.yellow('Use ddMMyyyy format date, default date format: yyyyMMdd'))
 
     if len(sys.argv) == 1:
         sys.argv.append('-h')

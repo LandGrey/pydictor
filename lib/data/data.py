@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.3#dev'
+    pystrs.version = '2.1.4.0#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -122,6 +122,9 @@ def init_pyoptions():
 
     # default counter view items
     pyoptions.default_vs_items = 50
+
+    # format date ymd_format: yyyMMdd   dmy_format: ddMMyyyy
+    pyoptions.ymd_format = True
 
     # command options
     pyoptions.args_base = ""
@@ -225,8 +228,11 @@ def init_pyoptions():
     pyoptions.encode_info = {}
     for encode_name in pyoptions.operator.keys():
         pyoptions.encode_info[encode_name] = getattr(pyoptions.operator.get(encode_name), "__doc__")
-    pyoptions.encode_desc = "".join([str(key).ljust(10) + pyoptions.encode_info[key] + pyoptions.CRLF
-                                     for key in sorted(pyoptions.encode_info.keys())])
+    try:
+        pyoptions.encode_desc = "".join([str(key).ljust(10) + pyoptions.encode_info[key] + pyoptions.CRLF
+                                         for key in sorted(pyoptions.encode_info.keys())])
+    except TypeError as e:
+        exit("[-] please check your modified encode function, something error")
 
     # tools_operator ending string format
     pyoptions.tool_ending = "_magic"

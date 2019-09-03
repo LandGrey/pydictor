@@ -65,6 +65,9 @@ def init():
         pyoptions.regex_is_filter = True
     pyoptions.filter_regex = args.regex
 
+    if args.dmy:
+        pyoptions.ymd_format = False
+
     pyoptions.args_base = args.base
     pyoptions.args_char = args.char
     pyoptions.args_chunk = args.chunk
