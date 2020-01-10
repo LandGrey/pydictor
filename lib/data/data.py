@@ -106,7 +106,7 @@ def init_pyoptions():
     pyoptions.maxlen_switcher = 20
 
     # allowed maximum generated items
-    pyoptions.count_switcher = 1000000000000
+    pyoptions.count_switcher = 999999999999999999999999999999999999999999999999999999
 
     # shredded file rewrite counts
     pyoptions.file_rewrite_count = 1

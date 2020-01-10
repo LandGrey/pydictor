@@ -41,10 +41,10 @@ def get_base_dic(objflag):
 
     objflag = getchars(objflag)
     countchecker(len(objflag), pyoptions.minlen, pyoptions.maxlen)
-    with open(storepath, "a") as f:
+    with open(storepath, "w") as f:
         for i in range_compatible(pyoptions.minlen, pyoptions.maxlen+1):
             for item in itertools.product(objflag, repeat=i):
                 f.write(pyoptions.operator.get(pyoptions.encode)(pyoptions.head + "".join(item) + pyoptions.tail) +
                         pyoptions.CRLF)
 
-    finishprinter(storepath)
+    if isinstance(storepath,str) : finishprinter(storepath)
