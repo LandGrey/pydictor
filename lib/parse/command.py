@@ -80,7 +80,7 @@ pydictor.py [options]
                         help=cool.yellow('Enter the Social Engineering Dictionary Builder'))
 
     parser.add_argument('-o', '--output', dest='output', metavar='path', type=str, default=paths.results_path,
-                        help=cool.yellow('''Set the output directory path
+                        help=cool.yellow('''Set the output directory path,use - mean output to stdout
     default: %s''' % paths.results_path))
 
     parser.add_argument('-tool', dest='tool', metavar='arg', nargs='+', type=str, default='',

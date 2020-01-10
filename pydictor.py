@@ -27,15 +27,40 @@ from lib.parse.tricksparse import sedb_tricks
 def init():
     args = parse_args()
     pyoptions.leetmode_code = args.leet
-
     if not (args.len[0] == pyoptions.minlen and args.len[1] == pyoptions.maxlen):
         pyoptions.args_pick = True
     if pyoptions.leetmode_code:
         pyoptions.extend_leet = True
         pyoptions.passcraper_leet = True
         pyoptions.sedb_leet = True
-    paths.results_path = os.path.abspath(args.output) \
-        if '\\' in args.output or '/' in args.output else os.path.join(paths.results_path, args.output)
+
+    if args.output=='-':
+        paths.results_path=None
+    else:
+        paths.results_path = os.path.abspath(args.output) \
+            if '\\' in args.output or '/' in args.output else os.path.join(paths.results_path, args.output)
+
+        try:
+            if os.path.isfile(paths.results_path):
+                tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
+                if not os.path.isdir(tmp_dirpath):
+                    os.makedirs(tmp_dirpath)
+                paths.results_path = tmp_dirpath
+                paths.results_file_name = ''.join(random.sample('pydictor', 4)) + '_' + tmp_filename
+            elif not os.path.isdir(paths.results_path):
+                tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
+                if '.' in tmp_filename:
+                    if not os.path.isdir(tmp_dirpath):
+                        os.makedirs(tmp_dirpath)
+                    paths.results_path = tmp_dirpath
+                    paths.results_file_name = tmp_filename
+                else:
+                    if not os.path.isdir(paths.results_path):
+                        os.makedirs(paths.results_path)
+        except WindowsError:
+            exit(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
+
+        print("{}".format(cool.green(pydictor_art_text)))
 
     pyoptions.head = args.head
     pyoptions.tail = args.tail
@@ -78,29 +103,10 @@ def init():
     pyoptions.args_tool = args.tool
     pyoptions.level = args.level
 
-    try:
-        if os.path.isfile(paths.results_path):
-            tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
-            if not os.path.isdir(tmp_dirpath):
-                os.makedirs(tmp_dirpath)
-            paths.results_path = tmp_dirpath
-            paths.results_file_name = ''.join(random.sample('pydictor', 4)) + '_' + tmp_filename
-        elif not os.path.isdir(paths.results_path):
-            tmp_dirpath, tmp_filename = os.path.split(paths.results_path)
-            if '.' in tmp_filename:
-                if not os.path.isdir(tmp_dirpath):
-                    os.makedirs(tmp_dirpath)
-                paths.results_path = tmp_dirpath
-                paths.results_file_name = tmp_filename
-            else:
-                if not os.path.isdir(paths.results_path):
-                    os.makedirs(paths.results_path)
-    except WindowsError:
-        exit(pyoptions.CRLF + cool.red("[-] Cannot create result file: %s " % paths.results_path))
+
 
 
 if __name__ == '__main__':
-    print("{}".format(cool.green(pydictor_art_text)))
     init()
     if pyoptions.args_base:
         get_base_dic(pyoptions.args_base)
@@ -113,6 +119,8 @@ if __name__ == '__main__':
     elif pyoptions.args_plug:
         plug_parser()
     elif pyoptions.args_sedb:
+        if not paths.results_path:
+            exit(pyoptions.CRLF + cool.red("[-] sedb cant not output to stdout"))
         try:
             sedb_tricks()
             shell = SEDB()

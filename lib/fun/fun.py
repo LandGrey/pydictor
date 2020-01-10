@@ -17,7 +17,7 @@ from functools import reduce
 from lib.fun.color import Colored
 from lib.fun.osjudger import py_ver_egt_3
 from lib.data.data import pystrs,  paths, pyoptions
-
+import sys
 cool = Colored()
 
 
@@ -182,6 +182,8 @@ def mybuildtime():
 
 
 def finishcounter(storepath):
+    if not isinstance(storepath,str):
+        return None
     line_count = 0
     with open(storepath, 'r') as files:
         for _ in files:
@@ -199,6 +201,8 @@ def finishprinter(storepath):
 
 def finalsavepath(prefix):
     directory = paths.results_path
+    if not directory:
+        return sys.stdout.fileno()
     timestamp = mybuildtime()
     ext = pyoptions.filextension
     customname = paths.results_file_name
