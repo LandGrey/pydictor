@@ -65,6 +65,11 @@ def init():
         pyoptions.regex_is_filter = True
     pyoptions.filter_regex = args.regex
 
+    if args.more:
+        pyoptions.more = True
+    else:
+        pyoptions.more = False
+
     if args.dmy:
         pyoptions.ymd_format = False
 

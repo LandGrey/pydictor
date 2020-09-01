@@ -125,6 +125,9 @@ pydictor.py [options]
     parser.add_argument('--leet', dest='leet', metavar='code', nargs='+', type=int, default=pyoptions.leetmode_code,
                         help=cool.yellow('Choose leet mode code (0, 1, 2, 11-19, 21-29)'))
 
+    parser.add_argument('--more', dest='more', default='',  action="store_true",
+                        help=cool.yellow('Append more simple word list to extend function results, default: false'))
+
     parser.add_argument('--dmy', dest='dmy', default='',  action="store_true",
                         help=cool.yellow('Use ddMMyyyy format date, default date format: yyyyMMdd'))
 

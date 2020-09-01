@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.4.0#dev'
+    pystrs.version = '2.1.4.1#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"

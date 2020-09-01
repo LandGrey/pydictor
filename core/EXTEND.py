@@ -29,9 +29,9 @@ def extend_magic(rawlist):
 
     @magic
     def extend():
-        for _ in walks_all_files(paths.weblist_path):
-            yield "".join(_)
-        if pyoptions.level <= 1:
+        if pyoptions.more:
+            for _ in walks_all_files(paths.weblist_path):
+                yield "".join(_)
             for _ in walks_all_files(paths.syslist_path):
                 yield "".join(_)
         for _ in extend_enter(rawlist, leet=leet):
@@ -59,32 +59,33 @@ def wordsharker(raw, leet=True):
     if pyoptions.level <= 3:
         # 3 {RAW:uppercase}
         init_word_res.append(raw.upper())
-        # 3 {raw}{raw}
-        init_word_res.append(raw + raw)
-        # 3 {raw:lowercase}{raw:lowercase}
-        init_word_res.append(raw.lower() + raw.lower())
-        # 3 {raw}{RAW:uppercase}
-        init_word_res.append(raw + raw.upper())
-        # 3 {raw:lowercase}{RAW:uppercase}
-        init_word_res.append(raw.lower() + raw.upper())
 
     if pyoptions.level <= 2:
-        # 2 {RAW:uppercase}{raw}
-        init_word_res.append(raw.upper() + raw)
-        # 2 {RAW:uppercase}{raw:lowercase}
-        init_word_res.append(raw.upper() + raw.lower())
-        # 2 {r:initials:lowercase}
-        init_word_res.append(raw[0].lower())
-        # 2 {R:initials:uppercase}
-        init_word_res.append(raw[0].upper())
-        # 2 {war:reverse}
-        init_word_res.append(raw[::-1])
-        # 2 {war:reverse:lowercase}
-        init_word_res.append(raw[::-1].lower())
-        # 2 {war:reverse:uppercase}
-        init_word_res.append(raw[::-1].upper())
+        # 2 {raw}{raw}
+        init_word_res.append(raw + raw)
+        # 2 {raw:lowercase}{raw:lowercase}
+        init_word_res.append(raw.lower() + raw.lower())
+        # 2 {raw}{RAW:uppercase}
+        init_word_res.append(raw + raw.upper())
+        # 2 {raw:lowercase}{RAW:uppercase}
+        init_word_res.append(raw.lower() + raw.upper())
 
     if pyoptions.level <= 1:
+        # 1 {RAW:uppercase}{raw}
+        init_word_res.append(raw.upper() + raw)
+        # 1 {RAW:uppercase}{raw:lowercase}
+        init_word_res.append(raw.upper() + raw.lower())
+        # 1 {r:initials:lowercase}
+        init_word_res.append(raw[0].lower())
+        # 1 {R:initials:uppercase}
+        init_word_res.append(raw[0].upper())
+        # 1 {war:reverse}
+        init_word_res.append(raw[::-1])
+        # 1 {war:reverse:lowercase}
+        init_word_res.append(raw[::-1].lower())
+        # 1 {war:reverse:uppercase}
+        init_word_res.append(raw[::-1].upper())
+
         # 1 {Raw:capitalize}{raw}
         init_word_res.append(raw.capitalize() + raw)
         # 1 {Raw:capitalize}{raw:lowercase}

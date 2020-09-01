@@ -28,7 +28,7 @@ python pydictor.py --conf "[0-9]{6,6}<none>[a-f,abc,123,!@#]{1,1}<none>" --encod
 #### 5. 规则扩展字典
 ```
 python pydictor.py -extend bob --level 4 --len 4 12
-python pydictor.py -extend liwei zwell.com --leet 0 1 2 11 21 --level 2 --len 6 16 --occur "<=10" ">0" "<=2" -o /possbile/wordlist.lst
+python pydictor.py -extend liwei zwell.com --more --leet 0 1 2 11 21 --level 2 --len 6 16 --occur "<=10" ">0" "<=2" -o /possbile/wordlist.lst
 ```
 
 #### 6. 社会工程学字典
