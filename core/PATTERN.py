@@ -9,11 +9,9 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 from __future__ import unicode_literals
 
 import operator
-import itertools
 import functools
 import traceback
-from core.CONF import get_conf_dic
-from lib.fun.filter import encode_filter
+from itertools import product
 from lib.data.data import pystrs, pyoptions
 from lib.fun.fun import finalsavepath, finishprinter, cool
 from lib.parse.confparse import elementparser, confmatcher
@@ -21,27 +19,45 @@ from lib.parse.confparse import elementparser, confmatcher
 
 def build_pattern_dic(source=""):
     buffer = []
-    buffer_size = 512
+    buffer_size = 256
     storepath = finalsavepath("pattern")
     pattern_set = patterncore(source)
     char_list = [sorted(set(i)) for i in pattern_set.values()]
+
+    # count word list lines
+    count = functools.reduce(operator.mul, [len(i) for i in pattern_set.values()], 1)
+    if count >= pyoptions.count_switcher:
+        exit_msg = pyoptions.CRLF + cool.fuchsia("[!] Build items more than pyoptions.count_switcher: %s%s"
+                                                 "[!] Modify /lib/data/data.py count_switcher to adjust it" %
+                                                 (str(pyoptions.count_switcher), pyoptions.CRLF))
+        exit(exit_msg)
+
+    # global variable transfer local variable to improved speed
+    head = pyoptions.head
+    tail = pyoptions.tail
+    crlf = pyoptions.CRLF
+    encode_name = pyoptions.encode
+    encode_fun = pyoptions.operator.get(encode_name)
+
     try:
         with open(storepath, "w") as f:
-            for item in map("".join, itertools.product(*char_list)):
-                item = pyoptions.head + item + pyoptions.tail
-                buffer.append(item if pyoptions.encode == "none" else encode_filter(item, encode=pyoptions.encode))
+            for item in map("".join, product(*char_list)):
+                if encode_name == "none":
+                    buffer.append(head + item + tail)
+                else:
+                    buffer.append(encode_fun(head + item + tail))
                 if len(buffer) == buffer_size:
-                    f.write(pyoptions.CRLF.join(buffer) + pyoptions.CRLF)
+                    f.write(crlf.join(buffer)+crlf)
                     buffer = []
-            f.write(pyoptions.CRLF.join(buffer))
-        finishprinter(storepath)
+            f.write(crlf.join(buffer))
+        finishprinter(storepath, count)
     except Exception as e:
         print(cool.red('[-] Exception as following:') + pyoptions.CRLF)
         print(traceback.print_exc())
 
 
 def patterncore(resource):
-    pattern_set = {}
+    pattern_dict = {}
 
     try:
         confdicts = elementparser(confmatcher(resource))
@@ -50,19 +66,7 @@ def patterncore(resource):
         exit(cool.red("[-] parse element error, please check your parsing element"))
     finalen = len(confdicts[pystrs.conf_head])
     for x in range(0, finalen):
-        # pattern_set_list = confdicts[pystrs.conf_char][x]
-        # keep parsing head and tail
-        pattern_set_list = get_conf_dic(int(confdicts[pystrs.conf_minlen][x]),
-                                        int(confdicts[pystrs.conf_maxlen][x]),
-                                        confdicts[pystrs.conf_char][x],
-                                        confdicts[pystrs.conf_encode][x],
-                                        confdicts[pystrs.conf_head][x],
-                                        confdicts[pystrs.conf_tail][x])
-        pattern_set[x] = "".join(pattern_set_list)
-    count = functools.reduce(operator.mul, [len(i) for i in pattern_set.values()], 1)
-    if count >= pyoptions.count_switcher:
-        exit_msg = pyoptions.CRLF + cool.fuchsia("[!] Build items more than pyoptions.count_switcher: %s%s"
-                                                 "[!] Modify /lib/data/data.py count_switcher to adjust it" %
-                                                 (str(pyoptions.count_switcher), pyoptions.CRLF))
-        exit(exit_msg)
-    return pattern_set
+        pattern_set_list = confdicts[pystrs.conf_char][x]
+        pattern_dict[x] = "".join(pattern_set_list)
+
+    return pattern_dict
