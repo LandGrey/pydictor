@@ -29,6 +29,7 @@ pydictor.py [options]
            -extend      [string_or_file]
            -plug        [{plugin}]
            --conf       [expression_or_file]
+           --pattern    [expression_or_file]
            --sedb
            -o,--output  [directory]
            -tool        [{tool}]
@@ -75,6 +76,9 @@ pydictor.py [options]
 
     parser.add_argument('--conf', dest='conf', nargs='?', metavar='file_path', default='default', const='const',
                         help=cool.yellow("Use the configuration string or file build the dictionary"))
+
+    parser.add_argument('--pattern', dest='pattern', nargs='?', metavar='file_path', default='default', const='const',
+                        help=cool.yellow("Use pattern string build the dictionary"))
 
     parser.add_argument('--sedb', dest='sedb', default='',  action="store_true",
                         help=cool.yellow('Enter the Social Engineering Dictionary Builder'))

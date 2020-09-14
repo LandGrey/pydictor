@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import os
 from lib.fun.fun import cool
 from core.CONF import build_conf_dic
+from core.PATTERN import build_pattern_dic
 from lib.data.data import paths, pyoptions
 
 
@@ -28,6 +29,10 @@ def conf_parser():
     else:
         paths.buildconf_path = pyoptions.args_conf
         build_conf_dic(source=paths.buildconf_path)
+
+
+def pattern_parser():
+    build_pattern_dic(source=pyoptions.args_pattern)
 
 
 def tool_parser():

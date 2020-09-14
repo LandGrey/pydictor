@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2020 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.4.1#dev'
+    pystrs.version = '2.1.5.0#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -106,7 +106,7 @@ def init_pyoptions():
     pyoptions.maxlen_switcher = 20
 
     # allowed maximum generated items
-    pyoptions.count_switcher = 1000000000000
+    pyoptions.count_switcher = 100000000000
 
     # shredded file rewrite counts
     pyoptions.file_rewrite_count = 1

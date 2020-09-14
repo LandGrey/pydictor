@@ -1,6 +1,6 @@
 # pydictor
 
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.4.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.5.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 
 **README.md [中文版](README_CN.md)**
@@ -71,27 +71,28 @@ python pydictor.py
 #
 #### All of pydictor can generating wordlist
 
-|  type  | wordlist  | identifier | description                              | supported function |
-| :----: | :-------: | :--------: | :--------------------------------------- | :----------------- |
-|  core  |   base    |     C1     | basic wordlist                           | F1 F2 F3 F4        |
-|  core  |   char    |     C2     | custom character wordlist                | F1 F2 F3 F4        |
-|  core  |   chunk   |     C3     | permutation and combination wordlist     | ALL                |
-|  core  |   conf    |     C4     | based on configuration file wordlist     | ALL                |
-|  core  |  extend   |     C5     | extend wordlist based on rules           | ALL                |
-|  core  |   sedb    |     C6     | social engineering wordlist              | ALL                |
-|  tool  | combiner  |     T1     | combine the specify directory files tool |                    |
-|  tool  | comparer  |     T2     | compare two file content difference tool | ALL                |
-|  tool  |  counter  |     T3     | word frequency count tool                | ALL                |
-|  tool  |  handler  |     T4     | handle the input file tool               | ALL                |
-|  tool  | uniqbiner |     T5     | combine and unique the directory files tool | ALL                |
-|  tool  | uniqifer  |     T6     | unique the input file tool               | ALL                |
-|  tool  | hybrider  |     T7     | hybrid couples word list tool            | F1 F2 F3 F4        |
+|  type  | wordlist  | identifier | description                                         | supported function |
+| :----: | :-------: | :--------: | :-------------------------------------------------- | :----------------- |
+|  core  |   base    |     C1     | basic wordlist                                      | F1 F2 F3 F4        |
+|  core  |   char    |     C2     | custom character wordlist                           | F1 F2 F3 F4        |
+|  core  |   chunk   |     C3     | permutation and combination wordlist                | ALL                |
+|  core  |   conf    |     C4     | based on configuration file wordlist                | ALL                |
+|  core  |  pattern  |     C5     | fastly generate pattern wordlist                    | F2 F3 F4           |
+|  core  |  extend   |     C6     | extend wordlist based on rules                      | ALL                |
+|  core  |   sedb    |     C7     | social engineering wordlist                         | ALL                |
+|  tool  | combiner  |     T1     | combine the specify directory files tool            |                    |
+|  tool  | comparer  |     T2     | compare two file content difference tool            | ALL                |
+|  tool  |  counter  |     T3     | word frequency count tool                           | ALL                |
+|  tool  |  handler  |     T4     | handle the input file tool                          | ALL                |
+|  tool  | uniqbiner |     T5     | combine and unique the directory files tool         | ALL                |
+|  tool  | uniqifer  |     T6     | unique the input file tool                          | ALL                |
+|  tool  | hybrider  |     T7     | hybrid couples word list tool                       | F1 F2 F3 F4        |
 | plugin | birthday  |     P1     | birthday keyword wordlist in specify datetime scope | ALL                |
-| plugin |    ftp    |     P2     | against keyword generate ftp password wordlist | ALL                |
-| plugin |   pid4    |     P3     | id card last 4 char wordlist             | ALL                |
-| plugin |   pid6    |     P4     | id card last 6 char wordlist             | ALL                |
-| plugin |   pid8    |     P5     | id card last 8 char wordlist             | ALL                |
-| plugin |  scratch  |     P6     | wordlist based on web pages keywords     | ALL                |
+| plugin |    ftp    |     P2     | against keyword generate ftp password wordlist      | ALL                |
+| plugin |   pid4    |     P3     | id card last 4 char wordlist                        | ALL                |
+| plugin |   pid6    |     P4     | id card last 6 char wordlist                        | ALL                |
+| plugin |   pid8    |     P5     | id card last 8 char wordlist                        | ALL                |
+| plugin |  scratch  |     P6     | wordlist based on web pages keywords                | ALL                |
 
 
 #### function code

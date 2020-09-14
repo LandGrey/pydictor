@@ -19,7 +19,7 @@ from core.SEDB import SEDB
 from lib.data.data import paths, pyoptions
 from lib.data.text import pydictor_art_text
 from lib.fun.fun import cool
-from lib.parse.argsparse import plug_parser, conf_parser, tool_parser
+from lib.parse.argsparse import plug_parser, conf_parser, pattern_parser, tool_parser
 from lib.parse.command import parse_args
 from lib.parse.tricksparse import sedb_tricks
 
@@ -80,6 +80,7 @@ def init():
     pyoptions.args_plug = args.plug
     pyoptions.args_sedb = args.sedb
     pyoptions.args_conf = args.conf
+    pyoptions.args_pattern = args.pattern
     pyoptions.args_tool = args.tool
     pyoptions.level = args.level
 
@@ -126,5 +127,7 @@ if __name__ == '__main__':
             exit(e)
     elif pyoptions.args_conf != 'default':
         conf_parser()
+    elif pyoptions.args_pattern != 'default':
+        pattern_parser()
     elif pyoptions.args_tool:
         tool_parser()

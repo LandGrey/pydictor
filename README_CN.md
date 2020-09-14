@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.4.1-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.5.0-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -75,27 +75,28 @@ python pydictor.py
 
 #### pydictor可以生成的所有字典的类型及其说明
 
-|   归属   |    类别     | 标识符  | 描述             | 支持功能代号      |
-| :----: | :-------: | :--: | :------------- | :---------- |
-|  core  |   base    |  C1  | 基础字典           | F1 F2 F3 F4 |
-|  core  |   char    |  C2  | 自定义字符集字典       | F1 F2 F3 F4 |
-|  core  |   chunk   |  C3  | 排列组合字典         | ALL         |
-|  core  |   conf    |  C4  | 配置语法生成字典       | ALL         |
-|  core  |  extend   |  C5  | 规则扩展字典         | ALL         |
-|  core  |   sedb    |  C6  | 社会工程学字典        | ALL         |
-|  tool  | combiner  |  T1  | 字典合并工具         |             |
-|  tool  | comparer  |  T2  | 字典比较相减工具       | ALL         |
-|  tool  |  counter  |  T3  | 词频统计工具         | ALL         |
-|  tool  |  handler  |  T4  | 筛选处理原有字典工具     | ALL         |
-|  tool  | uniqbiner |  T5  | 先合并后去重工具       | ALL         |
-|  tool  | uniqifer  |  T6  | 字典去重工具         | ALL         |
-|  tool  | hybrider  |  T7  | 多字典文件组合工具      | F1 F2 F3 F4 |
-| plugin | birthday  |  P1  | 生日日期字典插件       | ALL         |
-| plugin |    ftp    |  P2  | 关键词生成ftp密码字典插件 | ALL         |
-| plugin |   pid4    |  P3  | 身份证后四位字典插件     | ALL         |
-| plugin |   pid6    |  P4  | 身份证后六位字典插件     | ALL         |
-| plugin |   pid8    |  P5  | 身份证后八位字典插件     | ALL         |
-| plugin |  scratch  |  P6  | 网页原始关键词字典插件    | ALL         |
+|  归属  |   类别    | 标识符 | 描述                      | 支持功能代号 |
+| :----: | :-------: | :----: | :------------------------ | :----------- |
+|  core  |   base    |   C1   | 基础字典                  | F1 F2 F3 F4  |
+|  core  |   char    |   C2   | 自定义字符集字典          | F1 F2 F3 F4  |
+|  core  |   chunk   |   C3   | 排列组合字典              | ALL          |
+|  core  |   conf    |   C4   | 配置语法生成字典          | ALL          |
+|  core  |  pattern  |   C5   | 模式字典快速生成          | F2 F3 F4     |
+|  core  |  extend   |   C6   | 规则扩展字典              | ALL          |
+|  core  |   sedb    |   C7   | 社会工程学字典            | ALL          |
+|  tool  | combiner  |   T1   | 字典合并工具              |              |
+|  tool  | comparer  |   T2   | 字典比较相减工具          | ALL          |
+|  tool  |  counter  |   T3   | 词频统计工具              | ALL          |
+|  tool  |  handler  |   T4   | 筛选处理原有字典工具      | ALL          |
+|  tool  | uniqbiner |   T5   | 先合并后去重工具          | ALL          |
+|  tool  | uniqifer  |   T6   | 字典去重工具              | ALL          |
+|  tool  | hybrider  |   T7   | 多字典文件组合工具        | F1 F2 F3 F4  |
+| plugin | birthday  |   P1   | 生日日期字典插件          | ALL          |
+| plugin |    ftp    |   P2   | 关键词生成ftp密码字典插件 | ALL          |
+| plugin |   pid4    |   P3   | 身份证后四位字典插件      | ALL          |
+| plugin |   pid6    |   P4   | 身份证后六位字典插件      | ALL          |
+| plugin |   pid8    |   P5   | 身份证后八位字典插件      | ALL          |
+| plugin |  scratch  |   P6   | 网页原始关键词字典插件    | ALL          |
 
 #### 字典操作功能及说明对照表  
 

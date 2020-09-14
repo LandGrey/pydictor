@@ -25,13 +25,25 @@ python pydictor.py --conf /my/other/awesome.conf
 python pydictor.py --conf "[0-9]{6,6}<none>[a-f,abc,123,!@#]{1,1}<none>" --encode md5 --output parsing.txt
 ```
 
-#### 5. 规则扩展字典
+#### 5. 模式字典快速生成
+
+```
+# note that: 
+# 1. using python3 is fast than python2
+# 2. one element only support single character, like: [***]{1,1}<***>
+
+# generate pattern: abc[%d][%d][%l][%d][%d][%l][%d][%d]
+python3 pydictor.py --head abc --pattern "[0-9]{1,1}<none>[0-9]{1,1}<none>[a-z]{1,1}<none>[0-9]{1,1}<none>[0-9]{1,1}<none>[a-z]{1,1}<none>[0-9]{1,1}<none>[0-9]{1,1}<none>" -o output.txt
+```
+
+#### 6. 规则扩展字典
+
 ```
 python pydictor.py -extend bob --level 4 --len 4 12
 python pydictor.py -extend liwei zwell.com --more --leet 0 1 2 11 21 --level 2 --len 6 16 --occur "<=10" ">0" "<=2" -o /possbile/wordlist.lst
 ```
 
-#### 6. 社会工程学字典
+#### 7. 社会工程学字典
 `python pydictor.py --sedb`
 
 ```
