@@ -119,7 +119,7 @@ pydictor.py [options]
                         help=cool.yellow('''Default: letter "%s"  digital "%s"  special "%s"''' %
                                          (pyoptions.letter_repeat, pyoptions.digital_repeat, pyoptions.special_repeat)))
 
-    parser.add_argument('--regex', dest='regex', metavar='regex', nargs=1, type=str,
+    parser.add_argument('--regex', dest='regex', metavar='regex', type=str,
                         default=pyoptions.filter_regex, help=cool.yellow('''Filter by regex, Default: (%s)''' %
                                                                          pyoptions.filter_regex))
 

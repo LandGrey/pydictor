@@ -1,4 +1,6 @@
 *.xml
-.idea/pydictor.iml
+.idea/
+.env/
 *.pyc
 /test
+results/*.txt
