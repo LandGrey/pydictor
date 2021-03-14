@@ -2,12 +2,13 @@
 # coding:utf-8
 # author: LandGrey
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2021 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 from __future__ import unicode_literals
 
 import os
+import codecs
 import mimetypes
 import traceback
 from lib.data.data import pyoptions
@@ -35,9 +36,9 @@ def combiner_magic(*args):
             if mimetypes.guess_type(_)[0] == 'text/plain':
                 combine_list.append(_)
     try:
-        with open(storepath, "a") as f:
+        with codecs.open(storepath, 'a', encoding="utf-8") as f:
             for onefile in combine_list:
-                with open(onefile, 'r') as tf:
+                with codecs.open(onefile, 'r', encoding="utf-8") as tf:
                     f.write(tf.read())
         finishprinter(storepath)
 

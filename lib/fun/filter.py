@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2021 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -148,8 +148,8 @@ def repeat_filter(item, letter_repeat=pyoptions.letter_repeat, digital_repeat=py
         groups = groupby(item)
         repeat_dict = [{label: sum(1 for _ in group)} for label, group in groups]
         for r in repeat_dict:
-            key = r.keys()[0]
-            value = r.values()[0]
+            key = list(r.keys())[0]
+            value = list(r.values())[0]
             if key in string.ascii_letters:
                 l_repeat = max(l_repeat, value)
             elif key in string.digits:
