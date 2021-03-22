@@ -18,8 +18,6 @@ from lib.parse.confparse import elementparser, confmatcher
 
 
 def build_pattern_dic(source=""):
-    buffer = []
-    buffer_size = 256
     storepath = finalsavepath("pattern")
     pattern_set = patterncore(source)
     char_list = [sorted(set(i)) for i in pattern_set.values()]
@@ -33,6 +31,8 @@ def build_pattern_dic(source=""):
         exit(exit_msg)
 
     # global variable transfer local variable to improved speed
+    buffer = []
+    buffer_size = pyoptions.buffer_size
     head = pyoptions.head
     tail = pyoptions.tail
     crlf = pyoptions.CRLF

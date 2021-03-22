@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.5.3#dev'
+    pystrs.version = '2.1.5.4#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"
@@ -144,6 +144,7 @@ def init_pyoptions():
     pyoptions.encode = "none"
     pyoptions.minlen = 0
     pyoptions.maxlen = 4
+    pyoptions.buffer_size = 256
 
     pyoptions.default_occur = "<=99"
     pyoptions.occur_is_filter = False
