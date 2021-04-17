@@ -18,8 +18,8 @@ from lib.fun.osjudger import py_ver_egt_3
 
 def init_paths():
     try:
-        root_path = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0]))).encode('utf-8').decode() \
-            if py_ver_egt_3 else os.path.dirname(os.path.abspath(sys.argv[0])).decode('utf-8')
+        root_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0]))).encode('utf-8').decode() \
+            if py_ver_egt_3 else os.path.dirname(os.path.realpath(sys.argv[0])).decode('utf-8')
     except:
         root_path = 'fake path'
         exit("\n[-] Please ensure pydictor directory path name is english characters\n")
