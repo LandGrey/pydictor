@@ -1,5 +1,5 @@
 # pydictor
-[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.5.4-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
+[![build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://www.github.com/landgrey/pydictor)  [![Python 2.7&3.4](https://img.shields.io/badge/python-2.7&3.4-yellow.svg)](https://www.python.org/)  ![release](https://img.shields.io/badge/version-2.1.5.6-orange.svg) ![License](https://img.shields.io/badge/license-GPLv3-red.svg)
 
 **README.md [English](README.md)**
 
@@ -91,6 +91,7 @@ python pydictor.py
 |  tool  | uniqbiner |   T5   | 先合并后去重工具          | ALL          |
 |  tool  | uniqifer  |   T6   | 字典去重工具              | ALL          |
 |  tool  | hybrider  |   T7   | 多字典文件组合工具        | F1 F2 F3 F4  |
+|  tool  | printabler|   T8   | 可打印字符过滤工具        | ALL          |
 | plugin | birthday  |   P1   | 生日日期字典插件          | ALL          |
 | plugin |    ftp    |   P2   | 关键词生成ftp密码字典插件 | ALL          |
 | plugin |   pid4    |   P3   | 身份证后四位字典插件      | ALL          |
