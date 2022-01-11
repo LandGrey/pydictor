@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2021 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -67,8 +67,9 @@ def walks_all_files(directory):
     for _ in get_subdir_files_path(directory):
         with open(_, 'r') as f:
             for line in f.readlines():
-                if line.strip() != '' and line.strip()[0] != pyoptions.annotator:
-                    contents.append(line.strip())
+                line = line.strip()
+                if line != '' and line[0] != pyoptions.annotator:
+                    contents.append(line)
     return unique(contents)
 
 
@@ -76,12 +77,13 @@ def walk_pure_file(filepath, pure=True):
     results = []
     with open(filepath, 'r') as f:
         for line in f.readlines():
+            line = line.strip()
             if pure:
-                if line.strip() != '':
-                    results.append(line.strip())
+                if line != '':
+                    results.append(line)
             else:
-                if line.strip() != '' and line.strip()[0] != pyoptions.annotator:
-                    results.append(line.strip())
+                if line != '' and line[0] != pyoptions.annotator:
+                    results.append(line)
     return unique(results)
 
 

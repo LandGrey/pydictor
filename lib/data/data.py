@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2020 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2021 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -56,7 +56,7 @@ def init_pystrs():
     # start time
     pystrs.startime = time.time()
 
-    pystrs.version = '2.1.5.4#dev'
+    pystrs.version = '2.1.5.5#dev'
 
     # build configuration file element description
     pystrs.conf_head = "head"

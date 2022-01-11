@@ -29,10 +29,6 @@ def headtail_filter(item, head='', tail=''):
         return item
 
 
-def encode_filter(item, encode='none'):
-    return pyoptions.operator.get(encode)(item)
-
-
 def occur_filter(item, letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
                  special_occur=pyoptions.special_occur, occur_is_filter=False):
     l_count = d_count = s_count = 0
@@ -233,15 +229,34 @@ def cutout_filter(lists, start='pos-1', end='pos--1', cutout_is_filter=False):
             return _
 
 
-def filterforfun(item):
-    item = headtail_filter(item, head=pyoptions.head, tail=pyoptions.tail)
-    item = lenght_filter(item, minlen=pyoptions.minlen, maxlen=pyoptions.maxlen, lenght_is_filter=pyoptions.args_pick)
-    item = occur_filter(item, letter_occur=pyoptions.letter_occur, digital_occur=pyoptions.digital_occur,
-                        special_occur=pyoptions.special_occur, occur_is_filter=pyoptions.occur_is_filter)
-    item = types_filter(item, letter_types=pyoptions.letter_types, digital_types=pyoptions.digital_types,
-                        special_types=pyoptions.special_types, types_is_filter=pyoptions.types_is_filter)
-    item = repeat_filter(item, letter_repeat=pyoptions.letter_repeat, digital_repeat=pyoptions.digital_repeat,
-                         special_repeat=pyoptions.special_repeat, repeat_is_filter=pyoptions.repeat_is_filter)
-    item = regex_filter(item, regex=pyoptions.filter_regex, regex_is_filter=pyoptions.regex_is_filter)
-    item = encode_filter(item, encode=pyoptions.encode)
-    return item
+def fff_speed(item, head, tail, minlen, maxlen, args_pick, encode_fun,
+              letter_occur, digital_occur, special_occur, occur_is_filter,
+              letter_types, digital_types, special_types, types_is_filter,
+              letter_repeat, digital_repeat, special_repeat, repeat_is_filter,
+              filter_regex, regex_is_filter):
+    item = headtail_filter(item,
+                           head=head,
+                           tail=tail)
+    item = lenght_filter(item,
+                         minlen=minlen,
+                         maxlen=maxlen,
+                         lenght_is_filter=args_pick)
+    item = occur_filter(item,
+                        letter_occur=letter_occur,
+                        digital_occur=digital_occur,
+                        special_occur=special_occur,
+                        occur_is_filter=occur_is_filter)
+    item = types_filter(item,
+                        letter_types=letter_types,
+                        digital_types=digital_types,
+                        special_types=special_types,
+                        types_is_filter=types_is_filter)
+    item = repeat_filter(item,
+                         letter_repeat=letter_repeat,
+                         digital_repeat=digital_repeat,
+                         special_repeat=special_repeat,
+                         repeat_is_filter=repeat_is_filter)
+    item = regex_filter(item,
+                        regex=filter_regex,
+                        regex_is_filter=regex_is_filter)
+    return encode_fun(item)
