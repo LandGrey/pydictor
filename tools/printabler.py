@@ -30,14 +30,19 @@ def printabler_magic(*args):
     @magic
     def printabler():
         is_py3 = py_ver_egt_3()
-        with open(filepath, 'r') as f:
-            for item in f.readlines():
-                item = item.strip()
-                if item:
-                    ret = filter(lambda x: x in string.printable, item)
-                    if is_py3:
-                        if len(list(ret)) == len(item):
-                            yield item
-                    else:
-                        if len(ret) == len(item):
-                            yield item
+        if is_py3:
+            f = open(filepath, 'r', encoding='utf8', errors='replace')
+        else:
+            import codecs
+            f = codecs.open(filepath, 'r', encoding='utf8', errors='replace')
+        for item in f.readlines():
+            item = item.strip()
+            if item:
+                ret = filter(lambda x: x in string.printable, item)
+                if is_py3:
+                    if len(list(ret)) == len(item):
+                        yield item
+                else:
+                    if len(ret) == len(item):
+                        yield item
+        f.close()
