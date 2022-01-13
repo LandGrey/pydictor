@@ -13,6 +13,7 @@ import string
 from lib.fun.fun import cool
 from lib.fun.decorator import magic
 from lib.data.data import pyoptions
+from lib.fun.osjudger import py_ver_egt_3
 
 
 def printabler_magic(*args):
@@ -28,6 +29,15 @@ def printabler_magic(*args):
 
     @magic
     def printabler():
+        is_py3 = py_ver_egt_3()
         with open(filepath, 'r') as f:
             for item in f.readlines():
-                yield filter(lambda x: x in string.printable, item.strip())
+                item = item.strip()
+                if item:
+                    ret = filter(lambda x: x in string.printable, item)
+                    if is_py3:
+                        if len(list(ret)) == len(item):
+                            yield item
+                    else:
+                        if len(ret) == len(item):
+                            yield item
