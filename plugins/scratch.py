@@ -3,7 +3,7 @@
 # Referred: https://github.com/cheetz/brutescrape
 # author: LandGrey
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -144,7 +144,7 @@ def scratch_magic(*args):
     sites = []
     if os.path.isfile(target):
         with open(target, 'r') as f:
-            for _ in f.readlines():
+            for _ in f:
                 if _.startswith(pyoptions.annotator):
                     pass
                 else:

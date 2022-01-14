@@ -2,7 +2,7 @@
 # coding:utf-8
 # author: LandGrey
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -39,7 +39,7 @@ def uniqbiner_magic(*args):
         with open(tempath, "a") as f:
             for onefile in combine_list:
                 with open(onefile, 'r') as tf:
-                    for line in tf.readlines():
+                    for line in tf:
                         f.write(line.strip() + pyoptions.CRLF)
     except Exception as ex:
         print(pyoptions.CRLF + cool.red("[-] Combine file failed, Looking: "))
@@ -48,6 +48,6 @@ def uniqbiner_magic(*args):
     @magic
     def uniqbiner():
         with open(tempath) as o_f:
-            for item in o_f.readlines():
+            for item in o_f:
                 yield item.strip()
         print("[+] Source of  :{0} lines".format(cool.orange(finishcounter(tempath))))

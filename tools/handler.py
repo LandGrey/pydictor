@@ -2,7 +2,7 @@
 # coding:utf-8
 # author: LandGrey
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -28,5 +28,5 @@ def handler_magic(*args):
     @magic
     def handler():
         with open(path, 'r') as f:
-            for item in f.readlines():
+            for item in f:
                 yield item.strip()

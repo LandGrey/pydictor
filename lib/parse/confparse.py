@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -23,7 +23,7 @@ def confmatcher(resource):
                 configures.append(m.strip())
     else:
         with open(resource) as f:
-            for item in f.readlines():
+            for item in f:
                 confline = item.strip()
                 if len(confline) >= 1 and confline[0] == pyoptions.annotator:
                     pass

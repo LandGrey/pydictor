@@ -2,7 +2,7 @@
 # coding:utf-8
 # author: LandGrey
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 from __future__ import unicode_literals
@@ -35,7 +35,7 @@ def hybrider_magic(*args):
         for fp in filepaths:
             tmp = set()
             with open(fp, "r") as f:
-                for line in f.readlines():
+                for line in f:
                     tmp.add(line.strip())
             hybrid_list.append(tmp)
 

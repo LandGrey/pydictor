@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2021 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -48,7 +48,7 @@ def charanger(confstr):
     for i in range(len(confstr.split(pyoptions.chars_split))):
         if os.path.isfile(confstr.split(pyoptions.chars_split)[i]):
             with open(confstr.split(pyoptions.chars_split)[i], 'r') as f:
-                for line in f.readlines():
+                for line in f:
                     ranges.append(line.strip())
         elif pyoptions.char_range_split in confstr.split(pyoptions.chars_split)[i] and \
                         len(confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)) == 2:
@@ -66,7 +66,7 @@ def walks_all_files(directory):
     contents = []
     for _ in get_subdir_files_path(directory):
         with open(_, 'r') as f:
-            for line in f.readlines():
+            for line in f:
                 line = line.strip()
                 if line != '' and line[0] != pyoptions.annotator:
                     contents.append(line)
@@ -76,7 +76,7 @@ def walks_all_files(directory):
 def walk_pure_file(filepath, pure=True):
     results = []
     with open(filepath, 'r') as f:
-        for line in f.readlines():
+        for line in f:
             line = line.strip()
             if pure:
                 if line != '':

@@ -35,7 +35,7 @@ def printabler_magic(*args):
         else:
             import codecs
             f = codecs.open(filepath, 'r', encoding='utf8', errors='replace')
-        for item in f.readlines():
+        for item in f:
             item = item.strip()
             if item:
                 ret = filter(lambda x: x in string.printable, item)

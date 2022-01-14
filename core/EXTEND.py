@@ -2,7 +2,7 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -238,7 +238,7 @@ def get_extend_dic(target):
     for t in target:
         if os.path.isfile(t):
             with open(t) as f:
-                for line in f.readlines():
+                for line in f:
                     rawlist.append(line.strip())
         else:
             rawlist.append(t)

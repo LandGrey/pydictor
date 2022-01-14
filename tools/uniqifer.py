@@ -2,7 +2,7 @@
 # coding:utf-8
 # author: LandGrey
 """
-Copyright (c) 2016-2017 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
@@ -28,7 +28,7 @@ def uniqifer_magic(*args):
     @magic
     def uniqifer():
         with open(original_file_path) as o_f:
-            for item in o_f.readlines():
+            for item in o_f:
                 yield item.strip()
 
         print("[+] Source of  :{0} lines".format(cool.orange(finishcounter(original_file_path))))
