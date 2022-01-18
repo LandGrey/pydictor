@@ -16,24 +16,31 @@ import traceback
 from functools import reduce
 from lib.fun.color import Colored
 from lib.fun.osjudger import py_ver_egt_3
+from lib.encode.md5_encode import md5_encode
 from lib.data.data import pystrs,  paths, pyoptions
 
 cool = Colored()
 
 
 # order preserving
-def unique(seq, idfun=None):
-    if idfun is None:
-        def idfun(x): return x
+def unique(items):
     seen = {}
-    results = []
-    for item in seq:
-        marker = idfun(item)
-        if marker in seen:
-            continue
-        seen[marker] = 1
-        results.append(item)
-    return results
+    lines_count = 0
+    print_stop_unique_tips = True
+    max_lines_count = pyoptions.memory_unique_max_lines_count
+    for item in items:
+        if lines_count <= max_lines_count:
+            marker = md5_encode(item)
+            if marker in seen:
+                continue
+            seen[marker] = 1
+            lines_count += 1
+        else:
+            if print_stop_unique_tips:
+                print_stop_unique_tips = False
+                print(cool.fuchsia("[!] Generate lines >= {}, stop remove duplicates lines in memory to prevent memory error.".format(max_lines_count)))
+                print(cool.fuchsia("[!] Use unix-like system command: 'sort input.txt | uniq > output.txt' to get no duplicates file. (no duplicates lines and the same time no preserve sequence)"))
+        yield item
 
 
 def rreplace(self, old, new, *max):
