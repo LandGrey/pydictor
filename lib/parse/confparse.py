@@ -48,7 +48,10 @@ def elementparser(configures):
         count = x - 1
         x %= 5
         if x == 1:
-            dicts[pystrs.conf_head].append(configures[count].strip())
+            head = configures[count].strip()
+            for key, value in pyoptions.charmap.items():
+                head = head.replace(key, value)
+            dicts[pystrs.conf_head].append(head)
         elif x == 2:
             dicts[pystrs.conf_char].append(charanger(configures[count]))
         elif x == 3:
@@ -57,5 +60,8 @@ def elementparser(configures):
         elif x == 4:
             dicts[pystrs.conf_encode].append(configures[count])
         elif x == 0:
-            dicts[pystrs.conf_tail].append(configures[count].strip())
+            tail = configures[count].strip()
+            for key, value in pyoptions.charmap.items():
+                tail = tail.replace(key, value)
+            dicts[pystrs.conf_tail].append(tail)
     return dicts

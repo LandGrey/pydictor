@@ -53,19 +53,24 @@ def rreplace(self, old, new, *max):
 def charanger(confstr):
     ranges = []
     for i in range(len(confstr.split(pyoptions.chars_split))):
-        if os.path.isfile(confstr.split(pyoptions.chars_split)[i]):
-            with open(confstr.split(pyoptions.chars_split)[i], 'r') as f:
-                for line in f:
-                    ranges.append(line.strip())
-        elif pyoptions.char_range_split in confstr.split(pyoptions.chars_split)[i] and \
-                        len(confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)) == 2:
-            start = confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[0]
-            end = confstr.split(pyoptions.chars_split)[i].split(pyoptions.char_range_split)[1]
-            for c in string.printable:
-                if start <= c <= end:
-                    ranges.append(c.strip())
+        current_element = confstr.split(pyoptions.chars_split)[i]
+        if current_element in pyoptions.charmap.keys():
+            for key, value in pyoptions.charmap.items():
+                current_element = current_element.replace(key, value)
+            ranges.append(str(current_element))
         else:
-            ranges.append(str(confstr.split(pyoptions.chars_split)[i]).strip())
+            if os.path.isfile(current_element):
+                with open(current_element, 'r') as f:
+                    for line in f:
+                        ranges.append(line.strip())
+            elif pyoptions.char_range_split in current_element and len(current_element.split(pyoptions.char_range_split)) == 2:
+                start = current_element.split(pyoptions.char_range_split)[0]
+                end = current_element.split(pyoptions.char_range_split)[1]
+                for c in string.printable:
+                    if start <= c <= end:
+                        ranges.append(c.strip())
+            else:
+                ranges.append(str(current_element).strip())
     return ranges
 
 
