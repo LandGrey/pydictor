@@ -39,7 +39,7 @@ def unique(items):
             if print_stop_unique_tips:
                 print_stop_unique_tips = False
                 print(cool.fuchsia("[!] Generate lines >= {}, stop remove duplicates lines in memory to prevent memory error.".format(max_lines_count)))
-                print(cool.fuchsia("[!] Use unix-like system command: 'sort input.txt | uniq > output.txt' to get no duplicates file. (no duplicates lines and the same time no preserve sequence)"))
+                print(cool.fuchsia("[!] You can use unix-like system command: 'sort input.txt | uniq > output.txt' to get no duplicate lines and no preserve sequence file."))
         yield item
 
 

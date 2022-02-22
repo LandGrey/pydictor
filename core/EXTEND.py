@@ -160,6 +160,7 @@ def extend_enter(rawlist, leet=True):
                             if len(item[0]) <= middle_lenght and len(item[1]) <= middle_lenght:
                                 res.append(item[0] + m + item[1])
 
+        shapers = wordsharker(raw, leet=leet)
         for w in shapers:
             res.append(w)
             for suffix in suffix_content:
