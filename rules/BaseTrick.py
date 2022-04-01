@@ -2,12 +2,13 @@
 # coding:utf-8
 #
 """
-Copyright (c) 2016-2019 LandGrey (https://github.com/LandGrey/pydictor)
+Copyright (c) 2016-2022 LandGrey (https://github.com/LandGrey/pydictor)
 License: GNU GENERAL PUBLIC LICENSE Version 3
 """
 
 from __future__ import unicode_literals
 
+import types
 from core.EXTEND import wordsharker
 from lib.data.data import pyoptions
 from lib.fun.fun import unique
@@ -15,14 +16,22 @@ from lib.fun.fun import unique
 
 def simplejoin(first, second):
     ff = ss = []
-    if type(first) is list:
+    if isinstance(first, types.GeneratorType):
+        for _item in first:
+            ff.append(_item)
+    elif type(first) is list:
         ff.extend(first)
     else:
         ff.append(first)
-    if type(second) is list:
+
+    if isinstance(second, types.GeneratorType):
+        for _item in second:
+            ff.append(_item)
+    elif type(second) is list:
         ff.extend(second)
     else:
         ff.append(second)
+
     for f in ff:
         for s in ss:
             yield f + s
