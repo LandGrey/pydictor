@@ -116,7 +116,7 @@ def wordsharker(raw, leet=True):
 def extend_enter(rawlist, leet=True):
     extend_conf_dict = {'prefix': [], 'suffix': [], 'prefix_suffix': [], 'middle': []}
     try:
-        config = ConfigParser.SafeConfigParser(allow_no_value=True)
+        config = ConfigParser.ConfigParser(allow_no_value=True)
         config.optionxform = str
         config.read(paths.extendconf_path)
         for s in config.sections():
